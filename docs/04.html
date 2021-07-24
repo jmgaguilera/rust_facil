@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Comentarios - Rust en español fácil</title>
+        <title>Tipos de dato - Rust en español fácil</title>
         <!-- Custom HTML head -->
         
 
@@ -77,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html" class="active"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html" class="active"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -137,45 +137,28 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="comentarios"><a class="header" href="#comentarios">Comentarios</a></h1>
-<p><strong><a href="https://youtu.be/fJ7jBZG_Rpo">Puedes ver este capítulo en inglés en YouTube</a></strong></p>
-<p>Los comentarios son para que los lean los programadores, no el ordenador. es bueno escribir comentarios para ayudar a otras personas a entender tu código. Es bueno, también, para ayudarte a entender tu propio código pasado un tiempo (Muchas personas escriben buen código, pero olvidan porqué lo escribieron). Para escribir comentarios en el código, en Rust se suele usar <code>//</code>:</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    // Los programas Rust comienzan en fn main()
-    // Pones el código en un bloque que comienza con { y termina con }
-    let algun_numero = 100; // Aquí podemos esribir todo lo que queramos ya que el compilador no lo va mirar
-}
-</code></pre></pre>
-<p>Cuando lo haces así, el compilador no mirará nada que haya a la derecha de <code>//</code>.</p>
-<p>Existe otra clase de comentario que se escribe con <code>/*</code> para iniciarlo y se termina con `*/. Este tipo de comentario es útil para escribirlo entre el código.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let algun_numero/*: i16*/ = 100;
-}
-</code></pre></pre>
-<p>Para el compilador <code>let algun_numero/*: i16*/ = 100;</code> es igual que <code>let algun_numero = 100;</code>.</p>
-<p>Esta forma <code>/* */</code> también es útil para los comentarios de gran longitud que necesiten más de una línea. En este ejemplo se puede ver que necesitas escribir <code>//</code> en cada línea, pero si utilizas <code>/*</code>, el comentario dura hasta que lo finalices con <code>*/</code>.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let algun_numero = 100; /* Déjame contarte
-    un poco sobre este número.
-    Es el 100, que es mi número favorito.
-    Se llama algun_numero pero realmente creo que...*/
-
-    let algun_numero = 100; // Déjame contarte
-    // un poco sobre este número.
-    // Es el 100, que es mi número favorito.
-    // Se llama algun_numero pero realmente creo que...
-}
-</code></pre></pre>
+                        <h1 id="tipos-de-dato"><a class="header" href="#tipos-de-dato">Tipos de dato</a></h1>
+<p>Rust tiene muchos tipos de dato que permiten trabajar con números, caracteres y otros. Algunos son simples, otros son más complicados e, incluso, puedes crear tus propios tipos de dato.</p>
+<h2 id="tipos-de-dato-primitivos"><a class="header" href="#tipos-de-dato-primitivos">Tipos de dato primitivos</a></h2>
+<p><strong><a href="https://youtu.be/OxTPU5UGMhs">Puedes ver este capítulo en YouTube en inglés</a></strong></p>
+<p>Rust tiene tipos simples que llaman <strong>tipos primitivos</strong> (primitivo = muy básico). Comenzaremos con los números enteros y los <code>char</code> (caracteres). Los enteros son números sin coma decimal. Existen dos tipos de enteros:</p>
+<ul>
+<li>Enteros con signo.</li>
+<li>Enteros sin signo.</li>
+</ul>
+<p>&quot;Con signo&quot; significa que disponen de <code>+</code> (signo más) y <code>-</code> (signo menos), por lo que los enteros con signo pueden ser positivos o negativos (por ejemplo, +8, -8). Por el contratio, los enteros sin signo solo pueden ser positivos ya que no tienen signo.</p>
+<p>Los enteros con signo son: <code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>i128</code>, e <code>isize</code>.</p>
+<p>Los enteros sin signo son: <code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code>, <code>u128</code>, e <code>usize</code>.</p>
+<p>El número tras la <strong>i</strong> o la <strong>u</strong> indica el número de bits que se usan para el entero. Así, los números con más bits pueden ser mayores. 8 bits = un byte por lo que <code>i8</code> ocupa un byte, y puede contener valores entre el -128 y el 127. Por lo tanto <code>i64</code> ocupa 64 bits o, lo que es lo mismo, 8 bytes y puede representar números entre el -9223372036854775808 y el 9223372036854775807.</p>
+<p>Los tipos numéricos con mayor tamaño pueden representar valores mayores. Por ejemplo, el tipo <code>u8</code>puede representar del 0 al 255, el tipo <code>u16</code> puede representar del 0 al 65635, y el tipo <code>u128</code> puede representar a un número entre el 0 y el 340282366920938463463374607431768211455.</p>
+<p>¿Y qué representan <code>isize</code> y <code>usize</code>? El número de bits del tipo nativo del procesador de tu ordenador (El número de bits nativo de tu procesador se denomina la <strong>arquitectura</strong> de tu procesador). Así que <code>isize</code> y <code>usize</code> en un ordenador de 32-bits son equivalentes a <code>i32</code> y <code>u32</code>. En un ordenador de 64-bits son equivalentes a <code>i64</code> y <code>u64</code>.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="02.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="03.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
-                            </a>
-                            <a rel="next" href="04.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
                     </nav>
@@ -183,11 +166,8 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="02.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="03.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
-                    </a>
-                    <a rel="next" href="04.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 

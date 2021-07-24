@@ -10,3 +10,4 @@
 - [El entorno de pruebas de Rust](./01.md)
 - [🚧 y ⚠️](./02.md)
 - [Comentarios](./03.md)
+- [Tipos de dato](./04.md)

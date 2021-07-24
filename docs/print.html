@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 and ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -176,7 +176,7 @@
 <li><strong>Config</strong> (Configuración): puedes cambiar aquí el tema a modo oscuro para que puedas trabajar mejor de noche y otras muchas opciones.</li>
 </ul>
 <p>Si quieres instalar Rust, ve a <a href="https://www.rust-lang.org/tools/install">https://www.rust-lang.org/tools/install</a> y sigue las instrucciones. Normalmente, usarás <code>rustup</code> para instalar y actualizar Rust.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="-and-"><a class="header" href="#-and-">🚧 and ⚠️</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="-y-"><a class="header" href="#-y-">🚧 y ⚠️</a></h1>
 <p>En ocasiones, el código de los ejemplos del libro no funciona. Si un ejemplo no funciona, veras un 🚧 o un ⚠️ junto a él. 🚧 significa &quot;en construcción&quot;, es decir, que el código no está completo. Rust necesita una <code>fn main()</code> (función principal) para ejecutarse, pero algunas veces solo queremos observar una parte del código por lo que no aparecerá el código <code>fn main ()</code>. Estos ejemplos son correctos, pero necesitan de una función <code>fn main()</code> para ejecutarse. En algunos ejemplos el código mostrará un problema que tendrás que resolver. Estos ejemplos podrían tener una función <code>fn main()</code> pero generarán un error y por eso se acompañan de un símbolo ⚠️.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="comentarios"><a class="header" href="#comentarios">Comentarios</a></h1>
 <p><strong><a href="https://youtu.be/fJ7jBZG_Rpo">Puedes ver este capítulo en inglés en YouTube</a></strong></p>
@@ -207,6 +207,21 @@
     // Se llama algun_numero pero realmente creo que...
 }
 </code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tipos-de-dato"><a class="header" href="#tipos-de-dato">Tipos de dato</a></h1>
+<p>Rust tiene muchos tipos de dato que permiten trabajar con números, caracteres y otros. Algunos son simples, otros son más complicados e, incluso, puedes crear tus propios tipos de dato.</p>
+<h2 id="tipos-de-dato-primitivos"><a class="header" href="#tipos-de-dato-primitivos">Tipos de dato primitivos</a></h2>
+<p><strong><a href="https://youtu.be/OxTPU5UGMhs">Puedes ver este capítulo en YouTube en inglés</a></strong></p>
+<p>Rust tiene tipos simples que llaman <strong>tipos primitivos</strong> (primitivo = muy básico). Comenzaremos con los números enteros y los <code>char</code> (caracteres). Los enteros son números sin coma decimal. Existen dos tipos de enteros:</p>
+<ul>
+<li>Enteros con signo.</li>
+<li>Enteros sin signo.</li>
+</ul>
+<p>&quot;Con signo&quot; significa que disponen de <code>+</code> (signo más) y <code>-</code> (signo menos), por lo que los enteros con signo pueden ser positivos o negativos (por ejemplo, +8, -8). Por el contratio, los enteros sin signo solo pueden ser positivos ya que no tienen signo.</p>
+<p>Los enteros con signo son: <code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>i128</code>, e <code>isize</code>.</p>
+<p>Los enteros sin signo son: <code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code>, <code>u128</code>, e <code>usize</code>.</p>
+<p>El número tras la <strong>i</strong> o la <strong>u</strong> indica el número de bits que se usan para el entero. Así, los números con más bits pueden ser mayores. 8 bits = un byte por lo que <code>i8</code> ocupa un byte, y puede contener valores entre el -128 y el 127. Por lo tanto <code>i64</code> ocupa 64 bits o, lo que es lo mismo, 8 bytes y puede representar números entre el -9223372036854775808 y el 9223372036854775807.</p>
+<p>Los tipos numéricos con mayor tamaño pueden representar valores mayores. Por ejemplo, el tipo <code>u8</code>puede representar del 0 al 255, el tipo <code>u16</code> puede representar del 0 al 65635, y el tipo <code>u128</code> puede representar a un número entre el 0 y el 340282366920938463463374607431768211455.</p>
+<p>¿Y qué representan <code>isize</code> y <code>usize</code>? El número de bits del tipo nativo del procesador de tu ordenador (El número de bits nativo de tu procesador se denomina la <strong>arquitectura</strong> de tu procesador). Así que <code>isize</code> y <code>usize</code> en un ordenador de 32-bits son equivalentes a <code>i32</code> y <code>u32</code>. En un ordenador de 64-bits son equivalentes a <code>i64</code> y <code>u64</code>.</p>
 
                     </main>
 
