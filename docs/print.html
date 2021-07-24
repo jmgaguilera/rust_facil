@@ -222,6 +222,58 @@
 <p>El número tras la <strong>i</strong> o la <strong>u</strong> indica el número de bits que se usan para el entero. Así, los números con más bits pueden ser mayores. 8 bits = un byte por lo que <code>i8</code> ocupa un byte, y puede contener valores entre el -128 y el 127. Por lo tanto <code>i64</code> ocupa 64 bits o, lo que es lo mismo, 8 bytes y puede representar números entre el -9223372036854775808 y el 9223372036854775807.</p>
 <p>Los tipos numéricos con mayor tamaño pueden representar valores mayores. Por ejemplo, el tipo <code>u8</code>puede representar del 0 al 255, el tipo <code>u16</code> puede representar del 0 al 65635, y el tipo <code>u128</code> puede representar a un número entre el 0 y el 340282366920938463463374607431768211455.</p>
 <p>¿Y qué representan <code>isize</code> y <code>usize</code>? El número de bits del tipo nativo del procesador de tu ordenador (El número de bits nativo de tu procesador se denomina la <strong>arquitectura</strong> de tu procesador). Así que <code>isize</code> y <code>usize</code> en un ordenador de 32-bits son equivalentes a <code>i32</code> y <code>u32</code>. En un ordenador de 64-bits son equivalentes a <code>i64</code> y <code>u64</code>.</p>
+<p>Hay muchas raziones para disponer de todos estos tipos de números enteros. Una razón es el rendimiento del ordenador: es más rápido procesar un número menor de bytes. Por ejemplo, el número -10 representado como un <code>i8</code> es <code>11110110</code>, pero como un <code>i128</code> es <code>11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111110110</code>. </p>
+<p>veamos otros usos:</p>
+<p>Los caracters en Rust se denominan <code>char</code>. Todo <code>char</code> se representa por un número: la letra <code>A</code> es lel número 65, mientras que el carácter <code>友</code> (&quot;amigo&quot; en chino) es el número 21451. La lista de estos números que representan a carateres se denomina &quot;Unicode&quot;. Unicode usa números más pequeños para los caracteres que se usan más, como los de la A a la Z, los dígitos de 0 a 9 o el espacio.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let primera_letra = 'A';
+    let espacio = ' '; // Un espacio entre ' ' también es un char
+    let char_en_otro_idioma = 'Ꮔ'; // Gracias a Unicode, otros lenguajes, como el Cherokee, también se visualizan bien
+    let cara_gato = '😺'; // Emojis también son char
+}
+</code></pre></pre>
+<p>Los caracters que se utilizan más se representan or números menores al 256 y así pueden caber en un <code>u8</code>. Recuerda que un <code>u8</code> permite números entre el 0 y el 255, lo que facilita la representación de 256 caracteres en total. Esto significa que Rust puede convertir de forma segura del tipo de datos <code>u8</code> al <code>char</code>, utilizando la palabra reservada del lenguaje <code>as</code> (Considera el dato de este tipo <code>u8</code> como si fuese <code>char</code>).</p>
+<p>La conversión de tipos de datos utilizando <code>as</code> es muy útil ya que Rust es muy estrict. Siempre necesita conocer el tipo de dato y, además, no deja utilizar de forma conjunta dos tipos de datos diferentes incluso aunque sean de la misma familia (como los enteros). Por ejemplo, este código no funcionará:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() { // main() es la función a partir de la que se 
+            // inician los programas Rust. El código entre las llaves {}
+
+    let mi_numero = 100; // No hemos indicado el tipo de datos entero
+                         // que Rust debe utilizar,
+                         // así que Rust elige i32. Rust siempre
+                         // elige i32 para los enteros si no se le indica
+                         // que utilice otro tipo de datos diferente
+
+    println!(&quot;{}&quot;, mi_numero as char); // ⚠️
+}
+</code></pre></pre>
+<p>Esta es la razón:</p>
+<pre><code class="language-text">error[E0604]: only `u8` can be cast as `char`, not `i32`
+ --&gt; src\main.rs:10:20
+  |
+3 |     println!(&quot;{}&quot;, mi_numero as char);
+  |                    ^^^^^^^^^^^^^^^^^ invalid cast
+</code></pre>
+<p>Afortunadamente, podemos corregir esto fácilmente con <code>as</code>. No podemos convertir un <code>i32</code> a <code>char</code>, pero podemos convertir un <code>i32</code> a <code>u8</code>. Y después, podemos realizar la conversión de <code>u8</code> a <code>char</code>. Po tanto, en una línea usamos <code>as</code> para convertir mi_numero a <code>u8</code> y después lo convertimos a <code>char</code>. Ahora sí compilará:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() { 
+    let mi_numero = 100; 
+    println!(&quot;{}&quot;, mi_numero as u8 as char);
+}
+</code></pre></pre>
+<p>Se imprime <code>d</code> porque es el <code>char</code> que está representado en Unicode con este número.</p>
+<p>Existe una forma más fácil, sin embargo, de conseguir este resultado: indicarle a Rust que <code>mi_numero</code> es de tipo <code>u8</code>. Así:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() { 
+    let mi_numero: u8 = 100; // se indica de forma expresa que
+                             // el tipo de la variable mi_numero es u8
+    println!(&quot;{}&quot;, mi_numero as char);
+}
+</code></pre></pre>
+<p>Las anteriores, son dos de las razones para la existencia de todos estos tipos de datos numéricos en Rust. Hay otra razón más: <code>usize</code> es el tamaño que Rust utiliza para <em>indexar</em> (Indexar significa &quot;conocer cual elemento va primero&quot;, &quot;cual va segundo&quot;, etc.). <code>usize</code> es el mejor tamaño para el indexado porque:</p>
+<ul>
+<li>Un índice no puede ser negativo, por lo que tiene que ser uno de los tipos de dato con una <strong>u</strong>.</li>
+<li>Debe ser grande porque en muchas ocasiones necesitas indexar muchas cosas, pero</li>
+<li>No puede ser un u64 porque los ordenadores de 32-bits no lo pueden manejar.</li>
+</ul>
+<p>Por eso Rust usa <code>usize</code> para indexar y facilitar que tu ordenador pueda utilizar el tipo de datos mayor de que disponga.</p>
 
                     </main>
 
