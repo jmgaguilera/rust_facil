@@ -222,7 +222,7 @@
 <p>El número tras la <strong>i</strong> o la <strong>u</strong> indica el número de bits que se usan para el entero. Así, los números con más bits pueden ser mayores. 8 bits = un byte por lo que <code>i8</code> ocupa un byte, y puede contener valores entre el -128 y el 127. Por lo tanto <code>i64</code> ocupa 64 bits o, lo que es lo mismo, 8 bytes y puede representar números entre el -9223372036854775808 y el 9223372036854775807.</p>
 <p>Los tipos numéricos con mayor tamaño pueden representar valores mayores. Por ejemplo, el tipo <code>u8</code>puede representar del 0 al 255, el tipo <code>u16</code> puede representar del 0 al 65635, y el tipo <code>u128</code> puede representar a un número entre el 0 y el 340282366920938463463374607431768211455.</p>
 <p>¿Y qué representan <code>isize</code> y <code>usize</code>? El número de bits del tipo nativo del procesador de tu ordenador (El número de bits nativo de tu procesador se denomina la <strong>arquitectura</strong> de tu procesador). Así que <code>isize</code> y <code>usize</code> en un ordenador de 32-bits son equivalentes a <code>i32</code> y <code>u32</code>. En un ordenador de 64-bits son equivalentes a <code>i64</code> y <code>u64</code>.</p>
-<p>Hay muchas raziones para disponer de todos estos tipos de números enteros. Una razón es el rendimiento del ordenador: es más rápido procesar un número menor de bytes. Por ejemplo, el número -10 representado como un <code>i8</code> es <code>11110110</code>, pero como un <code>i128</code> es <code>11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111110110</code>. </p>
+<p>Hay muchas razones para disponer de todos estos tipos de números enteros. Una razón es el rendimiento del ordenador: es más rápido procesar un número menor de bytes. Por ejemplo, el número -10 representado como un <code>i8</code> es <code>11110110</code>, pero como un <code>i128</code> es <code>11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111110110</code>. </p>
 <p>veamos otros usos:</p>
 <p>Los caracters en Rust se denominan <code>char</code>. Todo <code>char</code> se representa por un número: la letra <code>A</code> es lel número 65, mientras que el carácter <code>友</code> (&quot;amigo&quot; en chino) es el número 21451. La lista de estos números que representan a carateres se denomina &quot;Unicode&quot;. Unicode usa números más pequeños para los caracteres que se usan más, como los de la A a la Z, los dígitos de 0 a 9 o el espacio.</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
@@ -274,6 +274,61 @@
 <li>No puede ser un u64 porque los ordenadores de 32-bits no lo pueden manejar.</li>
 </ul>
 <p>Por eso Rust usa <code>usize</code> para indexar y facilitar que tu ordenador pueda utilizar el tipo de datos mayor de que disponga.</p>
+<p>Vamos a aprender algo más sobre <code>char</code>. Ya vimos que <code>char</code>siempre es un carácter y utiliza <code>''</code> en lugar de <code>&quot;&quot;</code>.</p>
+<p>Todos los <code>char</code> usan 4 bytes de memoria, puesto que son necesarios 4 bytes para contener cualquier clase de carácter:</p>
+<ul>
+<li>Las letras y símbolos básicos suelen necesitar solo 1 de los 4 bytes: <code>a b 1 2 + - = $ @</code></li>
+<li>Otras letras como las diéresis y tildes necesitan 2 de los 4 bytes: <code>ä ö ü ß è é à ñ</code></li>
+<li>Los caracteres coreanos, japoneses o chinos necesitan 3 de los cuatro bytes: <code>国 안 녕</code></li>
+</ul>
+<p>Cuando los caracteres se usan como parte de una cadena, esta se codifica para usar la menor cantidad de memoria necesaria para cada carácter<sup class="footnote-reference"><a href="#1">1</a></sup>.</p>
+<p><sup class="footnote-reference"><a href="#1">1</a></sup> N.T.: Rust codifica las cadenas en UTF-8.</p>
+<p>Para observar esto podemos usar <code>.len()</code>:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    println!(&quot;Tamaño de un char: {}&quot;, std::mem::size_of::&lt;char&gt;()); // 4 bytes
+    // .len() devuelve el tamaño de una cadena de texto en bytes
+    println!(&quot;Tamaño de una cadena que contiene la 'a': {}&quot;, &quot;a&quot;.len());
+    println!(&quot;Tamaño de una cadena que contiene la 'ß': {}&quot;, &quot;ß&quot;.len());
+    println!(&quot;Tamaño de una cadena que contiene la '国': {}&quot;, &quot;国&quot;.len());
+    println!(&quot;Tamaño de una cadena que contiene la '𓅱': {}&quot;, &quot;𓅱&quot;.len());
+}
+</code></pre></pre>
+<p>Lo que imprime:</p>
+<pre><code class="language-text">Tamaño de un char: 4
+Tamaño de una cadena que contiene la 'a': 1
+Tamaño de una cadena que contiene la 'ß': 2
+Tamaño de una cadena que contiene la '国': 3
+Tamaño de una cadena que contiene la '𓅱': 4
+</code></pre>
+<p>Puedes ver que la <code>a</code> ocupa un byte, la 'ß' alemana ocupa dos, la japonesa <code>国</code> ocupa tres, y el carácter del antiguo egipto <code>𓅱</code> ocupa cuatro bytes.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let fragmento = &quot;¡Hola!&quot;;
+    println!(&quot;El fragmento ocupa {} bytes.&quot;, fragmento.len());
+    let fragmento2 = &quot;안녕!&quot;; // Coreano de &quot;hola&quot;
+    println!(&quot;El fragmento2 ocupa {} bytes.&quot;, fragmento2.len());
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">El fragmento ocupa 7 bytes.
+El fragmento2 ocupa 7 bytes.
+</code></pre>
+<p>El primer fragmento consta de seis caracteres y ocupa 7 bytes (la apertura de exclamación ocupa dos bytes). El segundo fragmento consta de tres caracteres y ocupa 7 bytes (los dos primeros caracteres ocupan tres bytes cada uno).</p>
+<p>Si <code>.len()</code> devuelve el tamaño en bytes, ¿cómo se puede conocer el tamaño de una cadena de texto en caracteres? Aprenderemos esto más tarde, en este momento basta con recordar que se hace con <code>.chars().count()</code>. La primera función <code>.chars()</code> devuelve los caracteres separados y luego cuenta cuántos son.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let fragmento = &quot;¡Hola!&quot;;
+    println!(&quot;El fragmento ocupa {} bytes y son {} caracteres.&quot;,
+        fragmento.len(), fragmento.chars().count());
+    let fragmento2 = &quot;안녕!&quot;;
+    println!(&quot;El fragmento2 ocupa {} bytes y son {} caracteres.&quot;,
+        fragmento2.len(), fragmento2.chars().count());
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">El fragmento ocupa 7 bytes y son 6 caracteres.
+El fragmento2 ocupa 7 bytes y son 3 caracteres.
+</code></pre>
+<h2 id="inferencia-de-tipos-de-dato"><a class="header" href="#inferencia-de-tipos-de-dato">Inferencia de tipos de dato</a></h2>
+<p><strong><a href="https://youtu.be/q1D2vpy3kEI">Puedes ver este capítulo en YouTube en inglés</a></strong></p>
 
                     </main>
 
