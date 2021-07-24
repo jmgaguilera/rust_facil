@@ -1,0 +1,6 @@
+[book]
+authors = ["José Miguel González Aguilera"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Rust en español fácil"
