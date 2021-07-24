@@ -8,5 +8,5 @@
 # Parte 1 - Rust en tu navegador
 
 - [El entorno de pruebas de Rust](./01.md)
-- [🚧 and ⚠️](./02.md)
+- [🚧 y ⚠️](./02.md)
 - [Comentarios](./03.md)
