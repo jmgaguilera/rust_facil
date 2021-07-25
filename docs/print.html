@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -541,7 +541,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>Si has observado bien, hemos cambiado <code>{}</code> por <code>{:?}</code>. El motivo se verá en el siguiente capítulo.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="la-vesualización-y-depuración"><a class="header" href="#la-vesualización-y-depuración">La vesualización y depuración</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="la-visualización-y-depuración"><a class="header" href="#la-visualización-y-depuración">La visualización y depuración</a></h1>
 <p><strong><a href="https://youtu.be/jd3pC248c0o">Puedes ver este capítulo en YouTube en inglés</a></strong></p>
 <p>En Rust, las variables simples se pueden imprimir usyo <code>{}</code> en <code>println!</code>.  Pero hay variables que no pueden imprimirse y es necesario usar <strong>la impresión de depuración</strong>. La impresión de depuración es para los programadores, porque habitualmente muestra más información. En ocasiones, esta impresión no es &quot;bonita&quot;, no queda bien, porque muestra información extra para ayudarte.</p>
 <p>¿Cómo puedes conocer si necesitas usar <code>{:?}</code> y no <code>{}</code>? El compilador te avesará. Por ejemplo:</p>
@@ -600,6 +600,106 @@ El menor u64 es 0 y el mayor u64 es 18446744073709551615.
 El menor i128 es -170141183460469231731687303715884105728 y el mayor i128 es 170141183460469231731687303715884105727.
 El menor u128 es 0 y el mayor u128 es 340282366920938463463374607431768211455.
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="mutabilidad-cambio"><a class="header" href="#mutabilidad-cambio">Mutabilidad (cambio)</a></h1>
+<p><strong><a href="https://youtu.be/Nyyd6qn7dZY">Puedes ver este capítulo en YouTube en inglés</a></strong></p>
+<p>Cuando se declara una variable con `let, es inmutable (no se puede cambiar su valor).</p>
+<p>El código siguiente no funciona.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mi_numero = 8;
+    mi_numero = 10; // ⚠️
+}
+</code></pre></pre>
+<p>El compilador indica <code>error[E0384]: cannot assign twice to immutable variable mi_numero</code>.</p>
+<pre><code class="language-text">error[E0384]: cannot assign twice to immutable variable `mi_numero`
+ --&gt; src/main.rs:3:5
+  |
+2 |     let mi_numero = 8;
+  |         ---------
+  |         |
+  |         first assignment to `mi_numero`
+  |         help: consider making this binding mutable: `mut mi_numero`
+3 |     mi_numero = 10; // ⚠️
+  |     ^^^^^^^^^^^^^^ cannot assign twice to immutable variable
+</code></pre>
+<p>Esto es porque las variables son inmutables si solo se escribe <code>let</code>.</p>
+<p>Muchas veces, será necesario modificar la variable. Para ello, se debe añadir <code>mut</code> después de <code>let</code>:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut mi_numero = 8;
+    mi_numero = 10;
+}
+</code></pre></pre>
+<p>El código anterior funciona sin problema alguno.</p>
+<p>Sin embargo, no se le puede cambiar el tipo. Esto no funciona:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut mi_numero = 8; // La variable es i32. 
+                           // El tipo no se puede cambiar.
+    mi_numero = &quot;¡Hola, mundo!&quot;; // ⚠️
+}
+</code></pre></pre>
+<p>Si se intenta compilar el programa anterior, se obtendrá el mismo mensaje &quot;expected&quot; por parte del compilador: <code>expected integer, found &amp;str</code>. <code>&amp;str</code>es un tipo de cadena que aprenderemos pronto.</p>
+<h3 id="ocultación-shadowing"><a class="header" href="#ocultación-shadowing">Ocultación (Shadowing)</a></h3>
+<p>La ocultación de una variable sucede cuando se usa <code>let</code> para declarar una nueva variable con el mismo nombre que otra. A primera vista se parece a la mutabilidad, pero es totalmente diferente. En el siguiente ejemplo, se oculta una variable:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mi_numero = 8; // Esta variable es i32
+    println!(&quot;{}&quot;, mi_numero); // imprime 8
+    let mi_numero = 9.2; // Esta variable es f64 y tiene el mismo nombre
+    // pero es una variable nueva, completamente diferente.
+    println!(&quot;{}&quot;, mi_numero) // imprime 9.2
+}
+</code></pre></pre>
+<p>Se dice que hemos &quot;ocultado&quot; <code>mi_numero</code>con un nuevo &quot;enlace&quot;.</p>
+<p>¿Se ha destruido la anterior variable <code>mi_numero</code>? No, pero cuando se llama a <code>mi_numero</code> ahora se accede a la segunda variable de tipo <code>f64</code>. Y como ambas declaraciones se encuentran en el mismo bloque de código (mismo ámbito, mismo <code>{}</code>), se deja de tener acceso al <code>mi_numero</code> de tipo <code>i32</code>.</p>
+<p>Si estuvieran en diferentes bloques de código, podríamos volver a acceder a la primera variable <code>mi_numero</code>. Por ejemplo:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mi_numero = 8; // Esta variable es i32
+    println!(&quot;{}&quot;, mi_numero); // imprime 8
+    {
+        let mi_numero = 9.2; // Esta variable es f64 y tiene el mismo nombre
+        // pero es una variable nueva, completamente diferente.
+        println!(&quot;{}&quot;, mi_numero) // imprime 9.2
+                                  // pero la nueva variable mi_numero
+                                  // solo existe hasta aquí
+                                  // la anterior ¡sigue viva!
+    }
+    println!(&quot;{}&quot;, mi_numero); // imprime 8
+}
+</code></pre></pre>
+<p>En resumen, cuando ocultas una variable, no la destruyes. La <strong>bloqueas</strong>.</p>
+<p>Qué ventajas tiene el ocultar variables. Es una buena práctica cuando necesitas modificar una variable en muchas ocasiones. Imagina que quieres hacer un conjunto de cálculos matemáticos simples con una variable:</p>
+<pre><pre class="playground"><code class="language-rust">fn dos_veces(numero: i32) -&gt; i32 {
+    numero * 2
+}
+
+fn main() {
+    let numero_final = {
+        let y = 10;
+        let x = 9; // x comienza con 9
+        let x = dos_veces(x); // se oculta con el nuevo x: 18
+        let x = x + y; // se oculta con el nuevo x: 28
+        x // devuelve x: a numero_final se asigna este valor de x
+    };
+    println!(&quot;El número ahora es: {}&quot;, numero_final)
+}
+</code></pre></pre>
+<p>Sin ocultar las variables anteriores, habría sido necesario pensar diferentes nombres, incluso aunque no nos importen estos valores intermedios:</p>
+<pre><pre class="playground"><code class="language-rust">fn dos_veces(numero: i32) -&gt; i32 {
+    numero * 2
+}
+
+fn main() {
+    // Ejemplo sin usar las capacidades de ocultar variables
+    let numero_final = {
+        let y = 10;
+        let x = 9; // x comienza con 9
+        let x2 = dos_veces(x); // segundo nombre para x
+        let x2_y = x2 + y; // ¡tercer nombre para x!
+        x2_y // qué pena no tener disponible la ocultación
+             // habríamos podido usar solo una variable x
+    };
+    println!(&quot;El número ahora es: {}&quot;, numero_final)
+}
+</code></pre></pre>
+<p>En general, se usa la ocultación de variables en estos casos. Cuando se quiere usar una variable para un cálculo y luego otro más, sin tener mucho interés por los valores intermedios.</p>
 
                     </main>
 
