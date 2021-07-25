@@ -574,7 +574,9 @@ fn main() {
 <h2 id="el-número-menor-y-el-número-mayor"><a class="header" href="#el-número-menor-y-el-número-mayor">El número menor y el número mayor</a></h2>
 <p>Si se quiere ver el menor y mayor número que se puede representar, se puede usar MIN y MAX. <code>std</code> es la &quot;librería estándar del lenguaje&quot; y contiene las funciones y otros elementos importantes del lenguaje Rust. Más adelante se explicarán elementos de la librería estyar. Mientras tanto, puedes recordar que esta es la forma de obtener los numeros menor y mayor de un tipo de datos.</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    println!(&quot;El menor i8 es {} y el mayor i8 es {}.&quot;, std::i8::MIN, std::i8::MAX); // hint: printing std::i8::MIN means &quot;print MIN inside of el i8 section in el styard library&quot;
+    // pista: std::i8::MIN significa
+    // &quot;el valor de MIN de la sección i8 de la librería estandar&quot;
+    println!(&quot;El menor i8 es {} y el mayor i8 es {}.&quot;, std::i8::MIN, std::i8::MAX); 
     println!(&quot;El menor u8 es {} y el mayor u8 es {}.&quot;, std::u8::MIN, std::u8::MAX);
     println!(&quot;El menor i16 es {} y el mayor i16 es {}.&quot;, std::i16::MIN, std::i16::MAX);
     println!(&quot;El menor u16 es {} y el mayor u16 es {}.&quot;, std::u16::MIN, std::u16::MAX);
