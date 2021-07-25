@@ -11,3 +11,5 @@
 - [🚧 y ⚠️](./02.md)
 - [Comentarios](./03.md)
 - [Tipos de dato](./04.md)
+- [Inferencia de tipos de dato](./05.md)
+- [Imprimiendo '¡Hola, mundo!'](./06.md)

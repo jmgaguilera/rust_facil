@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Comentarios - Rust en español fácil</title>
+        <title>Inferencia de tipos de dato - Rust en español fácil</title>
         <!-- Custom HTML head -->
         
 
@@ -77,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html" class="active"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html" class="active"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -137,33 +137,90 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="comentarios"><a class="header" href="#comentarios">Comentarios</a></h1>
-<p><strong><a href="https://youtu.be/fJ7jBZG_Rpo">Puedes ver este capítulo en inglés en YouTube</a></strong></p>
-<p>Los comentarios son para que los lean los programadores, no el ordenador. es bueno escribir comentarios para ayudar a otras personas a entender tu código. Es bueno, también, para ayudarte a entender tu propio código pasado un tiempo (Muchas personas escriben buen código, pero olvidan porqué lo escribieron). Para escribir comentarios en el código, en Rust se suele usar <code>//</code>:</p>
+                        <h1 id="inferencia-de-tipos-de-dato"><a class="header" href="#inferencia-de-tipos-de-dato">Inferencia de tipos de dato</a></h1>
+<p><strong><a href="https://youtu.be/q1D2vpy3kEI">Puedes ver este capítulo en YouTube en inglés</a></strong></p>
+<p>La inferencia de tipos de datos consiste en que si no se le indica el tipo de datos al compilador, pero lo puede determinar por sí mismo, él decide que tipo utilizar. El compilador siempre necesita conocer el tipo de las variables, pero no siempre es necesario decírselo expresamente. En realidad, normalmente no necesitas indicárselo. Por ejemplo, en la sentencia <code>let mi_numero = 8</code>, <code>mi_numero</code> será de tipo <code>i32</code>. Esto se debe a que el compilador elige siempre el tipo <code>i32</code> para los números enteros si no se le indica uno. Sin embargo, en la siguiente sentencia <code>let mi_numero: u8 = 8</code>, la variable <code>mi_numero</code> es de tipo <code>u8</code> ya que así se le ha indicado.</p>
+<p>Así que normalmente el compilador puede deducir el tipo de datos, pero en ocasiones será necesario indicárselo por una de las siguientes dos razones:</p>
+<ol>
+<li>Estás programando algo muy complejo y el compilador no puede deducir el tipo de datos que es necesario.</li>
+<li>Quieres usar un tipo de datos diferente (por ejemplo, quieres un <code>i128</code>, no el <code>i32</code> que se usa por defecto).</li>
+</ol>
+<p>Para especificar un tipo, se añaden dos puntos después del nombre de la variable seguido del tipo.</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    // Los programas Rust comienzan en fn main()
-    // Pones el código en un bloque que comienza con { y termina con }
-    let algun_numero = 100; // Aquí podemos esribir todo lo que queramos ya que el compilador no lo va mirar
+    let numerito: u8 = 10;
 }
 </code></pre></pre>
-<p>Cuando lo haces así, el compilador no mirará nada que haya a la derecha de <code>//</code>.</p>
-<p>Existe otra clase de comentario que se escribe con <code>/*</code> para iniciarlo y se termina con `*/. Este tipo de comentario es útil para escribirlo entre el código.</p>
+<p>Para los números, se puede especificar el tipo después del número, no se necesita un espacio - solo teclearlo justo después del número.</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    let algun_numero/*: i16*/ = 100;
+    let numerito = 10u8; // 10u8 = 10 de tipo u8
 }
 </code></pre></pre>
-<p>Para el compilador <code>let algun_numero/*: i16*/ = 100;</code> es igual que <code>let algun_numero = 100;</code>.</p>
-<p>Esta forma <code>/* */</code> también es útil para los comentarios de gran longitud que necesiten más de una línea. En este ejemplo se puede ver que necesitas escribir <code>//</code> en cada línea, pero si utilizas <code>/*</code>, el comentario dura hasta que lo finalices con <code>*/</code>.</p>
+<p>También se puede añadir <code>_</code> para añadir claridad a la lectura.</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    let algun_numero = 100; /* Déjame contarte
-    un poco sobre este número.
-    Es el 100, que es mi número favorito.
-    Se llama algun_numero pero realmente creo que...*/
-
-    let algun_numero = 100; // Déjame contarte
-    // un poco sobre este número.
-    // Es el 100, que es mi número favorito.
-    // Se llama algun_numero pero realmente creo que...
+    let numerito = 10_u8; // Esto es más fácil de leer
+    let numerazo = 100_000_000_i32; // 100 millones es de fácil lectura con _
+}
+</code></pre></pre>
+<p>El <code>_</code> no modifica el número. Solo lo hace más fácil de leer. Y no importa el cuantos <code>_</code> se utilizan.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let numero = 0________u8;
+    let numero2 = 1___6______2____4______i32;
+    println!(&quot;{}, {}&quot;, numero, numero2);
+}
+</code></pre></pre>
+<p>Lo anterior imprime <code>0, 1624</code>.</p>
+<h2 id="números-decimales"><a class="header" href="#números-decimales">Números decimales</a></h2>
+<p>Los números decimales son aquellos que tienen coma decimal<sup class="footnote-reference"><a href="#1">1</a></sup>. <code>5.5</code> es un número decimal y <code>6</code> es un número entero. <code>5.0</code> también es un número decimal e incluso <code>5.</code> lo es.</p>
+<p><sup class="footnote-reference"><a href="#1">1</a></sup> N.T.: en español se usa una coma como carácter para separar la parte entera de un número de su parte decimal. En Rust, la coma decimal española se sustituye por el punto decimal que es el que se usa habitualmente en los lenguajes de programación.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mi_decimal = 5.; // Rust ve un . y sabe que es un decimal (float, en inglés)
+}
+</code></pre></pre>
+<p>Rust utiliza diversos tipos de dato para almacenar números decimales, son el <code>f32</code> y el <code>f64</code>. Al igual que en los números enteros, el número tras <code>f</code> muestra el número de bits utilizados en cada caso para almacenar el dato. Si no se indica el tipo, Rust elige <code>f64</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mi_decimal: f64 = 5.0; // Esta variable es de tipo f64
+    let mi_otro_decimal: f32 = 8.5; // Esta es de tipo f32
+    let tercer_decimal = mi_decimal + mi_otro_decimal; // ⚠️
+}
+</code></pre></pre>
+<p>Cuanto se intenta ejecutar el código anterior, Rust se queja diciendo:</p>
+<pre><code class="language-text">error[E0308]: mismatched types
+ --&gt; src/main.rs:4:39
+  |
+5 |     let tercer_decimal = mi_decimal + mi_otro_decimal; // ⚠️
+  |                                       ^^^^^^^^^^^^^^^ expected `f64`, found `f32`
+</code></pre>
+<p>El compilador indica &quot;expected (tipo), found (type)&quot; cuando se usa el tipo erróneo. Rust lee el código de esta forma:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mi_decimal: f64 = 5.0; // El compilador ve un f64
+    let mi_otro_decimal: f32 = 8.5; // El compilador ve un f64. Es un tipo diferente.
+    let tercer_decimal = mi_decimal + // Se quiere sumar mi_decimal, que es f64 a algún
+                                      // otro número. Ahora espera otro f64...  
+        mi_otro_decimal; // ⚠️ pero se encuentra un f32, no se pueden sumar.
+}
+</code></pre></pre>
+<p>Así que cuando veas que el compilador indica &quot;expected (tipo), found (type)&quot;, debes buscar la causa por la que el compilador esperaba un tipo de datos diferente.</p>
+<p>Con los números simples es fácil arreglarlo. Puedes convertir el <code>f32</code> a <code>f64</code> con un <code>as</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mi_decimal: f64 = 5.0;
+    let mi_otro_decimal: f32 = 8.5;
+    // En la siguiente línea, se utiliza mi_otro decimal como un f64
+    let tercer_decimal = mi_decimal + mi_otro_decimal as f64;
+}
+</code></pre></pre>
+<p>O simplemente, se pueden eliminar las declaraciones de tipo, Rust elegirá tipos que se puedan sumar entre sí.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mi_decimal = 5.0; // Rust elige f64
+    let mi_otro_decimal = 8.5; // Rust elige de nuevo f64
+    let tercer_decimal = mi_decimal + mi_otro_decimal;
+}
+</code></pre></pre>
+<p>El compilador de Rust es inteligente y no elegirá f64 si necesitas f32:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mi_decimal: f32 = 5.0; // Rust elige f64
+    let mi_otro_decimal = 8.5; // Normalmente Rust elegiría f64
+    // pero al conocer que lo vamos a sumar a un f32, elige un f32 para mi_otro_decimal
+    let tercer_decimal = mi_decimal + mi_otro_decimal;
 }
 </code></pre></pre>
 
@@ -171,10 +228,10 @@
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="02.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="04.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                            <a rel="next" href="04.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="06.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -183,10 +240,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="02.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="04.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                    <a rel="next" href="04.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="06.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
