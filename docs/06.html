@@ -139,6 +139,132 @@
                     <main>
                         <h1 id="imprimiendo-hola-mundo"><a class="header" href="#imprimiendo-hola-mundo">Imprimiendo '¡Hola, mundo!'</a></h1>
 <p><strong>Puedes ver este capítulo en YouTube en inglés: <a href="https://youtu.be/yYlPHRl2geQ">Video 1</a>, <a href="https://youtu.be/DTCSfBJJZb8">Video 2</a></strong></p>
+<p>Cuando creas un nuevo programa Rust, siempre contiene este código:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    println!(&quot;Hello, world!&quot;);
+}
+</code></pre></pre>
+<ul>
+<li><code>fn</code> significa función.</li>
+<li><code>main</code> es el nombre de la función que inicia el programa.</li>
+<li><code>()</code> significa que en este caso no se le pasan variables a esta función.</li>
+<li><code>{}</code> es un <strong>bloque de código</strong>. Es donde se encuentra el código.</li>
+<li><code>println!</code> es una <strong>macro</strong>, que es como una función que sirve para escribir código por ti. Las macros siempre tienen un <code>!</code> al final de su nombre. Por ahora, recuerda que <code>!</code> significa que es una macro.</li>
+</ul>
+<p>Para aprender lo que hace <code>;</code>, crearemos otra función. Primero, en <code>main</code> imprimiremos el número 8<sup class="footnote-reference"><a href="#1">1</a></sup>.</p>
+<p><sup class="footnote-reference"><a href="#1">1</a></sup> N.T.: aprovechamos para cambiar el saludo a español. En Rust, cuando se utiliza la aplicación <code>cargo</code> para crear un programa, siempre se incorpora el código de <code>main</code> con &quot;Hello, world!&quot; de forma automática. </p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    println!(&quot;¡Hola, mundo número {}!&quot;, 8);
+}
+</code></pre></pre>
+<p>Las <code>{}</code> dentro de <code>println!</code> indican a Rust que &quot;ponga la variable en este lugar&quot;. Este código imprime <code>¡Hola, mundo número 8!</code>.</p>
+<p>Podemos poner más cosas ampliando lo anterior.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    println!(&quot;¡Hola, mundos número {} y {}!&quot;, 8, 9);
+}
+</code></pre></pre>
+<p>El codigo anterior imprime <code>¡Hola, mundos número 8 y 9!</code>.</p>
+<p>Ahora vamos a crear una función.</p>
+<pre><pre class="playground"><code class="language-rust">fn numero() -&gt; i32 {
+    8
+}
+
+fn main() {
+    println!(&quot;¡Hola, mundo número {}!&quot;, numero());
+}
+</code></pre></pre>
+<p>El código anterior también imprime <code>¡Hola, mundo número 8!</code>. Cuando Rust encuentra <code>numero()</code> entiende que es una función. Esta función:</p>
+<ul>
+<li>No toma ningún parámetro (porque tiene una llamada con <code>()</code>).</li>
+<li>Devuelve un <code>i32</code>. El símbolo de flecha <code>-&gt;</code> muestra el tipo que devuelve la función.</li>
+<li>La función en sí misma solo contiene un <code>8</code>. Al no terminar en <code>;</code> este valor es el que devuelve al terminar de ejecutarse. Si tuviera un <code>;</code> detrás, la función no devolvería nada (devolvería un <code>()</code>). Rust no compilaría si contuviera un <code>;</code> al final ya que se ha indicado que (tras la flecha) debe devolver un valor de tipo <code>i32</code> y con el <code>;</code> se devuelve <code>()</code> que no es de tipo <code>i32</code>.</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust">fn numero() -&gt; i32 {
+    8;
+}
+
+fn main() {
+    println!(&quot;¡Hola, mundo número {}!&quot;, numero());
+}
+</code></pre></pre>
+<pre><code class="language-text">error[E0308]: mismatched types
+ --&gt; src/main.rs:1:16
+  |
+1 | fn numero() -&gt; i32 {
+  |    ------      ^^^ expected `i32`, found `()`
+  |    |
+  |    implicitly returns `()` as its body has no tail or `return` expression
+2 |     8;
+  |      - help: consider removing this semicolon
+</code></pre>
+<p>Esto significa que &quot;me dijiste que <code>numero()</code> devuelve un <code>i32</code>, pero añadiste un <code>;</code> por lo que esta función no devuelve nada&quot;. Así que el compilador sugiere que se elimine el punto y coma.</p>
+<p>También se puede escribir lo siguiente <code>return 8;</code>, pero en Rust lo normal es simplemente eliminar el <code>;</code> para ejecutar el <code>return</code>.</p>
+<p>Cuando se quiere pasar variables a una función, se deben poner dentro de <code>()</code>. Hay que darles un nombre e indicar su tipo.</p>
+<pre><pre class="playground"><code class="language-rust">// Entran a la función dos i32s. Se llaman num_uno y num_dos
+fn multiplicar(num_uno: i32, num_dos: i32) {
+    let resultado = num_uno * num_dos;
+    println!(&quot;{} por {} es {}&quot;, num_uno, num_dos, resultado);
+}
+
+fn main() {
+    multiplicar(8, 9); // Pasamos unos números directamente
+    let algun_numero = 10; // o podemos declarar dos variables
+    let algun_otro_numero = 2;
+    multiplicar(algun_numero, algun_otro_numero); // y pasarlos a la función
+}
+</code></pre></pre>
+<p>También se puede devolver un <code>i32</code>. Basta con poner la variable <code>resultado</code> como la última de la función sin <code>;</code> al final.</p>
+<pre><pre class="playground"><code class="language-rust">fn multiplicar(num_uno: i32, num_dos: i32) -&gt; i32 {
+    let resultado = num_uno * num_dos;
+    println!(&quot;{} por {} es {}&quot;, num_uno, num_dos, resultado);
+    resultado // este es el valor i32 que se retorna
+}
+
+fn main() {
+    // multiplicar() imprime el resultado y lo devuelve,
+    // lo que permite asignarlo a resultado_mult
+    let resultado_mult = multiplicar(8, 9);
+}
+</code></pre></pre>
+<h2 id="la-declaración-de-variables-y-los-bloques-de-código"><a class="header" href="#la-declaración-de-variables-y-los-bloques-de-código">La declaración de variables y los bloques de código</a></h2>
+<p>Se usa <code>let</code>para declarar una variable (para decirle a Rust que construya una variable).</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mi_numero = 8;
+    println!(&quot;¡Hola, mundo número {}!&quot;, mi_numero);
+}
+</code></pre></pre>
+<p>Las variables existen dentro de un bloque de código <code>{}</code>. En el siguiente ejemplo <code>mi_numero</code> desaparece antes de llamar a <code>println!</code> porque se encuentra dentro de su propio código.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    {
+        let mi_numero = 8; // mi_numero se crea aquí
+                           // mi_numero se extingue aquí
+    }
+    println!(&quot;¡Hola, mundo número {}!&quot;, mi_numero);// ⚠️  mi_numero no existe y
+                                                   // println!() no lo puede encontrar
+}
+</code></pre></pre>
+<p>Se puede usar un bloque de código para devolver un valor, como en el siguiente código.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mi_numero = {
+        let segundo_num = 8;
+        segundo_num + 9 // sin punto y coma, por lo que el
+                        // bloque de código devuelve 8 + 9 = 17
+    }; 
+    println!(&quot;¡Hola, mundo número {}!&quot;, mi_numero);
+}
+</code></pre></pre>
+<p>Si se añadiera un punto y coma en la sentencia final del bloque, devolvería <code>()</code> (nada).</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mi_numero = {
+        let segundo_num = 8; // declara el segundo número
+        segundo_num + 9;     // suma 9 con el segundo número
+                             // pero no se devuelve
+                             // segundo_num desaparece aquí
+    }; 
+    println!(&quot;¡Hola, mundo número {:?}!&quot;, mi_numero); // mi_numero es ()
+}
+</code></pre></pre>
+<p>Si has observado bien, hemos cambiado <code>{}</code> por <code>{:?}</code>. El motivo se verá en el siguiente capítulo.</p>
 
                     </main>
 

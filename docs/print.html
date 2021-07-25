@@ -327,7 +327,7 @@ El fragmento2 ocupa 7 bytes.
 <pre><code class="language-text">El fragmento ocupa 7 bytes y son 6 caracteres.
 El fragmento2 ocupa 7 bytes y son 3 caracteres.
 </code></pre>
-<h2 id="inferencia-de-tipos-de-dato"><a class="header" href="#inferencia-de-tipos-de-dato">Inferencia de tipos de dato</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="inferencia-de-tipos-de-dato"><a class="header" href="#inferencia-de-tipos-de-dato">Inferencia de tipos de dato</a></h1>
 <p><strong><a href="https://youtu.be/q1D2vpy3kEI">Puedes ver este capítulo en YouTube en inglés</a></strong></p>
 <p>La inferencia de tipos de datos consiste en que si no se le indica el tipo de datos al compilador, pero lo puede determinar por sí mismo, él decide que tipo utilizar. El compilador siempre necesita conocer el tipo de las variables, pero no siempre es necesario decírselo expresamente. En realidad, normalmente no necesitas indicárselo. Por ejemplo, en la sentencia <code>let mi_numero = 8</code>, <code>mi_numero</code> será de tipo <code>i32</code>. Esto se debe a que el compilador elige siempre el tipo <code>i32</code> para los números enteros si no se le indica uno. Sin embargo, en la siguiente sentencia <code>let mi_numero: u8 = 8</code>, la variable <code>mi_numero</code> es de tipo <code>u8</code> ya que así se le ha indicado.</p>
 <p>Así que normalmente el compilador puede deducir el tipo de datos, pero en ocasiones será necesario indicárselo por una de las siguientes dos razones:</p>
@@ -413,96 +413,134 @@ El fragmento2 ocupa 7 bytes y son 3 caracteres.
     let tercer_decimal = mi_decimal + mi_otro_decimal;
 }
 </code></pre></pre>
-<h1 id="imprimiendo-hola-mundo"><a class="header" href="#imprimiendo-hola-mundo">Imprimiendo '¡Hola, mundo!'</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="imprimiendo-hola-mundo"><a class="header" href="#imprimiendo-hola-mundo">Imprimiendo '¡Hola, mundo!'</a></h1>
 <p><strong>Puedes ver este capítulo en YouTube en inglés: <a href="https://youtu.be/yYlPHRl2geQ">Video 1</a>, <a href="https://youtu.be/DTCSfBJJZb8">Video 2</a></strong></p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="inferencia-de-tipos-de-dato-1"><a class="header" href="#inferencia-de-tipos-de-dato-1">Inferencia de tipos de dato</a></h1>
-<p><strong><a href="https://youtu.be/q1D2vpy3kEI">Puedes ver este capítulo en YouTube en inglés</a></strong></p>
-<p>La inferencia de tipos de datos consiste en que si no se le indica el tipo de datos al compilador, pero lo puede determinar por sí mismo, él decide que tipo utilizar. El compilador siempre necesita conocer el tipo de las variables, pero no siempre es necesario decírselo expresamente. En realidad, normalmente no necesitas indicárselo. Por ejemplo, en la sentencia <code>let mi_numero = 8</code>, <code>mi_numero</code> será de tipo <code>i32</code>. Esto se debe a que el compilador elige siempre el tipo <code>i32</code> para los números enteros si no se le indica uno. Sin embargo, en la siguiente sentencia <code>let mi_numero: u8 = 8</code>, la variable <code>mi_numero</code> es de tipo <code>u8</code> ya que así se le ha indicado.</p>
-<p>Así que normalmente el compilador puede deducir el tipo de datos, pero en ocasiones será necesario indicárselo por una de las siguientes dos razones:</p>
-<ol>
-<li>Estás programando algo muy complejo y el compilador no puede deducir el tipo de datos que es necesario.</li>
-<li>Quieres usar un tipo de datos diferente (por ejemplo, quieres un <code>i128</code>, no el <code>i32</code> que se usa por defecto).</li>
-</ol>
-<p>Para especificar un tipo, se añaden dos puntos después del nombre de la variable seguido del tipo.</p>
+<p>Cuando creas un nuevo programa Rust, siempre contiene este código:</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    let numerito: u8 = 10;
+    println!(&quot;Hello, world!&quot;);
 }
 </code></pre></pre>
-<p>Para los números, se puede especificar el tipo después del número, no se necesita un espacio - solo teclearlo justo después del número.</p>
+<ul>
+<li><code>fn</code> significa función.</li>
+<li><code>main</code> es el nombre de la función que inicia el programa.</li>
+<li><code>()</code> significa que en este caso no se le pasan variables a esta función.</li>
+<li><code>{}</code> es un <strong>bloque de código</strong>. Es donde se encuentra el código.</li>
+<li><code>println!</code> es una <strong>macro</strong>, que es como una función que sirve para escribir código por ti. Las macros siempre tienen un <code>!</code> al final de su nombre. Por ahora, recuerda que <code>!</code> significa que es una macro.</li>
+</ul>
+<p>Para aprender lo que hace <code>;</code>, crearemos otra función. Primero, en <code>main</code> imprimiremos el número 8<sup class="footnote-reference"><a href="#1">1</a></sup>.</p>
+<p><sup class="footnote-reference"><a href="#1">1</a></sup> N.T.: aprovechamos para cambiar el saludo a español. En Rust, cuando se utiliza la aplicación <code>cargo</code> para crear un programa, siempre se incorpora el código de <code>main</code> con &quot;Hello, world!&quot; de forma automática. </p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    let numerito = 10u8; // 10u8 = 10 de tipo u8
+    println!(&quot;¡Hola, mundo número {}!&quot;, 8);
 }
 </code></pre></pre>
-<p>También se puede añadir <code>_</code> para añadir claridad a la lectura.</p>
+<p>Las <code>{}</code> dentro de <code>println!</code> indican a Rust que &quot;ponga la variable en este lugar&quot;. Este código imprime <code>¡Hola, mundo número 8!</code>.</p>
+<p>Podemos poner más cosas ampliando lo anterior.</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    let numerito = 10_u8; // Esto es más fácil de leer
-    let numerazo = 100_000_000_i32; // 100 millones es de fácil lectura con _
+    println!(&quot;¡Hola, mundos número {} y {}!&quot;, 8, 9);
 }
 </code></pre></pre>
-<p>El <code>_</code> no modifica el número. Solo lo hace más fácil de leer. Y no importa el cuantos <code>_</code> se utilizan.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let numero = 0________u8;
-    let numero2 = 1___6______2____4______i32;
-    println!(&quot;{}, {}&quot;, numero, numero2);
+<p>El codigo anterior imprime <code>¡Hola, mundos número 8 y 9!</code>.</p>
+<p>Ahora vamos a crear una función.</p>
+<pre><pre class="playground"><code class="language-rust">fn numero() -&gt; i32 {
+    8
+}
+
+fn main() {
+    println!(&quot;¡Hola, mundo número {}!&quot;, numero());
 }
 </code></pre></pre>
-<p>Lo anterior imprime <code>0, 1624</code>.</p>
-<h2 id="números-decimales-1"><a class="header" href="#números-decimales-1">Números decimales</a></h2>
-<p>Los números decimales son aquellos que tienen coma decimal<sup class="footnote-reference"><a href="#1">1</a></sup>. <code>5.5</code> es un número decimal y <code>6</code> es un número entero. <code>5.0</code> también es un número decimal e incluso <code>5.</code> lo es.</p>
-<p><sup class="footnote-reference"><a href="#1">1</a></sup> N.T.: en español se usa una coma como carácter para separar la parte entera de un número de su parte decimal. En Rust, la coma decimal española se sustituye por el punto decimal que es el que se usa habitualmente en los lenguajes de programación.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let mi_decimal = 5.; // Rust ve un . y sabe que es un decimal (float, en inglés)
+<p>El código anterior también imprime <code>¡Hola, mundo número 8!</code>. Cuando Rust encuentra <code>numero()</code> entiende que es una función. Esta función:</p>
+<ul>
+<li>No toma ningún parámetro (porque tiene una llamada con <code>()</code>).</li>
+<li>Devuelve un <code>i32</code>. El símbolo de flecha <code>-&gt;</code> muestra el tipo que devuelve la función.</li>
+<li>La función en sí misma solo contiene un <code>8</code>. Al no terminar en <code>;</code> este valor es el que devuelve al terminar de ejecutarse. Si tuviera un <code>;</code> detrás, la función no devolvería nada (devolvería un <code>()</code>). Rust no compilaría si contuviera un <code>;</code> al final ya que se ha indicado que (tras la flecha) debe devolver un valor de tipo <code>i32</code> y con el <code>;</code> se devuelve <code>()</code> que no es de tipo <code>i32</code>.</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust">fn numero() -&gt; i32 {
+    8;
+}
+
+fn main() {
+    println!(&quot;¡Hola, mundo número {}!&quot;, numero());
 }
 </code></pre></pre>
-<p>Rust utiliza diversos tipos de dato para almacenar números decimales, son el <code>f32</code> y el <code>f64</code>. Al igual que en los números enteros, el número tras <code>f</code> muestra el número de bits utilizados en cada caso para almacenar el dato. Si no se indica el tipo, Rust elige <code>f64</code>.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let mi_decimal: f64 = 5.0; // Esta variable es de tipo f64
-    let mi_otro_decimal: f32 = 8.5; // Esta es de tipo f32
-    let tercer_decimal = mi_decimal + mi_otro_decimal; // ⚠️
-}
-</code></pre></pre>
-<p>Cuanto se intenta ejecutar el código anterior, Rust se queja diciendo:</p>
 <pre><code class="language-text">error[E0308]: mismatched types
- --&gt; src/main.rs:4:39
+ --&gt; src/main.rs:1:16
   |
-5 |     let tercer_decimal = mi_decimal + mi_otro_decimal; // ⚠️
-  |                                       ^^^^^^^^^^^^^^^ expected `f64`, found `f32`
+1 | fn numero() -&gt; i32 {
+  |    ------      ^^^ expected `i32`, found `()`
+  |    |
+  |    implicitly returns `()` as its body has no tail or `return` expression
+2 |     8;
+  |      - help: consider removing this semicolon
 </code></pre>
-<p>El compilador indica &quot;expected (tipo), found (type)&quot; cuando se usa el tipo erróneo. Rust lee el código de esta forma:</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let mi_decimal: f64 = 5.0; // El compilador ve un f64
-    let mi_otro_decimal: f32 = 8.5; // El compilador ve un f64. Es un tipo diferente.
-    let tercer_decimal = mi_decimal + // Se quiere sumar mi_decimal, que es f64 a algún
-                                      // otro número. Ahora espera otro f64...  
-        mi_otro_decimal; // ⚠️ pero se encuentra un f32, no se pueden sumar.
+<p>Esto significa que &quot;me dijiste que <code>numero()</code> devuelve un <code>i32</code>, pero añadiste un <code>;</code> por lo que esta función no devuelve nada&quot;. Así que el compilador sugiere que se elimine el punto y coma.</p>
+<p>También se puede escribir lo siguiente <code>return 8;</code>, pero en Rust lo normal es simplemente eliminar el <code>;</code> para ejecutar el <code>return</code>.</p>
+<p>Cuando se quiere pasar variables a una función, se deben poner dentro de <code>()</code>. Hay que darles un nombre e indicar su tipo.</p>
+<pre><pre class="playground"><code class="language-rust">// Entran a la función dos i32s. Se llaman num_uno y num_dos
+fn multiplicar(num_uno: i32, num_dos: i32) {
+    let resultado = num_uno * num_dos;
+    println!(&quot;{} por {} es {}&quot;, num_uno, num_dos, resultado);
+}
+
+fn main() {
+    multiplicar(8, 9); // Pasamos unos números directamente
+    let algun_numero = 10; // o podemos declarar dos variables
+    let algun_otro_numero = 2;
+    multiplicar(algun_numero, algun_otro_numero); // y pasarlos a la función
 }
 </code></pre></pre>
-<p>Así que cuando veas que el compilador indica &quot;expected (tipo), found (type)&quot;, debes buscar la causa por la que el compilador esperaba un tipo de datos diferente.</p>
-<p>Con los números simples es fácil arreglarlo. Puedes convertir el <code>f32</code> a <code>f64</code> con un <code>as</code>.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let mi_decimal: f64 = 5.0;
-    let mi_otro_decimal: f32 = 8.5;
-    // En la siguiente línea, se utiliza mi_otro decimal como un f64
-    let tercer_decimal = mi_decimal + mi_otro_decimal as f64;
+<p>También se puede devolver un <code>i32</code>. Basta con poner la variable <code>resultado</code> como la última de la función sin <code>;</code> al final.</p>
+<pre><pre class="playground"><code class="language-rust">fn multiplicar(num_uno: i32, num_dos: i32) -&gt; i32 {
+    let resultado = num_uno * num_dos;
+    println!(&quot;{} por {} es {}&quot;, num_uno, num_dos, resultado);
+    resultado // este es el valor i32 que se retorna
+}
+
+fn main() {
+    // multiplicar() imprime el resultado y lo devuelve,
+    // lo que permite asignarlo a resultado_mult
+    let resultado_mult = multiplicar(8, 9);
 }
 </code></pre></pre>
-<p>O simplemente, se pueden eliminar las declaraciones de tipo, Rust elegirá tipos que se puedan sumar entre sí.</p>
+<h2 id="la-declaración-de-variables-y-los-bloques-de-código"><a class="header" href="#la-declaración-de-variables-y-los-bloques-de-código">La declaración de variables y los bloques de código</a></h2>
+<p>Se usa <code>let</code>para declarar una variable (para decirle a Rust que construya una variable).</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    let mi_decimal = 5.0; // Rust elige f64
-    let mi_otro_decimal = 8.5; // Rust elige de nuevo f64
-    let tercer_decimal = mi_decimal + mi_otro_decimal;
+    let mi_numero = 8;
+    println!(&quot;¡Hola, mundo número {}!&quot;, mi_numero);
 }
 </code></pre></pre>
-<p>El compilador de Rust es inteligente y no elegirá f64 si necesitas f32:</p>
+<p>Las variables existen dentro de un bloque de código <code>{}</code>. En el siguiente ejemplo <code>mi_numero</code> desaparece antes de llamar a <code>println!</code> porque se encuentra dentro de su propio código.</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    let mi_decimal: f32 = 5.0; // Rust elige f64
-    let mi_otro_decimal = 8.5; // Normalmente Rust elegiría f64
-    // pero al conocer que lo vamos a sumar a un f32, elige un f32 para mi_otro_decimal
-    let tercer_decimal = mi_decimal + mi_otro_decimal;
+    {
+        let mi_numero = 8; // mi_numero se crea aquí
+                           // mi_numero se extingue aquí
+    }
+    println!(&quot;¡Hola, mundo número {}!&quot;, mi_numero);// ⚠️  mi_numero no existe y
+                                                   // println!() no lo puede encontrar
 }
 </code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="imprimiendo-hola-mundo-1"><a class="header" href="#imprimiendo-hola-mundo-1">Imprimiendo '¡Hola, mundo!'</a></h1>
-<p><strong>Puedes ver este capítulo en YouTube en inglés: <a href="https://youtu.be/yYlPHRl2geQ">Video 1</a>, <a href="https://youtu.be/DTCSfBJJZb8">Video 2</a></strong></p>
+<p>Se puede usar un bloque de código para devolver un valor, como en el siguiente código.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mi_numero = {
+        let segundo_num = 8;
+        segundo_num + 9 // sin punto y coma, por lo que el
+                        // bloque de código devuelve 8 + 9 = 17
+    }; 
+    println!(&quot;¡Hola, mundo número {}!&quot;, mi_numero);
+}
+</code></pre></pre>
+<p>Si se añadiera un punto y coma en la sentencia final del bloque, devolvería <code>()</code> (nada).</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mi_numero = {
+        let segundo_num = 8; // declara el segundo número
+        segundo_num + 9;     // suma 9 con el segundo número
+                             // pero no se devuelve
+                             // segundo_num desaparece aquí
+    }; 
+    println!(&quot;¡Hola, mundo número {:?}!&quot;, mi_numero); // mi_numero es ()
+}
+</code></pre></pre>
+<p>Si has observado bien, hemos cambiado <code>{}</code> por <code>{:?}</code>. El motivo se verá en el siguiente capítulo.</p>
 
                     </main>
 
