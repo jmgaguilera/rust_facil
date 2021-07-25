@@ -15,3 +15,4 @@
 - [Imprimiendo '¡Hola, mundo!'](./06.md)
 - [La visualización y depuración](./07.md)
 - [Mutabilidad (cambio)](./08.md)
+- [La pila, la memoria dinámica y los punteros](./09.md)

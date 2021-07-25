@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Comentarios - Rust en español fácil</title>
+        <title>La pila, la memoria dinámica y los punteros - Rust en español fácil</title>
         <!-- Custom HTML head -->
         
 
@@ -77,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html" class="active"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html" class="active"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -137,45 +137,49 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="comentarios"><a class="header" href="#comentarios">Comentarios</a></h1>
-<p><strong><a href="https://youtu.be/fJ7jBZG_Rpo">Puedes ver este capítulo en inglés en YouTube</a></strong></p>
-<p>Los comentarios son para que los lean los programadores, no el ordenador. es bueno escribir comentarios para ayudar a otras personas a entender tu código. Es bueno, también, para ayudarte a entender tu propio código pasado un tiempo (Muchas personas escriben buen código, pero olvidan porqué lo escribieron). Para escribir comentarios en el código, en Rust se suele usar <code>//</code>:</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    // Los programas Rust comienzan en fn main()
-    // Pones el código en un bloque que comienza con { y termina con }
-    let algun_numero = 100; // Aquí podemos esribir todo lo que queramos ya que el compilador no lo va mirar
-}
-</code></pre></pre>
-<p>Cuando lo haces así, el compilador no mirará nada que haya a la derecha de <code>//</code>.</p>
-<p>Existe otra clase de comentario que se escribe con <code>/*</code> para iniciarlo y se termina con `*/. Este tipo de comentario es útil para escribirlo entre el código.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let algun_numero/*: i16*/ = 100;
-}
-</code></pre></pre>
-<p>Para el compilador <code>let algun_numero/*: i16*/ = 100;</code> es igual que <code>let algun_numero = 100;</code>.</p>
-<p>Esta forma <code>/* */</code> también es útil para los comentarios de gran longitud que necesiten más de una línea. En este ejemplo se puede ver que necesitas escribir <code>//</code> en cada línea, pero si utilizas <code>/*</code>, el comentario dura hasta que lo finalices con <code>*/</code>.</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let algun_numero = 100; /* Déjame contarte
-    un poco sobre este número.
-    Es el 100, que es mi número favorito.
-    Se llama algun_numero pero realmente creo que...*/
+                        <h1 id="la-pila-la-memoria-dinámica-y-los-punteros"><a class="header" href="#la-pila-la-memoria-dinámica-y-los-punteros">La pila, la memoria dinámica y los punteros</a></h1>
+<p>La pila (&quot;stack&quot; en inglés), la memoria dinámica (&quot;heap&quot; en inglés) y los punteros son elementos muy importantes en Rust.</p>
+<p>La pila y la memoria dinámica son dos tipos de almacenamiento de los datos de un programa durante su ejecución. Sus diferencias más importantes son:</p>
+<ul>
+<li>La pila es muy rápida, la memoria dinámica no lo es tanto. Tampoco es lenta, pero siempre es más rápido acceder a la pila. Aunque no es posible utilizar la pila siempre porque:</li>
+<li>Rust necesita conocer el tamaño de una variable en durante su compilación para poder guardarla en la pila. Así, las variables simples como <code>i32</code> van a la pila ya que se conoce su tamaño exacto. Se sabe que va a ocupar 4 bytes, 32 bits = 4 bytes. Por lo tanto, los datos de tipo <code>i32</code> pueden ir siempre a la pila.</li>
+<li>Algunos tipos no tienen un tamaño conocido en tiempo de compilación. No pueden guardarse en la pila. ¿Qué se puede hacer? En primer lugar, se pone la información en la memoria dinámica ya que esta puede contener datos de cualquier tamaño. En segundo lugar, se guarda un puntero en la pila. El tamaño de los punteros es conocid. Así, para recuperar un valor de una variable que está en la memoria dinámica, el ordenador va primero a la pila, obtiene el puntero y lo sigue hasta la memoria dinámica para localizr el dato que se busca.</li>
+</ul>
+<p>Los punteros parecen complicados, pero no lo son. Son como una tabla de contenidos de un libro. Imagina este libro:</p>
+<pre><code class="language-text">MI LIBRO
 
-    let algun_numero = 100; // Déjame contarte
-    // un poco sobre este número.
-    // Es el 100, que es mi número favorito.
-    // Se llama algun_numero pero realmente creo que...
+TABLA DE CONTENIDO
+
+Capítulo                        Página
+Capítulo 1: mi vida              1
+Capítulo 2: mi gato              15
+Capítulo 3: mi trabajo           23
+Capítulo 4: mi familia           30
+Capítulo 5: mis planes futuros   43
+</code></pre>
+<p>La tabla de contenido es como una &quot;pila&quot; que, en este caso, contiene cinco punteros. Puedes leerlos y encontrar la información sobre la que tratan. ¿Dónde está el capítulo sobre &quot;mi vida&quot;? Está en la página 1 (<em>Apunta</em> a la página 1). ¿Dónde está el capítulo sobre &quot;mi trabajo&quot;? Está en la página 23.</p>
+<p>El puntero que se ve habitualmente en Rust se denomina <strong>referencia</strong>. Esto es lo importante que se debe saber: una referencia apunta a la memoria de otro valor. Una referencia supone que <em>se tome prestado</em> el valor, pero no se apropia de él. Es lo mismo que en el libro anterior: la tabla de contenidos no posee la información. Se encuentra en los capítulos que son los que la poseen. En Rust, las referencias llevan el símbolo <code>&amp;</code> al principio de ellas. Así.</p>
+<ul>
+<li><code>let mi_variable = 8</code> crea una variable normal, pero</li>
+<li><code>let mi_referencia = &amp;mi_variable</code> crea una referencia. Se lee como &quot;mi_referencia es una referencia a mi_variable&quot; o como &quot;mi_referencia se refiere a mi_variable&quot;.</li>
+</ul>
+<p>Esto significa que <code>mi_referencia</code> solo mira a los datos de <code>mi_variable</code>. <code>mi_variable</code> sigue siendo propietaria de sus datos.
+También es posible tener una referencia que &quot;apunte&quot; a otra referencia. Hasta culquier número de referencias.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mi_numero = 15; // Esto es un i32
+    let referencia_simple = &amp;mi_numero; //  Esto es una &amp;i32
+    let referencia_doble = &amp;referencia_simple; // Esto es una &amp;&amp;i32
+    let referencia_quintuple = &amp;&amp;&amp;&amp;&amp;mi_numero; // Esto es una &amp;&amp;&amp;&amp;&amp;i32
 }
 </code></pre></pre>
+<p>Todos estos son tipos de dato diferentes, de la misma forma que &quot;un amigo de un amigo&quot; es diferente de &quot;un amigo&quot;.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="02.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="08.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
-                            </a>
-                            <a rel="next" href="04.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
                     </nav>
@@ -183,11 +187,8 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="02.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="08.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
-                    </a>
-                    <a rel="next" href="04.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
