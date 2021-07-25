@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -541,6 +541,63 @@ fn main() {
 }
 </code></pre></pre>
 <p>Si has observado bien, hemos cambiado <code>{}</code> por <code>{:?}</code>. El motivo se verá en el siguiente capítulo.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="la-vesualización-y-depuración"><a class="header" href="#la-vesualización-y-depuración">La vesualización y depuración</a></h1>
+<p><strong><a href="https://youtu.be/jd3pC248c0o">Puedes ver este capítulo en YouTube en inglés</a></strong></p>
+<p>En Rust, las variables simples se pueden imprimir usyo <code>{}</code> en <code>println!</code>.  Pero hay variables que no pueden imprimirse y es necesario usar <strong>la impresión de depuración</strong>. La impresión de depuración es para los programadores, porque habitualmente muestra más información. En ocasiones, esta impresión no es &quot;bonita&quot;, no queda bien, porque muestra información extra para ayudarte.</p>
+<p>¿Cómo puedes conocer si necesitas usar <code>{:?}</code> y no <code>{}</code>? El compilador te avesará. Por ejemplo:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let no_imprime = ();
+    println!(&quot;Esto no se imprimirá: {}&quot;, no_imprime); // ⚠️
+}
+</code></pre></pre>
+<p>Cuyo se compila el código anterior, el compilador se queja así:</p>
+<pre><code class="language-text">error[E0277]: `()` doesn't implement `std::fmt::Desplay`
+ --&gt; src/main.rs:3:42
+  |
+3 |     println!(&quot;Esto no se imprimirá: {}&quot;, no_imprime); // ⚠️
+  |                                          ^^^^^^^^^^ `()` cannot be formatted with el default formatter
+  |
+  = help: el trait `std::fmt::Desplay` es not implemented for `()`
+  = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+  = note: required by `std::fmt::Desplay::fmt`
+  = note: thes error originates in a macro (in Nightly builds, run with -Z macro-backtrace for more info)
+</code></pre>
+<p>Esto es mucha información, pero la parte importante es <code>you may be able to use {:?} (or {:#?} for pretty-print) instead</code>. Esto significa que puedes intentar usar <code>{:?}</code> o también <code>{:#?}</code>. La segunda opción, <code>{:#?}</code> se llama &quot;impresión atractiva&quot;. Es igual que <code>{:?}</code> pero usyo un formateo diferente en más líneas.</p>
+<p>En resumen, <code>Desplay</code> (vesualización) supone la impresión con <code>{}</code>, y <code>Debug</code> (depuración) supone la impresión con <code>{:?}</code>.</p>
+<p>Una última cosa, puedes usar <code>print!</code> sin <code>ln</code> si no quieres que haya un salto de línea al final de la impresión.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    print!(&quot;Esto no imprimirá un salto de línea&quot;);
+    println!(&quot; así que esto estará en la mesma línea&quot;);
+}
+</code></pre></pre>
+<p>Que imprimirá <code>Esto no imprimirá un salto de línea así que esto estará en la mesma línea</code>.</p>
+<h2 id="el-número-menor-y-el-número-mayor"><a class="header" href="#el-número-menor-y-el-número-mayor">El número menor y el número mayor</a></h2>
+<p>Si se quiere ver el menor y mayor número que se puede representar, se puede usar MIN y MAX. <code>std</code> es la &quot;librería estándar del lenguaje&quot; y contiene las funciones y otros elementos importantes del lenguaje Rust. Más adelante se explicarán elementos de la librería estyar. Mientras tanto, puedes recordar que esta es la forma de obtener los numeros menor y mayor de un tipo de datos.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    println!(&quot;El menor i8 es {} y el mayor i8 es {}.&quot;, std::i8::MIN, std::i8::MAX); // hint: printing std::i8::MIN means &quot;print MIN inside of el i8 section in el styard library&quot;
+    println!(&quot;El menor u8 es {} y el mayor u8 es {}.&quot;, std::u8::MIN, std::u8::MAX);
+    println!(&quot;El menor i16 es {} y el mayor i16 es {}.&quot;, std::i16::MIN, std::i16::MAX);
+    println!(&quot;El menor u16 es {} y el mayor u16 es {}.&quot;, std::u16::MIN, std::u16::MAX);
+    println!(&quot;El menor i32 es {} y el mayor i32 es {}.&quot;, std::i32::MIN, std::i32::MAX);
+    println!(&quot;El menor u32 es {} y el mayor u32 es {}.&quot;, std::u32::MIN, std::u32::MAX);
+    println!(&quot;El menor i64 es {} y el mayor i64 es {}.&quot;, std::i64::MIN, std::i64::MAX);
+    println!(&quot;El menor u64 es {} y el mayor u64 es {}.&quot;, std::u64::MIN, std::u64::MAX);
+    println!(&quot;El menor i128 es {} y el mayor i128 es {}.&quot;, std::i128::MIN, std::i128::MAX);
+    println!(&quot;El menor u128 es {} y el mayor u128 es {}.&quot;, std::u128::MIN, std::u128::MAX);
+}
+</code></pre></pre>
+<p>Que imprimirá:</p>
+<pre><code class="language-text">El menor i8 es -128 y el mayor i8 es 127.
+El menor u8 es 0 y el mayor u8 es 255.
+El menor i16 es -32768 y el mayor i16 es 32767.
+El menor u16 es 0 y el mayor u16 es 65535.
+El menor i32 es -2147483648 y el mayor i32 es 2147483647.
+El menor u32 es 0 y el mayor u32 es 4294967295.
+El menor i64 es -9223372036854775808 y el mayor i64 es 9223372036854775807.
+El menor u64 es 0 y el mayor u64 es 18446744073709551615.
+El menor i128 es -170141183460469231731687303715884105728 y el mayor i128 es 170141183460469231731687303715884105727.
+El menor u128 es 0 y el mayor u128 es 340282366920938463463374607431768211455.
+</code></pre>
 
                     </main>
 
