@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Actualizaciones - Rust en español fácil</title>
+        <title>Algo más sobre referencias - Rust en español fácil</title>
         <!-- Custom HTML head -->
         
 
@@ -77,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html" class="active">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html" class="active"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -137,20 +137,51 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="actualizaciones"><a class="header" href="#actualizaciones">Actualizaciones</a></h1>
-<p><img src="https://github.com/Dhghomon/easy_rust/workflows/github%20pages/badge.svg" alt="example workflow name" /></p>
-<p>23 de mayo de 2021: <a href="https://github.com/ariandy/easy-rust-indonesia">Ahora disponible en indonesio</a> gracias <a href="https://github.com/ariandy">Ariandy</a>/<a href="https://1kilobyte.github.io/">1kb</a>.</p>
-<p>2 de abril de 2021: <a href="https://www.buymeacoffee.com/mithridates">Añadido enlace a BuyMeACoffee</a> para aquellos a los que les gustaría invitarme a un café.</p>
-<p>1 de febrero de 2021: <a href="https://www.youtube.com/playlist?list=PLfllocyHVgsRwLkTAhG0E-2QxCf-ozBkk">¡Ahora disponible en youtube! (en inglés)</a> Dos meses después: completo el 1 de abril de 2021, 186 vídeos en total (un poco más de 23 horas).</p>
-<p>22 de diciembre 2020: el libro en mdBook se puede encontrar <a href="https://dhghomon.github.io/easy_rust">aquí</a>.</p>
-<p>28 de noviembre de 2020: <a href="https://github.com/kumakichi/easy_rust_chs">Ahora también disponible en chino simplificado</a> ¡Gracias a <a href="https://github.com/kumakichi">kumakichi</a>!</p>
+                        <h1 id="algo-más-sobre-referencias"><a class="header" href="#algo-más-sobre-referencias">Algo más sobre referencias</a></h1>
+<p><strong><a href="https://youtu.be/R13sQ8SNoEQ">Puedes ver este capítulo en YouTube en inglés</a></strong></p>
+<p>Las referencias son muy importantes en Rust. Las utiliza para asegurarse de que son seguros todos los accesos a la memoria. Ya se ha explicado anteriormente que para crear una referencia se utiliza <code>&amp;</code> delante del valor:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let pais = String::from(&quot;Austria&quot;);
+    let ref_uno = &amp;pais;
+    let ref_dos = &amp;pais;
+
+    println!(&quot;{}&quot;, ref_uno);
+}
+</code></pre></pre>
+<p>El código anterior imprime <code>Austria</code>. <code>pais</code> es un <code>String</code>. Se crean dos referencias a <code>pais</code>. Estas referencias son de tipo <code>&amp;String</code>, es decir son dos variables que son &quot;referencias a String&quot;. Se pueden crear tantas referencias a <code>pais</code>como se quiera. Todas &quot;apuntan&quot; al mismo valor, pero son punteros diferentes.</p>
+<p>A continuación se muestra un ejemplo sobre cómo Rust proteje el acceso a zonas de memoria erróneas:</p>
+<pre><pre class="playground"><code class="language-rust">fn return_str() -&gt; &amp;str {
+    let pais = String::from(&quot;Austria&quot;);
+    let pais_ref = &amp;pais;
+    pais_ref // ⚠️
+}
+
+fn main() {
+    let pais = return_str();
+}
+</code></pre></pre>
+<p>La función <code>return_str()</code> crea un valor de tipo String, luego crea una referencia a dicho valor. Cuando se intenta devolver la referencia se produce un error:</p>
+<pre><code class="language-text">error[E0106]: missing lifetime specifier
+ --&gt; src/main.rs:1:20
+  |
+1 | fn return_str() -&gt; &amp;str {
+  |                    ^ expected named lifetime parameter
+  |
+  = help: this function's return type contains a borrowed value, but there is no value for it to be borrowed from
+help: consider using the `'static` lifetime
+  |
+1 | fn return_str() -&gt; &amp;'static str {
+  |                    ^^^^^^^^
+</code></pre>
+<p>El valor de <code>pais</code> solo existe dentro de la función, al terminar de ejecutarse desaparece. Una vez la variable desaparece, el ordenador libera la memoria que ocupaba y la utiliza para otra cosa. Por eso, después de que la función termina, <code>pais_ref</code> apunta a una zona de memoria que ya no tiene el valor esperado y eso no es correcto. Rust previene este fallo en el código e impide que el programa compile.</p>
+<p>Este es el efecto importante de la existencia de tipos de dato &quot;con dueño&quot; en Rust. En el código anterior, el valor <code>String</code> tiene como dueño a la variable <code>pais</code>, por eso se puede &quot;prestar&quot; a otras variables (referencias), pero cuando desaparece la variable dueña del valor, <code>pais</code>, la referencia también desaparece, la referencia tiene &quot;prestado&quot; el valor, por lo que no se puede pasar a otro &quot;dueño&quot;.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="next" href="introduccion.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
+                            <a rel="prev" href="12.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
                             </a>
                         <div style="clear: both"></div>
                     </nav>
@@ -158,8 +189,8 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="next" href="introduccion.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
+                    <a rel="prev" href="12.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
                     </a>
             </nav>
 
