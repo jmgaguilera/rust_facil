@@ -138,6 +138,213 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="más-sobre-impresión"><a class="header" href="#más-sobre-impresión">Más sobre impresión</a></h1>
+<p>En Rust se puede imprimir como se quiera. Por eso, interesa conocer algunas cosas más sobre este tema.</p>
+<p>Si se añade <code>\n</code> se imprimirá una nueva línea. Si se añade <code>\t</code> se insertará un tabulador:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    // Observa: la función usada es print!, no println!
+    print!(&quot;\tComienza con un tabulador\ny salta a una nueva línea&quot;);
+}
+</code></pre></pre>
+<p>El código anterior imprime lo siguiente:</p>
+<pre><code class="language-text">        Comienza con un tabulador
+y salta a una nueva línea
+</code></pre>
+<p>Dentro de <code>&quot;&quot;</code> se puede escribir en diferentes líneas, pero es necesario tener cuidado con los espacios:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    // Nota: después de la primera línea tienes que comenzar la siguiente línea
+    // en la primera columna (pegado a la izquierda).
+    println!(&quot;Dentro de comillas
+se puede escribir
+en muchas líneas
+y se imprimirá correctamente.&quot;);
+    // Si se escribe directamente bajo la sentencia, se añadirán los espacios
+    // correspondientes de la izquierda
+    println!(&quot;Si se olvida que hay que
+    escribir pegado al lado izquierdo
+    estos espacios se añadirán
+    a la impresión.&quot;);
+}
+</code></pre></pre>
+<p>El código anterior imprime:</p>
+<pre><code class="language-text">Dentro de comillas
+se puede escribir
+en muchas líneas
+y se imprimirá correctamente.
+Si se olvida que hay que
+    escribir pegado al lado izquierdo
+    estos espacios se añadirán
+    a la impresión.
+</code></pre>
+<p>Si se necesitase imprimir caracteres como <code>\n</code> (caracteres de escape, como el del salto de línea y el tabulador que se han visto antes), se puede añadir un <code>\</code> extra:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    println!(&quot;Se imprimen caracteres de escape, no inserta nueva línea y tabulador: \\n y \\t&quot;);
+}
+</code></pre></pre>
+<p>Lo que imprime:</p>
+<pre><code class="language-text">Se imprimen caracteres de escape, no inserta nueva línea y tabulador: \n y \t
+</code></pre>
+<p>A veces se necesitan muchos <code>&quot;</code> y caracteres de escape en el texto, por lo que Rust proporciona un método más simple para ignorarlos: se añade <code>r#</code> al comienzo y <code>#</code> al final de la cadena de caracteres.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    // En esta línea hemos usado \ cinco veces
+    println!(&quot;Él dijo, \&quot;Puedes encontrar el fichero en c:\\files\\my_documents\\file.txt\&quot;. Y así fue como lo encontré.&quot;);
+    println!(r#&quot;Él dijo, &quot;Puedes encontrar el fichero en c:\files\my_documents\file.txt&quot;. Y así fue como lo encontré.&quot;#)
+}
+</code></pre></pre>
+<p>Ambas opciones imprimen lo mismo, pero el uso de <code>r#</code> lo hace más simple de entender.</p>
+<pre><code class="language-text">Él dijo, &quot;Puedes encontrar el fichero en c:\files\my_documents\file.txt&quot;. Y así fue como lo encontré.
+Él dijo, &quot;Puedes encontrar el fichero en c:\files\my_documents\file.txt&quot;. Y así fue como lo encontré.
+</code></pre>
+<p>Si se necesitara imprimir un carácter <code>#</code> en el texto, se puede usar <code>r##</code> al comienzo del texto y <code>##</code> al final. Si se usaran más de dos consecutivos, se pueden seguir añadiendo <code>#</code> al comienzo y al final, hasta que no coincida con nada contenido en el texto.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+
+    let my_string = &quot;'Hola, mundo,' dijo.&quot;; // comilla simples
+    let quote_string = r#&quot;&quot;Hola, mundo,&quot; dijo.&quot;#; // comillas dobles
+    // Contiene # se necesita al menos ##
+    let hashtag_string = r##&quot;El hasgtag #holamundo se ha hecho muy popular.&quot;##; 
+    // Contiene ### se necesitan al menos ####
+    let many_hashtags = r####&quot;&quot;No se tiene que teclear ### para usar un hashtag. Solo hay que usar #.&quot;&quot;####; 
+
+    println!(&quot;{}\n{}\n{}\n{}\n&quot;, my_string, quote_string, hashtag_string, many_hashtags);
+}
+</code></pre></pre>
+<p>Este código imprimirá:</p>
+<pre><code class="language-text">'Hola, mundo,' dijo.
+&quot;Hola, mundo,&quot; dijo.
+El hasgtag #holamundo se ha hecho muy popular.
+&quot;No se tiene que teclear ### para usar un hashtag. Solo hay que usar #.&quot;
+</code></pre>
+<p>Existe otro uso para <code>r#</code>: usar palabras reservadas (como <code>let</code>, <code>fn</code>, etc.) como nombres de variable.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let r#let = 6; // let como nombre de variable
+    let mut r#mut = 10; // Esta variable se llama mut
+}
+</code></pre></pre>
+<p>Esta función de <code>r#</code> se introdujo porque las versiones más antiguas de Rust tenían menos palabras reservadas que ahora. Así se pueden evitar errores en código previo en el que se usaban nombres de variables que ahora son palabras reservadas.</p>
+<p>Puede ser que por alguna razón <em>realmente</em> se necesite una función que se denomine como <code>return</code>. Así se puede escribir:</p>
+<pre><pre class="playground"><code class="language-rust">fn r#return() -&gt; u8 {
+    println!(&quot;Ahí va tu número.&quot;);
+    8
+}
+
+fn main() {
+    let mi_numero = r#return();
+    println!(&quot;{}&quot;, mi_numero);
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">Ahí va tu número.
+8
+</code></pre>
+<p>Esto no se va a necesitar normalmente, pero si <em>realmente</em> hace falta, se puede usar.</p>
+<p>Si se necesita imprimir los bytes de un <code>&amp;str</code> o un <code>char</code>, basta con escribir la letra <code>b</code> delante de la cadena.
+Esto funciona para todos los caracteres ASCII. Estos son todos los caracteres ASCII.</p>
+<pre><code class="language-text">☺☻♥♦♣♠♫☼►◄↕‼¶§▬↨↑↓→∟↔▲▼123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+</code></pre>
+<p>Así, este código:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    // N.T.: no se pueden poner tildes ya que en las 
+    // vocales ya que las letras resultantes no forman
+    // parte del conjunto de caracteres ASCII
+    println!(&quot;{:?}&quot;, b&quot;Esto aparece como una lista de numeros&quot;);
+}
+</code></pre></pre>
+<p>Da el siguiente resultado:</p>
+<pre><code class="language-text">[69, 115, 116, 111, 32, 97, 112, 97, 114, 101, 99, 101, 32, 99, 111, 109, 111, 32, 117, 110, 97, 32, 108, 105, 115, 116, 97, 32, 100, 101, 32, 110, 117, 109, 101, 114, 111, 115]
+</code></pre>
+<p>Para un <code>char</code> esto se llama <em>byte</em> y para el tipo <code>&amp;str</code> se llama <em>byte de cadena de texto</em>.</p>
+<p>También existe un sistema de escape para insertar caracteres Unicode: <code>\u{}</code>. Así es posible imprimir cualquier carácter Unicode en una cadena de texto. Además, es posible formatear un número en hexadecimal usando <code>{:X}</code>. El siguiente ejemplo demuestra cómo imprimir el código hexadecimal que representa al carácter Unicode y cómo imprimirlo de nuevo como carácter.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    // Convierte el char a u32 para obtener su valor numérico
+    println!(&quot;{:X}&quot;, '행' as u32); 
+    println!(&quot;{:X}&quot;, 'H' as u32);
+    println!(&quot;{:X}&quot;, '居' as u32);
+    println!(&quot;{:X}&quot;, 'い' as u32);
+
+    // Imprime los caracteres con el sistema de escape \u
+    println!(&quot;\u{D589}, \u{48}, \u{5C45}, \u{3044}&quot;); 
+}
+</code></pre></pre>
+<p>Ya se conoce que <code>println!</code> puede imprimir con <code>{}</code> (modo <em>Display</em>) t <code>{:?}</code> (para Depuración). Además de <code>{:#?}</code> para &quot;impresión bonita&quot;. Pero existen otras muchas formas de imprimir.</p>
+<p>Por ejempli, si se dispone de una referencia se puede usar <code>{:p}</code> para imprimir la <em>dirección del puntero</em>. Es decir, el lugar de la memoria del ordenador a la que <em>apunta</em> la referencia.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let number = 9;
+    let number_ref = &amp;number;
+    println!(&quot;{:p}&quot;, number_ref);
+}
+</code></pre></pre>
+<p>El código anterior imprime algo parecido a <code>0x7ffec9426f4c</code>, dependerá de dónde se ejecute el programa y se almacene el número referenciado en la memoria del ordenador.</p>
+<p>Los valores numéricos se pueden imprimir en binario, hexadecimal u octal:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let number = 555;
+    println!(&quot;Binario: {:b}, hexadecimal: {:x}, octal: {:o}&quot;, number, number, number);
+}
+</code></pre></pre>
+<p>Que imprime <code>Binario: 1000101011, hexadecimal: 22b, octal: 1053</code>.</p>
+<p>También se pueden añadir números entre las llaves para indicar qué variable utilizar, teniendo en cuenta que la primera tiene como índice el 0, la segunda el 1 y así sucesivamente.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let nombre_padre = &quot;José Miguel&quot;;
+    let nombre_hijo = &quot;Víctor&quot;;
+    let apellido = &quot;González&quot;;
+    println!(&quot;Este es {1} {2}, hijo de {0} {2}.&quot;, nombre_padre, nombre_hijo, apellido);
+}
+</code></pre></pre>
+<p>La variable <code>nombre_padre</code> está en la posición 0, <code>nombre_hijo</code>en la 1 y <code>apellido</code> está en la posición 2. Por eso, el código anterior imprime <code>Este es Víctor González, hijo de José Miguel González.</code>.</p>
+<p>Puede suceder que sea necesario imprimir una cadena de caracteres compleja con muchas variables dentro de las llaves. O puede que se necesite imprimir la misma variable dos o más veces. Para ello, se pueden añadir nombres a las llaves.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    println!(
+        &quot;{city1} está en {pais} y {city2} también está en {pais},
+pero {city3} no está en {pais}.&quot;,
+        city1 = &quot;Seul&quot;,
+        city2 = &quot;Busan&quot;,
+        city3 = &quot;Tokio&quot;,
+        pais = &quot;Korea&quot;
+    );
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">Seul está en Korea y Busan también está en Korea,
+pero Tokio no está en Korea.
+</code></pre>
+<p>También es posible editar de forma compleja el formato de la impresión. Tiene esta forma:</p>
+<p><code>{variable:relleno alineamiento mínimo.máximo}</code></p>
+<p>Para entender esta sintaxis:</p>
+<ol>
+<li>¿Se quiere usar un nombre de variable? Se escribe primero su nombre, como antes en {pais}. Lo siguiente será añadir (opcionalmente) <code>:</code> después si se quiere formatear de algún modo.</li>
+<li>¿Se se necesita un carácter de relleno? Por ejemplo, 55 con tres &quot;ceros de relleno&quot; se imprimiría como 00055.</li>
+<li>¿Que alineamiento se necesita para el relleno? izquierda, centro o derecha.</li>
+<li>¿Se desea una longitud mínima? solo hay que indicar el número deseado.</li>
+<li>¿Se desea una longitud máxima? solo hay que indicarla con un <code>.</code> delante.</li>
+</ol>
+<p>Por ejemplo, si se quiere escribir la letra &quot;a&quot; con cinco caracteres - de relleno (a izquierda y derecha):</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let letra = &quot;a&quot;;
+    println!(&quot;{:-^11}&quot;, letra);
+}
+</code></pre></pre>
+<p>Que imprime <code>-----a-----</code>. El ordenador lo interpreta así:</p>
+<ul>
+<li>¿Hay un nombre de variable? No, ya que lo primero que aparece en <code>{:-^11}</code> son los dos puntos. No hay nombre de variable delante de estos dos puntos.</li>
+<li>¿Se pide un carácter de relleno? Sí, - está justo después de <code>:</code> y lo sigue un <code>^</code>, lo que significa que el texto se inserta en el centro y el carácter de relleno se reparte en los espacios sobrantes a izquierda y derecha. Las otras dos posibilidades son: <code>&lt;</code> que indica que el texto va a la izquierda y el carácter de relleno a la izquierda, y <code>&gt;</code> que indica que el texto va a la derecha con el relleno a la izquierda.</li>
+</ul>
+<p>A continuación, se muestran diversos ejemplos de tipos de formateo.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let titulo = &quot;NOTICIAS DE HOY&quot;;
+    // sin variable, relleno con -, centrado, longitud de 30 caracteres
+    println!(&quot;{:-^30}&quot;, titulo); 
+    let barra = &quot;|&quot;;
+    // sin variable, relleno con espacios, 15 caracters cada uno, una barra a izquierda y otra a derecha
+    println!(&quot;{: &lt;15}{: &gt;15}&quot;, barra, barra); 
+    let a = &quot;SEUL&quot;;
+    let b = &quot;TOKIO&quot;;
+     // variables city1 y city2, relleno con -, a izquierda y a derecha
+     println!(&quot;{city1:-&lt;15}{city2:-&gt;15}&quot;, city1 = a, city2 = b);
+}
+</code></pre></pre>
+<p>El código anterior imprime:</p>
+<pre><code class="language-text">-------NOTICIAS DE HOY--------
+|                            |
+SEUL---------------------TOKIO
+</code></pre>
 
                     </main>
 
