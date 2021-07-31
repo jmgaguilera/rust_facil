@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Mutabilidad (cambio) - Rust en español fácil</title>
+        <title>Cadenas de caracteres - Rust en español fácil</title>
         <!-- Custom HTML head -->
         
 
@@ -77,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html" class="active"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html" class="active"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -137,116 +137,99 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="mutabilidad-cambio"><a class="header" href="#mutabilidad-cambio">Mutabilidad (cambio)</a></h1>
-<p><strong><a href="https://youtu.be/Nyyd6qn7dZY">Puedes ver este capítulo en YouTube en inglés</a></strong></p>
-<p>Cuando se declara una variable con `let, es inmutable (no se puede cambiar su valor).</p>
-<p>El código siguiente no funciona.</p>
+                        <h1 id="cadenas-de-caracteres"><a class="header" href="#cadenas-de-caracteres">Cadenas de caracteres</a></h1>
+<p><strong><a href="https://youtu.be/pSyaGzGg26o">Puedes ver este capítulo en YouTube en inglés</a></strong></p>
+<p>Rust tiene dos tipos de cadenas de caracteres: <code>String</code> y <code>&amp;str</code>. ¿Cuál es la diferencia?</p>
+<ul>
+<li><code>&amp;str</code> es una cadena de caracteres simple que reside en la pila. Cuando se escribe <code>let mi_variable = &quot;¡Hola, mundo!&quot;</code> se crea una <code>&amp;str</code>. Este tipo es muy rápido.</li>
+<li><code>String</code> es un tipo de dato más complejo. Es un poco más lento, pero tiene más funciones. Una <code>String</code> es un puntero que almacena los datos en la memoria dinámica.</li>
+</ul>
+<p>Hay que destacar que <code>&amp;str</code> tiene <code>&amp;</code> como primer carácter debido a que es necesaria una referencia para utilizar el tipo <code>str</code>.  Esto es por la razón que vimos anteriormente: la pila necesita conocer el tamaño, así que se le da una referencia, las referencias siempre tienen el mismo tamaño. Otro tema a tener en cuenta es que al utilizar <code>&amp;</code> una referencia para interactuar con el tipo <code>str</code>, nunca se es dueño del tipo. Por el contrario, <code>String</code>es un tipo <em>con dueño</em>. Más adelante se mostrará la importancia de esta distinción.</p>
+<p>Ambos tipos, <code>&amp;str</code> y <code>String</code> son UTF-8. Por ejemplo, se puede escribir el siguiente código:</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    let mi_numero = 8;
-    mi_numero = 10; // ⚠️
+    // Nombre en coreano. No da problemas, ya que &amp;str es UTF-8
+    let nombre = &quot;서태지&quot;;
+    // Ț y ș no son un problema en UTF-8.
+    let otro_nombre = String::from(&quot;Adrian Fahrenheit Țepeș&quot;);
 }
 </code></pre></pre>
-<p>El compilador indica <code>error[E0384]: cannot assign twice to immutable variable mi_numero</code>.</p>
-<pre><code class="language-text">error[E0384]: cannot assign twice to immutable variable `mi_numero`
- --&gt; src/main.rs:3:5
-  |
-2 |     let mi_numero = 8;
-  |         ---------
-  |         |
-  |         first assignment to `mi_numero`
-  |         help: consider making this binding mutable: `mut mi_numero`
-3 |     mi_numero = 10; // ⚠️
-  |     ^^^^^^^^^^^^^^ cannot assign twice to immutable variable
+<p>En el código anterior se observa que se puede construir de forma fácil una <code>String</code> de una <code>&amp;str</code>. Los dos tipos están muy relacionados, aunque son muy diferentes.</p>
+<p>Gracias a UTF-8, incluso se pueden escribir emojis.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let nombre = &quot;😂&quot;;
+    println!(&quot;Mi nombre real es {}&quot;, nombre);
+}
+</code></pre></pre>
+<p>Si se ejecuta este código en el terminal de comandos de tu propio ordenador tiene que aparecer <code>Mi nombre real es 😂</code> a menos el terminal de comandos presente limitaciones y no lo pueda imprimir. En cuyo caso imprimirá algo así <code>Mi nombre real es �</code>. En todo caso, Rust es capaz de manejar todos los caracteres Unicode.</p>
+<p>La razón para utilizar una referencia <code>&amp;</code>para el tipo <code>str</code> es que <code>str</code> es un tipo de datos de tamaño dinámico, su tamaño puede ser diferente. Por ejmplo, los nombres &quot;서태지&quot; y &quot;Adrian Fahrenheit Țepeș&quot; no son del mismo tamaño:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+
+    // std::mem::size_of::&lt;Type&gt;() devuelve el tamaño en bytes de un tipo
+    println!(&quot;Una String siempre ocupa {:?} bytes. Es de tamaño fijo.&quot;,
+        std::mem::size_of::&lt;String&gt;()); 
+    println!(&quot;Y un i8 siempre ocupa {:?} bytes. Es de tamaño fijo.&quot;, 
+        std::mem::size_of::&lt;i8&gt;());
+    println!(&quot;Y un f64 siempre ocupa {:?} bytes. Es de tamaño fijo.&quot;, 
+        std::mem::size_of::&lt;f64&gt;());
+     // std::mem::size_of_val() devuelve el tamaño en bytes de una variable
+    println!(&quot;¿Y un &amp;str? Puede ocupar cualquier tamaño. '서태지' ocupa {:?} bytes. No es de tamaño fijo.&quot;,
+        std::mem::size_of_val(&quot;서태지&quot;));
+    println!(&quot;Y 'Adrian Fahrenheit Țepeș' ocupa {:?} bytes. No es de tamaño fijo.&quot;,
+        std::mem::size_of_val(&quot;Adrian Fahrenheit Țepeș&quot;));
+}
+</code></pre></pre>
+<p>Lo que da como resultado:</p>
+<pre><code class="language-text">Una String siempre ocupa 24 bytes. Es de tamaño fijo.
+Y un i8 siempre ocupa 1 bytes. Es de tamaño fijo.
+Y un f64 siempre ocupa 8 bytes. Es de tamaño fijo.
+¿Y un &amp;str? Puede ocupar cualquier tamaño. '서태지' ocupa 9 bytes. No es de tamaño fijo.
+Y 'Adrian Fahrenheit Țepeș' ocupa 25 bytes. No es de tamaño fijo.
 </code></pre>
-<p>Esto es porque las variables son inmutables si solo se escribe <code>let</code>.</p>
-<p>Muchas veces, será necesario modificar la variable. Para ello, se debe añadir <code>mut</code> después de <code>let</code>:</p>
+<p>Por eso es necesario usar &amp;, porque así se construye un puntero (tipo de tamaño fijo) que puede almacenarse en la pila.  Si se escribiera <code>str</code>, Rust no sabría qué hacer al no conocer su tamaño.</p>
+<p>Hay muchas formas de construir un elemento de tipo <code>String</code>. Algunas de ellas son:</p>
+<ul>
+<li><code>String::from(&quot;Esta es una cadena de texto&quot;);</code> - <code>String::from()</code> es un método de Strgin que crea un <code>String</code> a partir de una cadena de texto.</li>
+<li><code>&quot;Esta es una cadena de texto&quot;.to_string()</code> - <code>&quot;&quot;.to_string()</code> es un método de <code>&amp;str</code> que crea un <code>String</code>.</li>
+<li>La macro <code>format!</code> - Es como <code>println!</code> excepto que crea un String en lugar de imprimir el texto.</li>
+</ul>
+<p>A continuación se muestran algunos ejemplos:</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    let mut mi_numero = 8;
-    mi_numero = 10;
-}
-</code></pre></pre>
-<p>El código anterior funciona sin problema alguno.</p>
-<p>Sin embargo, no se le puede cambiar el tipo. Esto no funciona:</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let mut mi_numero = 8; // La variable es i32. 
-                           // El tipo no se puede cambiar.
-    mi_numero = &quot;¡Hola, mundo!&quot;; // ⚠️
-}
-</code></pre></pre>
-<p>Si se intenta compilar el programa anterior, se obtendrá el mismo mensaje &quot;expected&quot; por parte del compilador: <code>expected integer, found &amp;str</code>. <code>&amp;str</code>es un tipo de cadena que aprenderemos pronto.</p>
-<h3 id="ocultación-shadowing"><a class="header" href="#ocultación-shadowing">Ocultación (Shadowing)</a></h3>
-<p>La ocultación de una variable sucede cuando se usa <code>let</code> para declarar una nueva variable con el mismo nombre que otra. A primera vista se parece a la mutabilidad, pero es totalmente diferente. En el siguiente ejemplo, se oculta una variable:</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let mi_numero = 8; // Esta variable es i32
-    println!(&quot;{}&quot;, mi_numero); // imprime 8
-    let mi_numero = 9.2; // Esta variable es f64 y tiene el mismo nombre
-    // pero es una variable nueva, completamente diferente.
-    println!(&quot;{}&quot;, mi_numero) // imprime 9.2
-}
-</code></pre></pre>
-<p>Se dice que hemos &quot;ocultado&quot; <code>mi_numero</code>con un nuevo &quot;enlace&quot;.</p>
-<p>¿Se ha destruido la anterior variable <code>mi_numero</code>? No, pero cuando se llama a <code>mi_numero</code> ahora se accede a la segunda variable de tipo <code>f64</code>. Y como ambas declaraciones se encuentran en el mismo bloque de código (mismo ámbito, mismo <code>{}</code>), se deja de tener acceso al <code>mi_numero</code> de tipo <code>i32</code>.</p>
-<p>Si estuvieran en diferentes bloques de código, podríamos volver a acceder a la primera variable <code>mi_numero</code>. Por ejemplo:</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    let mi_numero = 8; // Esta variable es i32
-    println!(&quot;{}&quot;, mi_numero); // imprime 8
-    {
-        let mi_numero = 9.2; // Esta variable es f64 y tiene el mismo nombre
-        // pero es una variable nueva, completamente diferente.
-        println!(&quot;{}&quot;, mi_numero) // imprime 9.2
-                                  // pero la nueva variable mi_numero
-                                  // solo existe hasta aquí
-                                  // la anterior ¡sigue viva!
-    }
-    println!(&quot;{}&quot;, mi_numero); // imprime 8
-}
-</code></pre></pre>
-<p>En resumen, cuando ocultas una variable, no la destruyes. La <strong>bloqueas</strong>.</p>
-<p>Qué ventajas tiene el ocultar variables. Es una buena práctica cuando necesitas modificar una variable en muchas ocasiones. Imagina que quieres hacer un conjunto de cálculos matemáticos simples con una variable:</p>
-<pre><pre class="playground"><code class="language-rust">fn dos_veces(numero: i32) -&gt; i32 {
-    numero * 2
-}
+    let my_name = &quot;Billybrobby&quot;;
+    let my_country = &quot;USA&quot;;
+    let my_home = &quot;Korea&quot;;
 
-fn main() {
-    let numero_final = {
-        let y = 10;
-        let x = 9; // x comienza con 9
-        let x = dos_veces(x); // se oculta con el nuevo x: 18
-        let x = x + y; // se oculta con el nuevo x: 28
-        x // devuelve x: a numero_final se asigna este valor de x
-    };
-    println!(&quot;El número ahora es: {}&quot;, numero_final)
+    let together = format!(
+        &quot;Soy {} y vengo de {}, pero vivo en {}.&quot;,
+        my_name, my_country, my_home
+    );
 }
 </code></pre></pre>
-<p>Sin ocultar las variables anteriores, habría sido necesario pensar diferentes nombres, incluso aunque no nos importen estos valores intermedios:</p>
-<pre><pre class="playground"><code class="language-rust">fn dos_veces(numero: i32) -&gt; i32 {
-    numero * 2
-}
-
-fn main() {
-    // Ejemplo sin usar las capacidades de ocultar variables
-    let numero_final = {
-        let y = 10;
-        let x = 9; // x comienza con 9
-        let x2 = dos_veces(x); // segundo nombre para x
-        let x2_y = x2 + y; // ¡tercer nombre para x!
-        x2_y // qué pena no tener disponible la ocultación
-             // habríamos podido usar solo una variable x
-    };
-    println!(&quot;El número ahora es: {}&quot;, numero_final)
+<p>Así se construye un objeto String denominado <em>together</em>, pero no se ha impreso.</p>
+<p>Otra forma adicional para crear un String es con la función <code>into()</code>, pero esta forma es algo diferente ya que no solo sirve para crear String. Algunos tipos se pueden convertir de forma fácil en otros utilizando <code>from</code> y <code>into()</code>. Si el tipo tiene <code>from</code>, tiene también <code>into()</code>. <code>from</code> resulta más claro ya que con él conoces los tipos: al usarlo <code>String::from(&quot;Cadena de texto&quot;)</code> se sabe que se crea una <code>String</code> de <code>&amp;str</code>. Sin embargo, con <code>.into()</code> el compilador, a veces, no lo conoce:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_string = &quot;Intento construir un String&quot;.into(); // ⚠️
 }
 </code></pre></pre>
-<p>En general, se usa la ocultación de variables en estos casos. Cuando se quiere usar una variable para un cálculo y luego otro más, sin tener mucho interés por los valores intermedios.</p>
+<p>Rust no conoce el tipo al que se quiere convertir la cadena de texto, porque se pueden crear muchos tipos diferentes a partir de un <code>&amp;str</code>. Rust se queja: puedo convertir &amp;str en muchos tipos diferentes. ¿Cuál es el que quieres?</p>
+<pre><code class="language-text">error[E0282]: type annotations needed
+ --&gt; src/main.rs:2:9
+  |
+2 |     let my_string = &quot;Intento construir un String&quot;.into(); // ⚠️
+  |         ^^^^^^^^^ consider giving `my_string` a type
+</code></pre>
+<p>Por lo que se puede corregir así:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_string: String = &quot;Intento construir un String&quot;.into();
+}
+</code></pre></pre>
+<p>Y ahora sí se ha podido crear un objeto String.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="07.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="10.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
-                            </a>
-                            <a rel="next" href="09.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
                     </nav>
@@ -254,11 +237,8 @@ fn main() {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="07.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="10.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
-                    </a>
-                    <a rel="next" href="09.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 

@@ -17,3 +17,4 @@
 - [Mutabilidad (cambio)](./08.md)
 - [La pila, la memoria dinámica y los punteros](./09.md)
 - [Más sobre impresión](./10.md)
+- [Cadenas de caracteres](./11.md)

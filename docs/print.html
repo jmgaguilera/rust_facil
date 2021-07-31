@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -944,6 +944,92 @@ pero Tokio no está en Korea.
 |                            |
 SEUL---------------------TOKIO
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cadenas-de-caracteres"><a class="header" href="#cadenas-de-caracteres">Cadenas de caracteres</a></h1>
+<p><strong><a href="https://youtu.be/pSyaGzGg26o">Puedes ver este capítulo en YouTube en inglés</a></strong></p>
+<p>Rust tiene dos tipos de cadenas de caracteres: <code>String</code> y <code>&amp;str</code>. ¿Cuál es la diferencia?</p>
+<ul>
+<li><code>&amp;str</code> es una cadena de caracteres simple que reside en la pila. Cuando se escribe <code>let mi_variable = &quot;¡Hola, mundo!&quot;</code> se crea una <code>&amp;str</code>. Este tipo es muy rápido.</li>
+<li><code>String</code> es un tipo de dato más complejo. Es un poco más lento, pero tiene más funciones. Una <code>String</code> es un puntero que almacena los datos en la memoria dinámica.</li>
+</ul>
+<p>Hay que destacar que <code>&amp;str</code> tiene <code>&amp;</code> como primer carácter debido a que es necesaria una referencia para utilizar el tipo <code>str</code>.  Esto es por la razón que vimos anteriormente: la pila necesita conocer el tamaño, así que se le da una referencia, las referencias siempre tienen el mismo tamaño. Otro tema a tener en cuenta es que al utilizar <code>&amp;</code> una referencia para interactuar con el tipo <code>str</code>, nunca se es dueño del tipo. Por el contrario, <code>String</code>es un tipo <em>con dueño</em>. Más adelante se mostrará la importancia de esta distinción.</p>
+<p>Ambos tipos, <code>&amp;str</code> y <code>String</code> son UTF-8. Por ejemplo, se puede escribir el siguiente código:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    // Nombre en coreano. No da problemas, ya que &amp;str es UTF-8
+    let nombre = &quot;서태지&quot;;
+    // Ț y ș no son un problema en UTF-8.
+    let otro_nombre = String::from(&quot;Adrian Fahrenheit Țepeș&quot;);
+}
+</code></pre></pre>
+<p>En el código anterior se observa que se puede construir de forma fácil una <code>String</code> de una <code>&amp;str</code>. Los dos tipos están muy relacionados, aunque son muy diferentes.</p>
+<p>Gracias a UTF-8, incluso se pueden escribir emojis.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let nombre = &quot;😂&quot;;
+    println!(&quot;Mi nombre real es {}&quot;, nombre);
+}
+</code></pre></pre>
+<p>Si se ejecuta este código en el terminal de comandos de tu propio ordenador tiene que aparecer <code>Mi nombre real es 😂</code> a menos el terminal de comandos presente limitaciones y no lo pueda imprimir. En cuyo caso imprimirá algo así <code>Mi nombre real es �</code>. En todo caso, Rust es capaz de manejar todos los caracteres Unicode.</p>
+<p>La razón para utilizar una referencia <code>&amp;</code>para el tipo <code>str</code> es que <code>str</code> es un tipo de datos de tamaño dinámico, su tamaño puede ser diferente. Por ejmplo, los nombres &quot;서태지&quot; y &quot;Adrian Fahrenheit Țepeș&quot; no son del mismo tamaño:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+
+    // std::mem::size_of::&lt;Type&gt;() devuelve el tamaño en bytes de un tipo
+    println!(&quot;Una String siempre ocupa {:?} bytes. Es de tamaño fijo.&quot;,
+        std::mem::size_of::&lt;String&gt;()); 
+    println!(&quot;Y un i8 siempre ocupa {:?} bytes. Es de tamaño fijo.&quot;, 
+        std::mem::size_of::&lt;i8&gt;());
+    println!(&quot;Y un f64 siempre ocupa {:?} bytes. Es de tamaño fijo.&quot;, 
+        std::mem::size_of::&lt;f64&gt;());
+     // std::mem::size_of_val() devuelve el tamaño en bytes de una variable
+    println!(&quot;¿Y un &amp;str? Puede ocupar cualquier tamaño. '서태지' ocupa {:?} bytes. No es de tamaño fijo.&quot;,
+        std::mem::size_of_val(&quot;서태지&quot;));
+    println!(&quot;Y 'Adrian Fahrenheit Țepeș' ocupa {:?} bytes. No es de tamaño fijo.&quot;,
+        std::mem::size_of_val(&quot;Adrian Fahrenheit Țepeș&quot;));
+}
+</code></pre></pre>
+<p>Lo que da como resultado:</p>
+<pre><code class="language-text">Una String siempre ocupa 24 bytes. Es de tamaño fijo.
+Y un i8 siempre ocupa 1 bytes. Es de tamaño fijo.
+Y un f64 siempre ocupa 8 bytes. Es de tamaño fijo.
+¿Y un &amp;str? Puede ocupar cualquier tamaño. '서태지' ocupa 9 bytes. No es de tamaño fijo.
+Y 'Adrian Fahrenheit Țepeș' ocupa 25 bytes. No es de tamaño fijo.
+</code></pre>
+<p>Por eso es necesario usar &amp;, porque así se construye un puntero (tipo de tamaño fijo) que puede almacenarse en la pila.  Si se escribiera <code>str</code>, Rust no sabría qué hacer al no conocer su tamaño.</p>
+<p>Hay muchas formas de construir un elemento de tipo <code>String</code>. Algunas de ellas son:</p>
+<ul>
+<li><code>String::from(&quot;Esta es una cadena de texto&quot;);</code> - <code>String::from()</code> es un método de Strgin que crea un <code>String</code> a partir de una cadena de texto.</li>
+<li><code>&quot;Esta es una cadena de texto&quot;.to_string()</code> - <code>&quot;&quot;.to_string()</code> es un método de <code>&amp;str</code> que crea un <code>String</code>.</li>
+<li>La macro <code>format!</code> - Es como <code>println!</code> excepto que crea un String en lugar de imprimir el texto.</li>
+</ul>
+<p>A continuación se muestran algunos ejemplos:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_name = &quot;Billybrobby&quot;;
+    let my_country = &quot;USA&quot;;
+    let my_home = &quot;Korea&quot;;
+
+    let together = format!(
+        &quot;Soy {} y vengo de {}, pero vivo en {}.&quot;,
+        my_name, my_country, my_home
+    );
+}
+</code></pre></pre>
+<p>Así se construye un objeto String denominado <em>together</em>, pero no se ha impreso.</p>
+<p>Otra forma adicional para crear un String es con la función <code>into()</code>, pero esta forma es algo diferente ya que no solo sirve para crear String. Algunos tipos se pueden convertir de forma fácil en otros utilizando <code>from</code> y <code>into()</code>. Si el tipo tiene <code>from</code>, tiene también <code>into()</code>. <code>from</code> resulta más claro ya que con él conoces los tipos: al usarlo <code>String::from(&quot;Cadena de texto&quot;)</code> se sabe que se crea una <code>String</code> de <code>&amp;str</code>. Sin embargo, con <code>.into()</code> el compilador, a veces, no lo conoce:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_string = &quot;Intento construir un String&quot;.into(); // ⚠️
+}
+</code></pre></pre>
+<p>Rust no conoce el tipo al que se quiere convertir la cadena de texto, porque se pueden crear muchos tipos diferentes a partir de un <code>&amp;str</code>. Rust se queja: puedo convertir &amp;str en muchos tipos diferentes. ¿Cuál es el que quieres?</p>
+<pre><code class="language-text">error[E0282]: type annotations needed
+ --&gt; src/main.rs:2:9
+  |
+2 |     let my_string = &quot;Intento construir un String&quot;.into(); // ⚠️
+  |         ^^^^^^^^^ consider giving `my_string` a type
+</code></pre>
+<p>Por lo que se puede corregir así:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_string: String = &quot;Intento construir un String&quot;.into();
+}
+</code></pre></pre>
+<p>Y ahora sí se ha podido crear un objeto String.</p>
 
                     </main>
 
