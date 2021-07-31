@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -1030,6 +1030,24 @@ Y 'Adrian Fahrenheit Țepeș' ocupa 25 bytes. No es de tamaño fijo.
 }
 </code></pre></pre>
 <p>Y ahora sí se ha creado un objeto String.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="const-y-static"><a class="header" href="#const-y-static">const y static</a></h1>
+<p><strong><a href="https://youtu.be/Ky3HqkWUcI0">Puedes ver este capítulo en YouTube en inglés</a></strong></p>
+<p>Además de <code>let</code>, existen dos maneras más de declarar valores. <code>const</code> y <code>static</code>. Para estas declaraciones, Rust no realiza la inferencia de los tipos: es necesario declarar el tipo de los valores. Existen vamores que no cambian (<code>const</code> significa constante). La diferencia entre ellos es que:</p>
+<ul>
+<li><code>const</code> se utiliza para los valores que no cambian y el nombre se reemplaza por su valor, allí donde se usa.</li>
+<li><code>static</code> define una posición fija en memoria que puede actuar como una variable global.</li>
+</ul>
+<p>Por ello, son casi lo mismo. Los programadores de Rust casi siempre utilizan valores constantes con <code>const</code>.</p>
+<p>Por convención, las constantes se suelen escribir con todas las letras en mayúsculas, normalmente están fuera del <code>main</code> para que existan en todo el programas.</p>
+<p>Dos ejemplos:</p>
+<pre><pre class="playground"><code class="language-rust">const NUMERO_DE_MESES: u32 = 12;
+static ESTACIONES: [&amp;str; 4] = [&quot;Primavera&quot;, &quot;Verano&quot;, &quot;Otoño&quot;, &quot;Invierno&quot;];
+
+fn main() {
+    println!(&quot;{}&quot;, NUMERO_DE_MESES);
+    println!(&quot;{:?}&quot;, ESTACIONES);
+}
+</code></pre></pre>
 
                     </main>
 

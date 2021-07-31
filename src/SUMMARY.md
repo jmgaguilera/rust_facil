@@ -18,3 +18,4 @@
 - [La pila, la memoria dinámica y los punteros](./09.md)
 - [Más sobre impresión](./10.md)
 - [Cadenas de caracteres](./11.md)
+- [const y static](./12.md)
