@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -1086,6 +1086,96 @@ help: consider using the `'static` lifetime
 </code></pre>
 <p>El valor de <code>pais</code> solo existe dentro de la función, al terminar de ejecutarse desaparece. Una vez la variable desaparece, el ordenador libera la memoria que ocupaba y la utiliza para otra cosa. Por eso, después de que la función termina, <code>pais_ref</code> apunta a una zona de memoria que ya no tiene el valor esperado y eso no es correcto. Rust previene este fallo en el código e impide que el programa compile.</p>
 <p>Este es el efecto importante de la existencia de tipos de dato &quot;con dueño&quot; en Rust. En el código anterior, el valor <code>String</code> tiene como dueño a la variable <code>pais</code>, por eso se puede &quot;prestar&quot; a otras variables (referencias), pero cuando desaparece la variable dueña del valor, <code>pais</code>, la referencia también desaparece, la referencia tiene &quot;prestado&quot; el valor, por lo que no se puede pasar a otro &quot;dueño&quot;.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="referencias-modificables-mutables"><a class="header" href="#referencias-modificables-mutables">Referencias modificables (mutables)</a></h1>
+<p><strong><a href="https://youtu.be/G48z6Rv76vc">Puedes ver este capítulo en YouTube en inglés</a></strong></p>
+<p>Si se necesita modificar un valor a través de una referencia, se debe indicar que la referencia sea modificable (mutable). Para ello, se utiliza <code>&amp;mut</code> en lugar de <code>&amp;</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    // no hay que olvidar que hay que escribir mut en la variable original
+    let mut mi_numero = 8;
+    let num_ref = &amp;mut mi_numero;
+}
+</code></pre></pre>
+<p><code>mi_numero</code> es de tipo <code>i32</code>, y <code>num_ref</code> es de tipo <code>&amp;mut i32</code> (es una &quot;referencia modificable/mutable a un valor <code>ì32</code>).</p>
+<p>Si se desea usar esta referencia para sumar 10, no se puede usar <code>num_ref += 10</code> ya que <code>num_ref</code> no es de tipo <code>i32</code>, es <code>&amp;i32</code>. Para obtener el valor de la referencia, se debe usar <code>*</code> que significa que &quot;no se necesita la referencia, sino el valor que al que representa&quot;. En otras palabras, <code>*</code> es lo opuesto a <code>&amp;</code>, un <code>*</code> borra a un <code>&amp;</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut mi_numero = 8;
+    let num_ref = &amp;mut mi_numero;
+    *num_ref += 10; // Usa * para cambiar el valor i32
+    println!(&quot;{}&quot;, mi_numero);
+
+    let segundo_numero = 800;
+    let triple_referencia = &amp;&amp;&amp;segundo_numero;
+    println!(&quot;segundo_numero = ¿triple_referencia? {}&quot;,
+        segundo_numero == ***triple_referencia);
+}
+</code></pre></pre>
+<p>El código anterior, da como resultado:</p>
+<pre><code class="language-text">18
+segundo_numero = ¿triple_referencia? true
+</code></pre>
+<p>El uso del operador sobre una variable <code>&amp;</code> se denomina &quot;referenciar&quot;. El uso del operador sobre una variable de referencia <code>*</code> se denomina &quot;<strong>des</strong>referenciar&quot;.</p>
+<p>Rust usa dos reglas para las referencias mutables e inmutables. Son muy importantes y fáciles de recordar porque tienen sentido.</p>
+<ul>
+<li><strong>Regla 1</strong>: Si solo existen referencias inmutables a un valor, se pueden tener tantas como se quiera.</li>
+<li><strong>Regla 2</strong>: Si existe una referencia mutable a un valor, solo puede existir una referencia. Esto último significa que no pueden existir a la vez referencias inmutables y mutables en el mismo momento.</li>
+</ul>
+<p>Estas reglas son necesarias debido a que las referencias mutables pueden cambiar los datos. Sería problemático que se modificara un dato cuando otras referencias lo están usando.</p>
+<p>Un forma de entenderlo es pensar en la creación de una presentación de Powerpoint <sup class="footnote-reference"><a href="#1">1</a></sup>.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>No se trata de un ejemplo excesivamente bueno, ya que actualmente es posible editar simultáneamente en Office 365.</p>
+</div>
+<p>El primer caso representa el de <strong>la existencia de una referencia mutable</strong>: un empleado está editando una presentación de Powerpoint. Piode ayuda a su jefe. El empleado entrega sus credenciales de acceso a su jefe para que pueda editar el Powerpoint. Ahora el jefe tiene una &quot;referencia mutable&quot; a la presentación de su empleado. El jefe puede hacer los cambios que quiera y devolver el ordenador más tarde. Nadie más tiene acceso a la presentación, por lo que este caso no da problemas.</p>
+<p>El segundo caso representa el de **la existencia únicamente de referencias inmutables&quot;: El empleado entrega la presentación a 100 personas. Todas ellas pueden verla. Tienen una &quot;referencia inmutable&quot; a la presentación ya que nadie puede modificarla, por lo que este caso no da problemas.</p>
+<p>El tercer caso representa la <strong>situación problemática a evitar</strong>: El empleado entrega sus credenciales de acceso a su jefe, que a partir de aquí dispone de una &quot;referencia mutable&quot;. Además, el empleado entrega la presentación a 100 personas. El jefe puede entrar a editar y estas modificaciones pueden verse o no por parte de las 100 personas, según el momento en que accedan sin que puedan controlar.</p>
+<p>Se puede ver que el intento de usar una referencia mutable simultáneamente con una inmutable no es aceptado por el compilador:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut numero = 10;
+    let numero_ref = &amp;numero;
+    let numero_modif = &amp;mut numero;
+    *numero_modif += 10;
+    println!(&quot;{}&quot;, numero_ref); // ⚠️
+}
+</code></pre></pre>
+<p>El compilador muestra un mensaje explicativo muy claro para mostrar el problema:</p>
+<pre><code class="language-text">error[E0502]: cannot borrow `numero` as mutable because it is also borrowed as immutable
+ --&gt; src/main.rs:4:24
+  |
+3 |     let numero_ref = &amp;numero;
+  |                      ------- immutable borrow occurs here
+4 |     let numero_modif = &amp;mut numero;
+  |                        ^^^^^^^^^^^ mutable borrow occurs here
+5 |     *numero_modif += 10;
+6 |     println!(&quot;{}&quot;, numero_ref); // ⚠️
+  |                    ---------- immutable borrow later used here
+</code></pre>
+<p>Sin embargo, este código sí funciona. ¿Por qué?</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut numero = 10;
+    let numero_modif = &amp;mut numero; // referencia modificable
+    *numero_modif += 10; // suma 10
+    let numero_ref = &amp;numero; // referencia inmutable
+    println!(&quot;{}&quot;, numero_ref); // imprime el valor referenciado
+}
+</code></pre></pre>
+<p>Imprime <code>20</code> sin problemas. Funciona porque el compilador es suficientemente inteligente para comprender el código. Conoce que se ha cmabiado <code>numero</code> a través de la referencia <code>numero_modif</code>, pero después, esta referencia mutable no se vuelve a usar. Por eso no hay problema aquí. No se usan &quot;a la vez&quot; referencias inmutables y mutables (como sí pasaba en el caso anterior).</p>
+<p>En versiones anteriores de Rust, este código sí daba error, pero actualmente no lo hace ya que el compilador es más inteligente. Puede entender no solo lo que se ha tecleado, sino como se usa todo.</p>
+<h2 id="ocultación-shadowing-de-nuevo"><a class="header" href="#ocultación-shadowing-de-nuevo">Ocultación (shadowing) de nuevo</a></h2>
+<p>Es necesario recordar que el ocultamiento de variables no destruye sus valores, sino que los bloquea. Con el uso de las referencias esto se ve más claro.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let pais = String::from(&quot;Austria&quot;);
+    let pais_ref = &amp;pais;
+    let pais = 8;
+    println!(&quot;{}, {}&quot;, pais_ref, pais);
+}
+</code></pre></pre>
+<p>¿Qué imprime este código? ¿<code>Austria, 8</code> o <code>8, 8</code>? Imprime <code>Austria, 8</code>. En la primera línea, se declara una variable <code>String</code> con el valor <code>Austria</code> y denominada <code>pais</code>. En la segunda línea se crea una referencia al valor de esta variable. Es decir, a la <code>String</code> que contiene <code>Austria</code>. Después, se oculta la variable <code>pais</code> con una nueva cuyo valor es <code>8</code> y que es de tipo <code>i32</code>. El primer elemento <code>pais</code> no se destruyó (lo hará al finalizar el ámbito en el que está, en la llave de cierre de este bloque), por lo que sigue accesible a través de la referencia <code>pais_ref</code>. Para mayor claridad, se vuelve a mostrar el código, ahora con comentarios sobre su comportamiento.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let pais = String::from(&quot;Austria&quot;); // String denominada pais
+    let pais_ref = &amp;pais; // pais_ref es una referencia al valor
+    let pais = 8; // nueva variable pais con un valor 8. Sin relación con la anterior, ni con pais_ref
+    println!(&quot;{}, {}&quot;, pais_ref, pais); // pais_ref sigue &quot;apuntando&quot; al dato Austria
+}
+</code></pre></pre>
 
                     </main>
 
