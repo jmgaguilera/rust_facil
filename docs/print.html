@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li><li class="chapter-item expanded "><a href="15.html"><strong aria-hidden="true">15.</strong> Paso de referencias a funciones</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -1176,6 +1176,102 @@ segundo_numero = ¿triple_referencia? true
     println!(&quot;{}, {}&quot;, pais_ref, pais); // pais_ref sigue &quot;apuntando&quot; al dato Austria
 }
 </code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="paso-de-referencias-a-funciones"><a class="header" href="#paso-de-referencias-a-funciones">Paso de referencias a funciones</a></h1>
+<p><strong>Puedes ver este capítulo en Youtube en inglés: <a href="https://youtu.be/mKWXt9YTavc">referencias inmutables</a> y <a href="https://youtu.be/kJV1wIvAbyk">referencias mutables</a></strong></p>
+<p>Las referencias son muy útiles en las funciones. La regla de Rust para todos los valores es que un valor solo puede tener una variable propietario.</p>
+<p>Este código no funcionará:</p>
+<pre><pre class="playground"><code class="language-rust">fn print_pais(pais_nombre: String) {
+    println!(&quot;{}&quot;, pais_nombre);
+}
+
+fn main() {
+    let pais = String::from(&quot;Austria&quot;);
+    print_pais(pais); // Se imprime &quot;Austria&quot;
+    print_pais(pais); // ⚠️ Se intenta de nuevo, pero no funciona
+}
+</code></pre></pre>
+<p>Devuelve el siguiente error:</p>
+<pre><code class="language-text">error[E0382]: use of moved value: `pais`
+ --&gt; src/main.rs:8:16
+  |
+6 |     let pais = String::from(&quot;Austria&quot;);
+  |         ---- move occurs because `pais` has type `String`, which does not implement the `Copy` trait
+7 |     print_pais(pais); // Se imprime &quot;Austria&quot;
+  |                ---- value moved here
+8 |     print_pais(pais); // ⚠️ Se intenta de nuevo, pero no funciona
+  |                ^^^^ value used here after move
+</code></pre>
+<p>La variable <code>pais</code> ya no existen en la última línea. El funcionamiento es el siguiente:</p>
+<ul>
+<li>Paso 1: Se crea el valor de tipo <code>String</code> cuyo dueño es la variable <code>pais</code>.</li>
+<li>Paso 2: Se pasa <code>pais</code> a la función <code>print_pais</code>. Es una función que no tiene <code>-&gt;</code> en su declaración, por lo que no retorna ningún valor. Al hacer la llamada, la variable <code>pais_nombre</code> (parámetro) es la nueva dueña del valor. Después de que esta función finaliza, <code>pais_nombre</code> desaparece, como es la dueña del valor, este también se destruye.</li>
+<li>Paso 3: Se intenta pasar por segunda vez <code>pais</code> a la función `print_pais, pero ya no existe ya que dejó de ser dueña del valor y el valor despareció dentro de la primera llamada a la función.</li>
+</ul>
+<p>Se podría hacer que la función <code>print_pais</code> devolviera de nuevo el valor <code>String</code>, pero es poco ortodoxo.</p>
+<pre><pre class="playground"><code class="language-rust">fn print_pais(pais_nombre: String) -&gt; String {
+    println!(&quot;{}&quot;, pais_nombre);
+    pais_nombre // se devuelve el valor
+}
+
+fn main() {
+    let pais = String::from(&quot;Austria&quot;);
+    let pais = print_pais(pais); // Es necesario crear una nueva variable para recuperar el valor
+    print_pais(pais);
+}
+</code></pre></pre>
+<p>Ahora sí funciona e imprime:</p>
+<pre><code class="language-text">Austria
+Austria
+</code></pre>
+<p>Es mucho mejor evitar que la variable <code>print_nombre</code>, parámetro de la función, sea dueña del valor, solamente se &quot;presta&quot;, sin que la variable <code>pais</code> de la función <code>main</code> deje de ser su dueño.</p>
+<pre><pre class="playground"><code class="language-rust">fn print_pais(pais_nombre: &amp;String) {
+    println!(&quot;{}&quot;, pais_nombre);
+}
+
+fn main() {
+    let pais = String::from(&quot;Austria&quot;);
+    print_pais(&amp;pais); // Se imprime &quot;Austria&quot;
+    print_pais(&amp;pais); // Se intenta de nuevo y funciona correctamente
+}
+</code></pre></pre>
+<p>En este caso <code>print_pais()</code> toma una referencia a una <code>String</code>: <code>&amp;String</code>. Cuando se llama <code>print_pais()</code> se pasa una referencia con <code>&amp;pais</code>. Esto significa que &quot;la función puede acceder al valor, pero no se hace dueña de él&quot;.</p>
+<p>A continuación, se muestra un ejemplo similar para observar el comportamiento de las referencias modificables (mutables).</p>
+<pre><pre class="playground"><code class="language-rust">fn añade_hungria(pais_nombre: &amp;mut String) { // se pasa una referencia mutable
+    pais_nombre.push_str(&quot;-Hungría&quot;); // push_str() añade un &amp;str a un String
+    println!(&quot;Ahora dice: {}&quot;, pais_nombre);
+}
+
+fn main() {
+    // es importante que la variable se declare
+    // como mutable para poder crear referencias mutables
+    let mut pais = String::from(&quot;Austria&quot;);
+    añade_hungria(&amp;mut pais); // hay que pasar la referencia mutable.
+    println!(&quot;Y el valor se ha modificado aquí: {}&quot;, pais);
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">Ahora dice: Austria-Hungría
+Y el valor se ha modificado aquí: Austria-Hungría
+</code></pre>
+<p>En resumen:</p>
+<ul>
+<li><code>fn nombre_de_funcion(variable: String)</code> toma un <code>String</code> y se hace dueño de él.</li>
+<li><code>fn nombre_de_funcion(variable: &amp;String)</code> toma prestado un <code>String</code> y puede acceder a su valor.</li>
+<li><code>fn nombre_de_funcion(variable: &amp;mut String)</code> toma prestado un <code>String</code>, puede acceder a su valor y modificarlo.</li>
+</ul>
+<p>El siguiente ejemplo puede parecer similar, pero es muy diferente. Sirve para mostrar cómo quien se hace dueño de un objeto puede decidir que sea modificable, aunque anteriormente no lo fuese.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let pais = String::from(&quot;Austria&quot;); // pais no es mutable, ni referencia
+    añadir_hungria(pais);
+}
+
+fn añadir_hungria(mut pais: String) { // añadir_hungria declara su parámetro como mutable
+    pais.push_str(&quot;-Hungría&quot;);
+    println!(&quot;{}&quot;, pais);
+}
+</code></pre></pre>
+<p>La función <code>añadir_hungria</code> se hace dueña del valor en su variable <code>mut pais</code>. A partir de ahí, puede hacer con este valor lo que quiera.</p>
+<p>Si se recuerda el ejemplo anterior sobre el empleado, su jefe y la presentación en powerpoint, esta es la situación en la que el empleado le da el control completo al jefe. El empleado no puede volver a tocar la presentación y el jefe puede hacer lo que quiera con ella.</p>
 
                     </main>
 
