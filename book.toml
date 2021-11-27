@@ -1,6 +1,9 @@
 [book]
 authors = ["José Miguel González Aguilera"]
-language = "en"
+language = "es"
 multilingual = false
 src = "src"
 title = "Rust en español fácil"
+
+[build]
+build-dir = "docs"
