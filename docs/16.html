@@ -138,7 +138,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="copia"><a class="header" href="#copia">Copia</a></h1>
-<p>Algunos tipos de Rust son muy simples. Se almacenan todos en la pila ya que el compilador conoce su tamaño. Esto significa que son fáciles de copiar, por lo que el compilador siempre los copia cuando se envían a una función. Son valores de tamaño fijo, conocido y pequeño, por lo que son fáciles de copiar. En estos casos, no hay necesidad de preocuparse por quién es el dueño de estos tipos de dato.</p>
+<p>Algunos tipos de Rust son muy simples. Se almacenan todos en la pila ya que el compilador conoce su tamaño. Esto significa que son fáciles de copiar, por lo que el compilador siempre los copia cuando se envían a una función. Son valores de tamaño fijo, conocido y pequeño. En estos casos, no hay necesidad de preocuparse por quién es el dueño de estos tipos de dato. A estos tipos, se los denomina <strong>tipos copia</strong> (Copy Types, en inglés).</p>
 <p>Estos tipos simples incluyen a los enteros, flotantes, booleanos (<code>true</code> -verdadero- y <code>false</code> -falso-) y <code>char</code>.</p>
 <p>Para que los tipos se puedan copiar tienen que <strong>implementar</strong> la posibilidad de copia (copy). Se puede consultar la documentación de cada tipo para conocerlo. Por ejemplo, esta es la documentación del tipo <code>char</code>:</p>
 <p><a href="https://doc.rust-lang.org/std/primitive.char.html">https://doc.rust-lang.org/std/primitive.char.html</a></p>
@@ -148,6 +148,141 @@
 <li>Puede usar <code>{}</code> para imprimir (<strong>Display</strong>).</li>
 <li>Puede usar <code>{:?}</code> para imprimir (<strong>Debug</strong>).</li>
 </ul>
+<pre><pre class="playground"><code class="language-rust">fn prints_number(numero: i32) { // Esta función no tiene -&gt;, no devuelve ningún valor
+                             // Si el número no se copiara, esta función se haría au propietaria 
+                             // y no se podría volver a usar
+    println!(&quot;{}&quot;, numero);
+}
+
+fn main() {
+    let mi_numero = 8;
+    prints_number(mi_numero); // Imprime 8. prints_number obtiene una copia del número
+    prints_number(mi_numero); // Imprime 8 de nuevo.
+                              // No hay problema ya que mi_numero es un tipo que se copia
+}
+</code></pre></pre>
+<p>Sin embargo, si se revisa la documentación de <code>String</code> se ve que no es un tipo que se copie.</p>
+<p><a href="https://doc.rust-lang.org/std/string/struct.String.html">https://doc.rust-lang.org/std/string/struct.String.html</a></p>
+<p>A la izquierda de esta documentación se puede ver <strong>Trait Implementations</strong>, en orden alfabético. En la C no está <strong>Copy</strong>. Lo que sí aparece es <strong>Clone</strong>, que es similar a *<em>Copy</em>, solo que es necesario invocarlo expresamente con el método <code>clone()</code>. Es decir, que no se clona por sí mismo, se tiene que pedir expresamente.</p>
+<p>En el siguiente ejemplo, <code>prints_country()</code> imprime el nombre del país, que es de tipo <code>String</code>. Se quiere, como en el caso anterior, imprimir dos veces, pero no es posible:</p>
+<pre><pre class="playground"><code class="language-rust">fn prints_country(country_name: String) {
+    println!(&quot;{}&quot;, country_name);
+}
+
+fn main() {
+    let country = String::from(&quot;Kiribati&quot;);
+    prints_country(country);
+    prints_country(country); // ⚠️
+}
+</code></pre></pre>
+<p>El mensaje es autoexplicativo:</p>
+<pre><code class="language-text">error[E0382]: use of moved value: `country`
+ --&gt; src\main.rs:4:20
+  |
+2 |     let country = String::from(&quot;Kiribati&quot;);
+  |         ------- move occurs because `country` has type `std::string::String`, which does not implement the `Copy` trait
+3 |     prints_country(country);
+  |                    ------- value moved here
+4 |     prints_country(country);
+  |                    ^^^^^^^ value used here after move
+</code></pre>
+<p>Dice que <code>String</code> no implementa el rasgo necesario para copiar <code>Copy trait</code>. Sin embargo, se ha visto que sí implementa el rasgo <code>Clone</code>, por lo que se puede añadir <code>.clone()</code> al código para generar de forma expresa una copia del valor. De este modo, se puede enviar un clon del valor a la función. Así, después de llamar a la función, la variable <code>country</code> continúa vigente y se puede utilizar.</p>
+<pre><pre class="playground"><code class="language-rust">fn prints_country(country_name: String) {
+    println!(&quot;{}&quot;, country_name);
+}
+
+fn main() {
+    let country = String::from(&quot;Kiribati&quot;);
+    prints_country(country.clone()); // crea un clon y lo pasa a la función. country sigue vigente
+    prints_country(country);
+}
+</code></pre></pre>
+<p>Evidentemente, si el <code>String</code> es muy largo, generar un clon requiere el uso de mucha memoria. Una cadena de texto <code>String</code> puede ser de la longitud de un libro entero, y cada vez que se llama a <code>.clone()</code> se genera una copia completa. Por eso, es recomendable el uso de <code>&amp;</code> para utilizar una referencia cuando sea posible. Por ejemplo, el código siguiente añade una cadena de texto <code>&amp;str</code> en una <code>String</code> y después crea un clon cada vez que se utiliza en una función:</p>
+<pre><pre class="playground"><code class="language-rust">fn get_length(input: String) { // Se apropia de la cadena de texto
+    println!(&quot;Tiene una longitud de {} palabras.&quot;, input.split_whitespace().count()); // la divide para contar el número de palabras
+}
+
+fn main() {
+    let mut my_string = String::new();
+    for _ in 0..50 {
+        my_string.push_str(&quot;Aquí van palabras en español &quot;); // añade las palabras
+        get_length(my_string.clone()); // obtiene un nuevo clon cada vez
+    }
+}
+</code></pre></pre>
+<p>Lo que imprime es:</p>
+<pre><code class="language-text">Tiene una longitud de 5 palabras.
+Tiene una longitud de 10 palabras.
+...
+Tiene una longitud de 250 palabras
+</code></pre>
+<p>Esto genera 50 clones. El siguiente código cumple la misma función usando referencias y es mucho más eficiente:</p>
+<pre><pre class="playground"><code class="language-rust">fn get_length(input: &amp;String) {
+    println!(&quot;Tiene una longitud de {} palabras.&quot;, input.split_whitespace().count());
+}
+
+fn main() {
+    let mut my_string = String::new();
+    for _ in 0..50 {
+        my_string.push_str(&quot;Aquí van palabras en español &quot;);
+        get_length(&amp;my_string);
+    }
+}
+</code></pre></pre>
+<p>Con el código anterior no se genera ningún clon.</p>
+<h2 id="variables-sin-valores"><a class="header" href="#variables-sin-valores">Variables sin valores</a></h2>
+<p>Una variables sin valor está <em>sin inicializar</em>. Para crear una variable en este estado se usa <code>let</code> y el nombre de la variable:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_variable; // ⚠️
+}
+</code></pre></pre>
+<p>Rust no compila si hay alguna variable sin inicializar.</p>
+<p>Sin embargo, en ocasiones pueden ser útiles. Un claro ejemplo es cuando:</p>
+<ul>
+<li>Se tiene un bloque de código en el que se genera el valor necesario para la variable y...</li>
+<li>...la variable tiene que sobrevivir fuera del bloque de código.</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust">fn loop_then_return(mut counter: i32) -&gt; i32 {
+    loop {
+        counter += 1;
+        if counter % 50 == 0 {
+            break;
+        }
+    }
+    counter
+}
+
+fn main() {
+    let my_number;
+
+    { // Este bloque es innecesario, pero se crea para documentar caso
+        let number = {
+            // Aquí podria haber mucho código
+            // para generar un valor, por ejemplo:
+            57
+        };
+
+        my_number = loop_then_return(number);
+    }
+
+    println!(&quot;{}&quot;, my_number);
+}
+</code></pre></pre>
+<p>Este ejemplo imprime <code>100</code>.</p>
+<p>Se observa que <code>my_number</code> se declarón en la función <code>main()</code>, por lo que su tiempo de vida dura hasta su finalización. Y obtiene su valor dentro del bucle <code>loop</code>. El valor pasa a ser propiedad de <code>my_number</code> antes de salir del bloque.</p>
+<p>Si se hubiera declarado y asignado el valor en la misma línea con <code>let my_number = loop_then_return(number)</code> dentro del bloque, la variable hubiera desaparecido con el bloque.</p>
+<p>De forma simplificada, ayuda a verlo el sustituir la función por su valor de retorno, 100. Se ve en el siguiente código:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_number;
+    {
+        my_number = 100;
+    }
+
+    println!(&quot;{}&quot;, my_number);
+}
+</code></pre></pre>
+<p>Es casi como escribir <code>let my_number = { 100 };</code>.</p>
+<p>Se debe observar que <code>my_number</code> no es <code>mut</code>. No se le asigna un valor hasta que se asigna el 100, por lo que no ha cambiado de valor. En el fondo el código real para <code>my_number</code> es solo <code>let my_number = 100;</code>.</p>
 
                     </main>
 
@@ -169,6 +304,20 @@
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
