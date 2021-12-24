@@ -23,3 +23,4 @@
 - [Referencias modificables (mutables)](./14.md)
 - [Paso de referencias a funciones](./15.md)
 - [Copia](./16.md)
+- [Tipos colección](./17.md)
