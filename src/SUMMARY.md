@@ -26,3 +26,4 @@
 - [Tipos colección](./17.md)
 - [Vectores](./18.md)
 - [Tuplas](./19.md)
+- [Estructuras de control](./20.md)
