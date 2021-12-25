@@ -25,3 +25,4 @@
 - [Copia](./16.md)
 - [Tipos colección](./17.md)
 - [Vectores](./18.md)
+- [Tuplas](./19.md)

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>¿Quién soy? - Rust en español fácil</title>
+        <title>Tuplas - Rust en español fácil</title>
         <!-- Custom HTML head -->
         
 
@@ -77,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html" class="active">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li><li class="chapter-item expanded "><a href="15.html"><strong aria-hidden="true">15.</strong> Paso de referencias a funciones</a></li><li class="chapter-item expanded "><a href="16.html"><strong aria-hidden="true">16.</strong> Copia</a></li><li class="chapter-item expanded "><a href="17.html"><strong aria-hidden="true">17.</strong> Tipos colección</a></li><li class="chapter-item expanded "><a href="18.html"><strong aria-hidden="true">18.</strong> Vectores</a></li><li class="chapter-item expanded "><a href="19.html"><strong aria-hidden="true">19.</strong> Tuplas</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li><li class="chapter-item expanded "><a href="15.html"><strong aria-hidden="true">15.</strong> Paso de referencias a funciones</a></li><li class="chapter-item expanded "><a href="16.html"><strong aria-hidden="true">16.</strong> Copia</a></li><li class="chapter-item expanded "><a href="17.html"><strong aria-hidden="true">17.</strong> Tipos colección</a></li><li class="chapter-item expanded "><a href="18.html"><strong aria-hidden="true">18.</strong> Vectores</a></li><li class="chapter-item expanded "><a href="19.html" class="active"><strong aria-hidden="true">19.</strong> Tuplas</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -137,21 +137,81 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="quién-soy"><a class="header" href="#quién-soy">¿Quién soy?</a></h1>
-<p>Soy un canadiense que vive en Korea y escribí Rust Fácil pensando en cómo hacer más fácil su uso para las empresas de aquí<sup class="footnote-reference"><a href="#1">1</a></sup>. Espero que otras empresas que no usan el inglés como primer idioma puedan utilizarlo también.</p>
-<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
-<p>N.T.: Soy un español que vive en Madrid, espero que esta traducción también facilite la comprensión de este lenguaje que tiene aspectos novedosos incluso para los que conocen C, C++, Java, Python, Ruby, Javascript o Typescript...</p>
-</div>
+                        <h1 id="tuplas"><a class="header" href="#tuplas">Tuplas</a></h1>
+<p><strong><a href="https://youtu.be/U67Diy6SlTg">Se puede ver este capítulo en Youtube en inglés</a></strong></p>
+<p>En Rust las tuplas usan <code>()</code>. Ya han aparecido muchas tuplas vacías ya que <em>nada</em>, en una función, realmente significa una tupla vacía:</p>
+<pre><code class="language-text">fn do_something() {}
+</code></pre>
+<p>realmente es igual a:</p>
+<pre><code class="language-text">fn do_something() -&gt; () {}
+</code></pre>
+<p>Esta función no recibe ningún parámetro (recibe una tupla vacía) y no retorna ningún valor (una tupla vacía). Por eso, se han estado usando ya muchas tuplas en los ejemplos de capítulos anteriores. Cuando no se retorna ningún valor en una función, se está retornando una tupla vacía.</p>
+<pre><pre class="playground"><code class="language-rust">fn just_prints() {
+    println!(&quot;Estoy imprimiendo&quot;); // Al añadir un ;
+    // como último dato antes de terminar la función
+    // se está indicando que se debe retornar una tupla vacía
+}
+
+fn main() {}
+</code></pre></pre>
+<p>Las tuplas pueden almacenar muchos tipos de elementos diferentes a la vez. Los elementos incluidos se indexan con números de 0 en adelante. Para acceder a ellos se utiliza el operador <code>.</code> en lugar de <code>[]</code>. A continuación se incorporan datos de diferentes tipos en una única tupla:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let random_tuple = (&quot;Esto es un texto&quot;, 8, vec!['a'], 'b', [8, 9, 10], 7.7);
+    println!(
+        &quot;El interior de la tupla contiene: Primer elemento: {:?}
+Segundo elemento: {:?}
+Tercer elemento: {:?}
+Cuarto elemento: {:?}
+Quinto elemento: {:?}
+Sexto elemento: {:?}&quot;,
+        random_tuple.0,
+        random_tuple.1,
+        random_tuple.2,
+        random_tuple.3,
+        random_tuple.4,
+        random_tuple.5,
+    )
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">El interior de la tupla contiene: Primer elemento: &quot;Esto es un texto&quot;
+Segundo elemento: 8
+Tercer elemento: ['a']
+Cuarto elemento: 'b'
+Quinto elemento: [8, 9, 10]
+Sexto elemento: 7.7
+</code></pre>
+<p>Esta tupla es de tipo <code>(&amp;str, i32, Vec&lt;char&gt;, char, [i32; 3], f64)</code>.</p>
+<p>Se puede usar una tupla para crear múltiples variables. En el siguiente código:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let str_vec = vec![&quot;one&quot;, &quot;two&quot;, &quot;three&quot;];
+}
+</code></pre></pre>
+<p><code>str_vec</code> contiene tres elementos. ¿Cómo se pueden recuperar los tres valores de este vector en diferentes variables? Por ejemplo, con una tupla:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let str_vec = vec![&quot;one&quot;, &quot;two&quot;, &quot;three&quot;];
+
+    let (a, b, c) = (str_vec[0], str_vec[1], str_vec[2]); // las variables serán a, b, y c
+    println!(&quot;{:?}&quot;, b);
+}
+</code></pre></pre>
+<p>El resultado del código anterior imprime <code>&quot;two&quot;</code>, que es lo que contiene la variable <code>b</code>. A esta forma de extraer valores en variables se denomina <em>desestructuramiento</em>.</p>
+<p>Si se necesita desestructurar un conjunto de elementos, pero no se quieren todos, se puede utilizar <code>_</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let str_vec = vec![&quot;one&quot;, &quot;two&quot;, &quot;three&quot;];
+
+    let (_, _, variable) = (str_vec[0], str_vec[1], str_vec[2]);
+}
+</code></pre></pre>
+<p>El código anterior solo crea una variable denominada <code>variable</code>, pero no las crea para el resto de elementos.</p>
+<p>Existen muchos más tipos colección y muchas formas adicionales de utilizar a los arrays, vectores y tuplas. Se enseñará más sobre ellos más adelante, pero primero, se enseñará la forma de controlar el flujo de ejecución de un programa.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="introduccion.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="18.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
-                            </a>
-                            <a rel="next" href="escritura.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
                     </nav>
@@ -159,11 +219,8 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="introduccion.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="18.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
-                    </a>
-                    <a rel="next" href="escritura.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
