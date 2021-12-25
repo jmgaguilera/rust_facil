@@ -27,3 +27,4 @@
 - [Vectores](./18.md)
 - [Tuplas](./19.md)
 - [Estructuras de control](./20.md)
+- [Estructuras - struct](./21.md)

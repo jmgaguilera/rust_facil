@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>El entorno de pruebas de Rust - Rust en español fácil</title>
+        <title>Estructuras - struct - Rust en español fácil</title>
         <!-- Custom HTML head -->
         
 
@@ -77,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html" class="active"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li><li class="chapter-item expanded "><a href="15.html"><strong aria-hidden="true">15.</strong> Paso de referencias a funciones</a></li><li class="chapter-item expanded "><a href="16.html"><strong aria-hidden="true">16.</strong> Copia</a></li><li class="chapter-item expanded "><a href="17.html"><strong aria-hidden="true">17.</strong> Tipos colección</a></li><li class="chapter-item expanded "><a href="18.html"><strong aria-hidden="true">18.</strong> Vectores</a></li><li class="chapter-item expanded "><a href="19.html"><strong aria-hidden="true">19.</strong> Tuplas</a></li><li class="chapter-item expanded "><a href="20.html"><strong aria-hidden="true">20.</strong> Estructuras de control</a></li><li class="chapter-item expanded "><a href="21.html"><strong aria-hidden="true">21.</strong> Estructuras - struct</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li><li class="chapter-item expanded "><a href="15.html"><strong aria-hidden="true">15.</strong> Paso de referencias a funciones</a></li><li class="chapter-item expanded "><a href="16.html"><strong aria-hidden="true">16.</strong> Copia</a></li><li class="chapter-item expanded "><a href="17.html"><strong aria-hidden="true">17.</strong> Tipos colección</a></li><li class="chapter-item expanded "><a href="18.html"><strong aria-hidden="true">18.</strong> Vectores</a></li><li class="chapter-item expanded "><a href="19.html"><strong aria-hidden="true">19.</strong> Tuplas</a></li><li class="chapter-item expanded "><a href="20.html"><strong aria-hidden="true">20.</strong> Estructuras de control</a></li><li class="chapter-item expanded "><a href="21.html" class="active"><strong aria-hidden="true">21.</strong> Estructuras - struct</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -137,31 +137,104 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="parte-1---rust-en-tu-navegador"><a class="header" href="#parte-1---rust-en-tu-navegador">Parte 1 - Rust en tu navegador</a></h1>
-<p>Este libro tiene dos partes. En la primera, aprenderás todo solo utilizando tu navegador. Puedes aprender casi todo lo que debes saber sin instalar Rust. Por eso esta primera parte es muy larga. En la segunda parte, mucho más corta, se habla de Rust en tu ordenador. Ahí aprenderás todo lo que necesitas conocer y que solo se puede hacer fuera del navegador. Algunos ejemplos son: trabajar con ficheros, obtener datos del usuario, gráficos y configuraciones personales. Espero que al finalizar la primera parte te guste Rust lo suficiente para que lo instales en tu equipo. Y si no, no hay problema, esta primera parte de enseña tanto que no te importará.</p>
-<h1 id="el-entorno-de-pruebas-playground-de-rust"><a class="header" href="#el-entorno-de-pruebas-playground-de-rust">El entorno de pruebas (Playground) de Rust</a></h1>
-<p><strong><a href="https://youtu.be/-lYeJeQ11OI">Puedes ver este capítulo en inglés en YouTube</a></strong></p>
-<p>Puede que no quieras instalarte aún Rust. No pasa nada. Puedes ir a <a href="https://play.rust-lang.org/">https://play.rust-lang.org/</a> y comenzar a escribir Rust sin salir del navegador. Puedes escribir ahí el código y pulsar <strong>Run</strong> para ver los resultados. Puedes ejecutar la mayoría de los ejemplos de este libro en este entorno. Solamente al final del libro verás ejemplos que van más allá de lo que se puede hacer aquí (como abrir ficheros.)</p>
-<p>Algunas recomendaciones de uso de este entorno de pruebas (Playground):</p>
-<ul>
-<li>Ejecuta el código con <strong>Run</strong></li>
-<li>Cambia de <strong>Debug</strong> a <strong>Release</strong> si quieres que el código sea más rápdio. <strong>Debug</strong> (Depuración) hace que compile más rápido, se ejecute más lento y contenga información para la depuración de errores. <strong>Release</strong> (Producción) hace que compile más lento, se ejecute más rápido y se suprima la información para la depuración de errores.</li>
-<li>Pulsa en <strong>Share</strong> (Compartir) para obtener un hiperenlace. Puedes usarlo para compartir tu código si necesitas ayuda. Después de pulsar compartir, puedes pulsar en <code>Open a new thread in de Rust user forum</code>(Abre un nuevo hilo en el foro de usuarios de Rust) para pedir ayuda.</li>
-<li><strong>Tools</strong> (Herramientas): <strong>Rustfmt</strong> formatea el código correctamente.</li>
-<li><strong>Tools</strong> (Herramientas): <strong>Clippy</strong> da información extra sobre cómo hacer mejor el código.</li>
-<li><strong>Config</strong> (Configuración): puedes cambiar aquí el tema a modo oscuro para que puedas trabajar mejor de noche y otras muchas opciones.</li>
-</ul>
-<p>Si quieres instalar Rust, ve a <a href="https://www.rust-lang.org/tools/install">https://www.rust-lang.org/tools/install</a> y sigue las instrucciones. Normalmente, usarás <code>rustup</code> para instalar y actualizar Rust.</p>
+                        <h1 id="estructuras---struct"><a class="header" href="#estructuras---struct">Estructuras - struct</a></h1>
+<p><strong>Se puede ver este capítulo en YouTube en inglés: <a href="https://youtu.be/W23uQghBOFk">Parte 1</a> y <a href="https://youtu.be/GSVhrjLCuNA">Parte 2</a></strong></p>
+<p>Con las estructuras se pueden crear nuevos tipos de datos. Se utilizan constantemente en Rust, puesto que son muy útiles. Las estructuras se crean con la palabra reservada <code>struct</code>. El nombre de las estructuras debería estar en UpperCamelCase (una letra mayúscula por cada palabra sin espacios, ni guiones bajos). Si se escribe todo en minúsculas, el compilador avisará.</p>
+<p>Existen tres tipos de estructuras.</p>
+<p>La primera de ellas es la estructura unitaria &quot;unit struct&quot;, que no tiene nada. Simplemente se escribe su nombre seguido de un punto y coma.</p>
+<pre><pre class="playground"><code class="language-rust">struct FileDirectory;
+fn main() {}
+</code></pre></pre>
+<p>La segunda de ellas es la estructura tupla, o estructura sin nombres. Solo es necesario escribir los tipos de dato que contiene, sin nombres de campo. Las estructuras de tupla son indicadas cuando se necesita una estructura simple sin necesidad de utilizar nombres.</p>
+<pre><pre class="playground"><code class="language-rust">struct Colour(u8, u8, u8);
+
+fn main() {
+    let my_colour = Colour(50, 0, 50); // Crea un colo RGB (red, green, blue)
+    println!(&quot;La segunda parte del color (la componente verde) es: {}&quot;, my_colour.1);
+}
+</code></pre></pre>
+<p>Este código imprime <code>La segunda parte del colo (la componente verde) es: 0</code>.</p>
+<p>El tercer tipo es la estructura con nombres. Que es, probablemente, la más habitual. En estas estructuras se declaran los nombres de los campos y sus tipos en un bloque <code>{}</code>. Estos bloques no se terminan con punto y coma.</p>
+<pre><pre class="playground"><code class="language-rust">struct Colour(u8, u8, u8); // Declara la misma estructura tupla para el color
+
+struct SizeAndColour {
+    size: u32,
+    colour: Colour, // y la inserta en una estructura con nombres
+}
+
+fn main() {
+    let my_colour = Colour(50, 0, 50);
+
+    let size_and_colour = SizeAndColour {
+        size: 150,
+        colour: my_colour
+    };
+}
+</code></pre></pre>
+<p>Los campos de una estructura con nombres se separan con comas. El último campo puede llevar o no la coma. En el caso anterior, se puso una coma después de definir el campo <code>colour: Colour,</code>, pero no es necesario. Normalmente, se considera buena idea poner siempre la coma, porque en ocasiones resulta necesario cambiar el orden de los campos o añadir uno al final y de este modo es sistemática la modificación:</p>
+<pre><pre class="playground"><code class="language-rust">struct Colour(u8, u8, u8); 
+
+struct SizeAndColour {
+    size: u32,
+    colour: Colour // Sin coma
+}
+
+fn main() {}
+</code></pre></pre>
+<p>Se dedice cambiar su orden, cortando y pegando la fila...</p>
+<pre><pre class="playground"><code class="language-rust">struct SizeAndColour {
+    colour: Colour // ⚠️ ¡Error! ya que no tiene coma.
+    size: u32,
+}
+
+fn main() {}
+</code></pre></pre>
+<p>En todo caso, no es muy importante si se usa la coma o no.</p>
+<p>En el siguiente ejemplo, se crea una estructura <code>Pais</code> que tiene los campos <code>poblacion</code>, <code>capital</code>y <code>presidente</code>.</p>
+<pre><pre class="playground"><code class="language-rust">struct Pais {
+    poblacion: u32,
+    capital: String,
+    presidente: String
+}
+
+fn main() {
+    let poblacion = 500_000;
+    let capital = String::from(&quot;Elista&quot;);
+    let presidente = String::from(&quot;Batu Khasikov&quot;);
+
+    let kalmykia = Pais {
+        poblacion: poblacion,
+        capital: capital,
+        presidente: presidente,
+    };
+}
+</code></pre></pre>
+<p>Se observa que resuta prolijo tener que escribir el nombre del campo y su valor. Se escribe doble. <code>poblacion: poblacion</code>, <code>capital: capital</code> y <code>presidente: presidente</code>. Como se trata de alto habitual, Rust proporciona un atajo si tanto el campo, como la variable que contiene el valor se llaman igual. En ese caso, se puede simplificar así:</p>
+<pre><pre class="playground"><code class="language-rust">struct Pais {
+    poblacion: u32,
+    capital: String,
+    presidente: String
+}
+
+fn main() {
+    let poblacion = 500_000;
+    let capital = String::from(&quot;Elista&quot;);
+    let presidente = String::from(&quot;Batu Khasikov&quot;);
+
+    let kalmykia = Pais {
+        poblacion,
+        capital,
+        presidente,
+    };
+}
+</code></pre></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="escritura.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="20.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
-                            </a>
-                            <a rel="next" href="02.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
                     </nav>
@@ -169,11 +242,8 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="escritura.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="20.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
-                    </a>
-                    <a rel="next" href="02.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
