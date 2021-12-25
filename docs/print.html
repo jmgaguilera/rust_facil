@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li><li class="chapter-item expanded "><a href="15.html"><strong aria-hidden="true">15.</strong> Paso de referencias a funciones</a></li><li class="chapter-item expanded "><a href="16.html"><strong aria-hidden="true">16.</strong> Copia</a></li><li class="chapter-item expanded "><a href="17.html"><strong aria-hidden="true">17.</strong> Tipos colección</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li><li class="chapter-item expanded "><a href="15.html"><strong aria-hidden="true">15.</strong> Paso de referencias a funciones</a></li><li class="chapter-item expanded "><a href="16.html"><strong aria-hidden="true">16.</strong> Copia</a></li><li class="chapter-item expanded "><a href="17.html"><strong aria-hidden="true">17.</strong> Tipos colección</a></li><li class="chapter-item expanded "><a href="18.html"><strong aria-hidden="true">18.</strong> Vectores</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -1491,6 +1491,98 @@ error[E0599]: no method named `thd` found for array `[&amp;str; 5]` in the curre
 </ul>
 <p>Así, <code>[0..2]</code> obtiene el primer y segundo valor (0 y 1). Dicho de otro modo, el índice cero y uno. No obtiene el tercer valor, cuyo  índice es dos.</p>
 <p>Es posible establecer un rango <strong>inclusivo</strong>, que sí incluya el último número del rango. Para ello se escribe <code>..=</code>, en lugar de <code>..</code>. Así que <code>[0..=2]</code> permite obtener el primer, segundo y tercer elemento del array.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="vectores"><a class="header" href="#vectores">Vectores</a></h1>
+<p><strong><a href="https://youtu.be/Eh-DsRnDKmw">Puedes ver este capítulo en Youtube en inglés</a></strong></p>
+<p>Del mismo modo que se dispone de <code>&amp;str</code> y <code>String</code>, se dispone de arrays y vectores. Los arrays son más rápidos, pero tienen menos funcionalidad, y los vectores son más lentos, pero tienen más funcionalidad (Rust siempre es muy rápido, solo que los vectores no son tan rápidos como los arrays). El tipo es <code>Vec</code> y, por lo tanto, se le puede llamar como &quot;vec&quot;.</p>
+<p>Existen principalemente dos formas de declarar un vector. Una es igual a como se crea un <code>String</code>, mediante el uso de <code>new</code>:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let name1 = String::from(&quot;Windy&quot;);
+    let name2 = String::from(&quot;Gomesy&quot;);
+
+    let mut my_vec = Vec::new();
+    // Si se compilara este programa hasta aquí, el compilador dará un error.
+    // ya que no conoce el tipo de datos del vec.
+
+    my_vec.push(name1); // Ahora sí lo conoce, es un Vec&lt;String&gt;
+    my_vec.push(name2);
+}
+</code></pre></pre>
+<p>Los <code>Vec</code> siempre contienen valores y para eso sirven <code>&lt;&gt;</code> (los paréntesis angulares). Un <code>Vec&lt;String&gt;</code> es un vector que contiene elementos <code>String</code>. Algunos otros ejemplos son:</p>
+<ul>
+<li><code>Vec&lt;(i32, i32)&gt;</code> es un vector en el que cada elemento de contenido es una tupla <code>(i32, i32)</code>.</li>
+<li><code>Vec&lt;Vec&lt;String&gt;&gt;</code> es un vector en el que cada elemento es otro vector de <code>String</code>. Por ejemplo, se puede pensar en almacenar el texto de un libro como un <code>Vec&lt;String&gt;</code>. Para almacenar varios libros haría falta crear una lista de elementos del tipo anterior y esto se puede hacer en otro <code>Vec</code> que contiene <code>Vec&lt;String&gt;</code>. Por lo tanto, el tipo resultante sería así <code>Vec&lt;Vec&lt;String&gt;&gt;</code>.</li>
+</ul>
+<p>En lugar de usar <code>.push()</code> para llegar a deducir el tipo de elementos que contiene un vector, se puede declarar el tipo:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut my_vec: Vec&lt;String&gt; = Vec::new(); // El compilador conoce el tipo
+                                              // Por eso no hay error
+}
+</code></pre></pre>
+<p>Como se observa, todos los elementos de un vector tienen que tener un mismo tipo.</p>
+<p>Otra forma sencilla de crear un vector es usando la macro <code>vec!</code>, cuya sintaxis recuerda a la declaración de un array.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut my_vec = vec![8, 10, 10];
+}
+</code></pre></pre>
+<p>El tipo de los elementos, en este ejemplo, es <code>Vec&lt;i32&gt;</code>. Un vector de enteros. </p>
+<p>Se pueden obtener secciones de un vector, igual que como se hace para un array.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let vec_of_ten = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    // Todo el código es idéntico, salvo que se añade vec!.
+    let three_to_five = &amp;vec_of_ten[2..5];
+    let start_at_two = &amp;vec_of_ten[1..];
+    let end_at_five = &amp;vec_of_ten[..5];
+    let everything = &amp;vec_of_ten[..];
+
+    println!(&quot;Three to five: {:?},
+start at two: {:?}
+end at five: {:?}
+everything: {:?}&quot;, three_to_five, start_at_two, end_at_five, everything);
+}
+</code></pre></pre>
+<p>Puesto que un vector es más lento que un array, se pueden usar diversos métodos para hacerlo más rápido. Un vector tiene una <strong>capacidad</strong> de espacio asignada, que permite que al ir insertando nuevos elementos en el vector, se haga rápidamente. Cada vez que se hace esto, el vector se acerca al límite de su capacidad. Cuando esta se supera, Rust crea un nuevo espacio del doble del tamaño actual y copia todos los elementos al nuevo espacio. Esto se denomina relocalización. Se puede usar el método <code>.capacity()</code>para ver la capacidad de un vector según se le van añadiendo elementos.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut num_vec = Vec::new();
+    println!(&quot;{}&quot;, num_vec.capacity()); // 0 elementos: immprime 0
+    num_vec.push('a'); // añade un carácter
+    println!(&quot;{}&quot;, num_vec.capacity()); // 1 elemento: imprime 4. Vecs con 1 elemento siempre se inician con una capacidad de 4
+    num_vec.push('a'); // añade uno más
+    num_vec.push('a'); // añade uno más
+    num_vec.push('a'); // añade uno más
+    println!(&quot;{}&quot;, num_vec.capacity()); // 4 elementos: aún 4 de capacidad.
+    num_vec.push('a'); // añade uno más
+    println!(&quot;{}&quot;, num_vec.capacity()); // imprime 8. Son 5 elementos, pero ha doblado la capacidad de 4 a 8 para hacer espacio.
+}
+</code></pre></pre>
+<p>Esto imprime:</p>
+<pre><code class="language-text">0
+4
+4
+8
+</code></pre>
+<p>Así que este vector ha sufrido dos relocalizaciones: de 0 a 4 y de 4 a 8. Para que fuese más rápido se puede iniciar así:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut num_vec = Vec::with_capacity(8); // Se crea con una capacidad inicial de 8
+    num_vec.push('a'); // se añade un carácter
+    println!(&quot;{}&quot;, num_vec.capacity()); // imprime 8
+    num_vec.push('a'); // añade uno más
+    println!(&quot;{}&quot;, num_vec.capacity()); // imprime 8
+    num_vec.push('a'); // añade uno más
+    println!(&quot;{}&quot;, num_vec.capacity()); // imprime 8.
+    num_vec.push('a'); // añade uno más
+    num_vec.push('a'); // añade uno más
+    // Ahora hay 5 elementos
+    println!(&quot;{}&quot;, num_vec.capacity()); // Aún 8
+}
+</code></pre></pre>
+<p>Este vector no ha sufrido ninguna relocalización, lo que es mejor. Por eso, si se conoce a priori el número de elementos que se necesitará, se puede inicializar el vector con <code>Vec::with_capacity()</code> para que funcione más rápido.</p>
+<p>En el caso de las <code>&amp;str</code> se podía utilizar <code>.into()</code> para convertirlo en una <code>String</code>. Igualmente, se puede convertir un array en un vector con la misma función.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_vec: Vec&lt;u8&gt; = [1, 2, 3].into();
+    let my_vec2: Vec&lt;_&gt; = [9, 0, 10].into(); // Vec&lt;_&gt; significa &quot;elige el tipo del Vector por mí&quot;
+                                             // Rust elegirá Vec&lt;i32&gt;
+}
+</code></pre></pre>
 
                     </main>
 
