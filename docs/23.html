@@ -1,0 +1,371 @@
+<!DOCTYPE HTML>
+<html lang="es" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Bucles - Rust en español fácil</title>
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li><li class="chapter-item expanded "><a href="15.html"><strong aria-hidden="true">15.</strong> Paso de referencias a funciones</a></li><li class="chapter-item expanded "><a href="16.html"><strong aria-hidden="true">16.</strong> Copia</a></li><li class="chapter-item expanded "><a href="17.html"><strong aria-hidden="true">17.</strong> Tipos colección</a></li><li class="chapter-item expanded "><a href="18.html"><strong aria-hidden="true">18.</strong> Vectores</a></li><li class="chapter-item expanded "><a href="19.html"><strong aria-hidden="true">19.</strong> Tuplas</a></li><li class="chapter-item expanded "><a href="20.html"><strong aria-hidden="true">20.</strong> Estructuras de control</a></li><li class="chapter-item expanded "><a href="21.html"><strong aria-hidden="true">21.</strong> Estructuras - struct</a></li><li class="chapter-item expanded "><a href="22.html"><strong aria-hidden="true">22.</strong> Enumerados - enum</a></li><li class="chapter-item expanded "><a href="23.html" class="active"><strong aria-hidden="true">23.</strong> Bucles</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust en español fácil</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="bucles"><a class="header" href="#bucles">Bucles</a></h1>
+<p>Con los bucles se de puede decir a Rust que repita algo hasta que se quiera que se detenga. Se puede utilizar la palabra reservada <code>loop</code> para iniciar un bucle que no tenga fin. Al menos, hasta que se le indique que se pare mediante la palabra reservada <code>break</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() { // Este programa nunca se detiene
+    loop {
+
+    }
+}
+</code></pre></pre>
+<p>El siguiente programa sí acaba. En cada repetición incrementa en uno un contador, hasta que vale 5. En este momento se acaba:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut contador = 0; // Inicia el contador a 0
+    loop {
+        contador +=1; // Incrementa el contador en 1
+        println!(&quot;El contador vale ahora {}&quot;, contador);
+        if contador == 5 { // Sale del bucle cuyo contador == 5
+            break;
+        }
+    }
+}
+</code></pre></pre>
+<p>This will print:</p>
+<pre><code class="language-text">El contador vale ahora 1
+El contador vale ahora 2
+El contador vale ahora 3
+El contador vale ahora 4
+El contador vale ahora 5
+</code></pre>
+<p>Si se inserta un bucle dentro de otro, es posible darles nombre para indicar a Rust a qué bucle salir cuyo se ejecuta una sentencia <code>break</code>. Para dar nombre se usa el apóstrofo <code>'</code> y los dos puntos <code>:</code>:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut contador = 0;
+    let mut contador2 = 0;
+    println!(&quot;Entryo en el primer bucle.&quot;);
+
+    'primer_bucle: loop {
+        // Da nombre al primer bucle
+        contador += 1;
+        println!(&quot;El contador es ahora: {}&quot;, contador);
+        if contador &gt; 9 {
+            // Inicia un segundo bucle dentro del primero
+            println!(&quot;Entryo en el segundo bucle.&quot;);
+
+            'segundo_bucle: loop {
+                // está dentro del 'segundo_bucle
+                println!(&quot;El segundo contador es ahora: {}&quot;, contador2);
+                contador2 += 1;
+                if contador2 == 3 {
+                    break 'primer_bucle; // Sale del  'primer_bucle para abyonar el programa
+                }
+            }
+        }
+    }
+}
+</code></pre></pre>
+<p>Este código imprimirá:</p>
+<pre><code class="language-text">Entryo en el primer bucle.
+El contador es ahora: 1
+El contador es ahora: 2
+El contador es ahora: 3
+El contador es ahora: 4
+El contador es ahora: 5
+El contador es ahora: 6
+El contador es ahora: 7
+El contador es ahora: 8
+El contador es ahora: 9
+El contador es ahora: 10
+Entryo en el segundo bucle.
+El segundo contador es ahora: 0
+El segundo contador es ahora: 1
+El segundo contador es ahora: 2
+</code></pre>
+<p>Un bucle <code>while</code> es uno que se repite mientras una condición se cumple (es <code>true</code>). En cada repetición, Rust valida si la condición es aún <code>true</code>. Cuyo es <code>false</code>, Rust finaliza el bucle.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut contador = 0;
+
+    while contador &lt; 5 {
+        contador +=1;
+        println!(&quot;El contador vale ahora: {}&quot;, contador);
+    }
+}
+</code></pre></pre>
+<p>Un bucle <code>for</code> repite la ejecución un número determinado de veces. Este tipo de bucles suele utilizar <strong>rangos</strong> muy a menudo. Se utiliza <code>..</code> y <code>..=</code> para crear un rango.</p>
+<ul>
+<li><code>..</code> crea un rango <strong>excluyente</strong>: <code>0..3</code> crea un rango con los siguientes tres números <code>0, 1, 2</code>.</li>
+<li><code>..=</code> crea un rango <strong>incluyente</strong>: <code>0..=3</code> crea un rango con los siguientes cuatro números <code>0, 1, 2, 3</code>.</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    for numero in 0..3 {
+        println!(&quot;El numero es: {}&quot;, numero);
+    }
+
+    for numero in 0..=3 {
+        println!(&quot;El siguiente numero es: {}&quot;, numero);
+    }
+}
+</code></pre></pre>
+<p>This prints:</p>
+<pre><code class="language-text">El numero es: 0
+El numero es: 1
+El numero es: 2
+El siguiente numero es: 0
+El siguiente numero es: 1
+El siguiente numero es: 2
+El siguiente numero es: 3
+</code></pre>
+<p>En los bucles <code>for</code> se observa que se crea una variable en cada repetición que contiene el valor de la repetición (iteración) actual. Esta variable se podría llamar de cualquier forma. La variable se usa, en este caso, en <code>println!</code>.</p>
+<p>Si no se necesitara la variable, se puede utilizar <code>_</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    for _ in 0..3 {
+        println!(&quot;Imprimiendo lo mismo las tres veces&quot;);
+    }
+}
+</code></pre></pre>
+<p>This prints:</p>
+<pre><code class="language-text">Imprimiendo lo mismo las tres veces
+Imprimiendo lo mismo las tres veces
+Imprimiendo lo mismo las tres veces
+</code></pre>
+<p>En este caso no se ha usado la variable.</p>
+<p>Realmente, si se le hubiera dado nombre a la variable y no se hubiese usado, Rust lo hubiera indicado:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    for numero in 0..3 {
+        println!(&quot;Imprimiendo lo mismo las tres veces&quot;);
+    }
+}
+</code></pre></pre>
+<p>El código anterior imprime lo mismo que antes. El programa compila bien, pero Rust lanzará un aviso recordyo que la variable <code>numero</code> no se está usyo:</p>
+<pre><code class="language-text">warning: unused variable: `numero`
+ --&gt; src\main.rs:2:9
+  |
+2 |     for numero in 0..3 {
+  |         ^^^^^^ help: if this is intentional, prefix it with an underscore: `_number`
+</code></pre>
+<p>Rust sugiere que se escriba <code>_numero</code> en lugar de <code>_</code>. Para Rust, una variable que comience por <code>_</code> significa que &quot;puede que se use en el futuro&quot;. El uso de <code>_</code> solo, significa &quot;no importa este valor&quot;. Por eso, se pueden poner <code>_</code> guiones bajos delante del nombre de las variables que se vayan a usar más tarde y no se quiera que el compilador avise sobre que no se están usyo.</p>
+<p><code>break</code> también se puede usar para devolver un valor. Para ello, se escribe un valor detrás de él y se usa <code>;</code>. A continuación se muestra un ejemplo con <code>loop</code> y un uso de <code>break</code>que devuelve <code>mi_numero</code> como valor.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut contador = 5;
+    let mi_numero = loop {
+        contador +=1;
+        if contador % 53 == 3 {
+            break contador;
+        }
+    };
+    println!(&quot;{}&quot;, mi_numero);
+}
+</code></pre></pre>
+<p>Este código imprime <code>56</code>. <code>break contador;</code> significa &quot;finaliza el bucle y devuelve el valor del contador&quot;. Puesto que el bucle se asigna a la variable <code>mi_numero</code>, el valor devuelto se almacena en ella.</p>
+<p>Con el conocimiento de los bucles se puede escribir una solución mejor al problema anterior de la comprobación de los colores con <code>match</code>. Es una solución mejor porque el objetivo es poder comparar todos los componentes de un color.</p>
+<pre><pre class="playground"><code class="language-rust">fn match_colores(rbg: (i32, i32, i32)) {
+    println!(&quot;Comparación de un color con {} rojo, {} azul, y {} verde:&quot;, rbg.0, rbg.1, rbg.2);
+    let new_vec = vec![(rbg.0, &quot;rojo&quot;), (rbg.1, &quot;azul&quot;), (rbg.2, &quot;verde&quot;)]; // Coloca los colores en un vec. Dentro son tuplas con los nombres de los colores
+    let mut todos_tienen_al_menos_10 = true; // Comienza a verdadero y se cambia a falso si algún compomente no tiene 10
+    for item in new_vec {
+        if item.0 &lt; 10 {
+            todos_tienen_al_menos_10 = false; // Ahora es false
+            println!(&quot;No mucho {}.&quot;, item.1) // Y se imprime el nombre del color.
+        }
+    }
+    if todos_tienen_al_menos_10 { // Comprueba si es verdadero e imprime si lo es
+        println!(&quot;Cada compomente de color tiene al menos 10.&quot;)
+    }
+    println!(); // Añade una línea vacía para separar
+}
+
+fn main() {
+    let first = (200, 0, 0);
+    let second = (50, 50, 50);
+    let third = (200, 50, 0);
+
+    match_colores(first);
+    match_colores(second);
+    match_colores(third);
+}
+</code></pre></pre>
+<p>This prints:</p>
+<pre><code class="language-text">Comparación de un color con 200 rojo, 0 azul, y 0 verde:
+No mucho azul.
+No mucho verde.
+
+Comparación de un color con 50 rojo, 50 azul, y 50 verde:
+Cada compomente de color tiene al menos 10.
+
+Comparación de un color con 200 rojo, 50 azul, y 0 verde:
+No mucho verde.
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="22.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="22.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
