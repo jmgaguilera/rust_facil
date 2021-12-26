@@ -28,3 +28,4 @@
 - [Tuplas](./19.md)
 - [Estructuras de control](./20.md)
 - [Estructuras - struct](./21.md)
+- [Enumerados - enum](./22.md)
