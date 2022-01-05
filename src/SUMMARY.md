@@ -33,3 +33,4 @@
 - [Implementando structs y enums](./24.md)
 - [Desestructurar](./25.md)
 - [Referencias y el operador punto `.`](./26.md)
+- [Genéricos](./27.md)
