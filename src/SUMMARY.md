@@ -31,3 +31,4 @@
 - [Enumerados - enum](./22.md)
 - [Bucles](./23.md)
 - [Implementando structs y enums](./24.md)
+- [Desestructurar](./25.md)
