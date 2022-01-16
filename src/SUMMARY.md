@@ -35,3 +35,4 @@
 - [Referencias y el operador punto `.`](./26.md)
 - [Genéricos](./27.md)
 - [Los enumerados Option y Result](./28.md)
+- [Otras colecciones](./29.md)
