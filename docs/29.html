@@ -383,7 +383,7 @@ fn main() {
 <p>Un <code>HashSet</code> es un <code>HashMap</code> que solo tiene claves. En <a href="https://doc.rust-lang.org/std/collections/struct.HashSet.html">la página para HashSet</a> explica lo siguiente:</p>
 <p>&quot;Es un hash set implementado con HashMap en el que el valor es ().&quot; Es un <code>HashMap</code> con claves y sin valores.</p>
 <p>Se utiliza frecuentemente para saber si una clave existe o no.</p>
-<p>Por ejemplo, si se tienen 100 números aleatorios y cada uno de ellos se encuentra entre el 1 y el 100, habrá números entre el 1 y el 100 que aparezcan varias veces y algunos que no aparecerán. Si se insertan en un <code>HashSet</code> se obtendrá una lista de todos los números que sí han aparecido sin tener en cuenta el número de veces que lo han hecho.</p>
+<p>Por ejemplo, si se tienen 100 números aleatorios y cada uno de ellos se encuentra entre el 1 y el 100, habrá números entre el 1 y el 100 que aparezcan varias veces y algunos que no aparecerán. Si se insertan en un <code>HashSet</code> se obtendrá una lista de todos los números que sí han aparecido sin tener en cuenta el número de veces que lo han hecha.</p>
 <pre><pre class="playground"><code class="language-rust">use std::collections::HashSet;
 
 fn main() {
@@ -529,7 +529,7 @@ Tienes que hacer: Ver algo en YouTube
 }
 </code></pre></pre>
 <p>Se eliminará el <code>9</code>. El <code>8</code> en el índice 1 se moverá al índice 0, el <code>7</code> en el índice 2 se moverá al 1 y así sucesivamente. Se puede imaginar lo complejo que sería que un aparcamiento de vehículos funcionara así cada vez que un coche sale de él...</p>
-<p>Esta forma de eliminar el primer elemento supone mucho trabajo para el ordenador. De hecho, si se ejecuta esto en el Playground de rust, problamente lo abandone debido a que es mucho esfuerzo:</p>
+<p>Esta forma de eliminar el primer elemento supone mucho trabajo para el ordenador. De hecha, si se ejecuta esto en el Playground de rust, problamente lo abanhecha debido a que es mucho esfuerzo:</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let mut my_vec = vec![0; 600_000];
     for i in 0..600000 {
@@ -538,6 +538,57 @@ Tienes que hacer: Ver algo en YouTube
 }
 </code></pre></pre>
 <p>El código anterior construye un <code>Vec</code> de 600.000 ceros. Cada vez que usa <code>.remove(0)</code> se tiene que mover cada cero una posición a la izquierda. Y esto se tiene que hacer hasta 600.000 veces.</p>
+<p>Esto no es un problema para <code>VecDeque</code>. En general, puede ser un poco más lento que un <code>Vec</code>, pero si es necesario realizar operaciones en ambos lados es muchísimo más eficiente. Se puede construir a partir de un vector mediante <code>VecDeque::from</code>. El código anterior quedaría modificado así:</p>
+<pre><pre class="playground"><code class="language-rust">use std::collections::VecDeque;
+
+fn main() {
+    let mut my_vec = VecDeque::from(vec![0; 600_000]);
+    for i in 0..600000 {
+        my_vec.pop_front();
+    }
+}
+</code></pre></pre>
+<p>Que ahora es mucho más rápido y en el Playground de Rust se acaba en menos de un segundo en lugar de fallar.</p>
+<p>En el siguiente ejemplo se dispone de un <code>Vec</code> de cosas para hacer. Se convierte a un <code>VecDeque</code> y se usa <code>.push_front()</code> para añadir elementos al inicio. Así el primer elemento añadido estará a la derecha. Cada elemento que se inserta es una tupla <code>(&amp;str, bool)</code>: <code>&amp;str</code> es la descripción de la tarea y <code>false</code> significa que no se ha ejecutado aún. Se usa la función <code>.hecha()</code> para extraer un elemento del final, pero sin eliminarlo. En su lugar, se cambia de <code>false</code> a <code>true</code> y se inserta al inicio para conservarlo.</p>
+<p>Queda así:</p>
+<pre><pre class="playground"><code class="language-rust">use std::collections::VecDeque;
+
+fn comprueba_restantes(input: &amp;VecDeque&lt;(&amp;str, bool)&gt;) { // Cada elemento es un (&amp;str, bool)
+    for item in input {
+        if item.1 == false {
+            println!(&quot;Tienes que: {}&quot;, item.0);
+        }
+    }
+}
+
+fn hecha(input: &amp;mut VecDeque&lt;(&amp;str, bool)&gt;) {
+    let mut tarea_hecha = input.pop_back().unwrap(); // extrae del final
+    tarea_hecha.1 = true;                            // ahora está hecha - se marca como true
+    input.push_front(tarea_hecha);                   // y se inserta al inicio
+}
+
+fn main() {
+    let mut my_vecdeque = VecDeque::new();
+    let things_to_do = vec![&quot;enviar correo al cliente&quot;, &quot;añadir un producto a la lista&quot;, &quot;devolver la llamada a Loki&quot;];
+
+    for thing in things_to_do {
+        my_vecdeque.push_front((thing, false));
+    }
+
+    hecha(&amp;mut my_vecdeque);
+    hecha(&amp;mut my_vecdeque);
+
+    comprueba_restantes(&amp;my_vecdeque);
+
+    for tarea in my_vecdeque {
+        print!(&quot;{:?} &quot;, tarea);
+    }
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">Tienes que: devolver la llamada a Loki
+(&quot;añadir un producto a la lista&quot;, true) (&quot;enviar correo al cliente&quot;, true) (&quot;devolver la llamada a Loki&quot;, false)
+</code></pre>
 
                     </main>
 
