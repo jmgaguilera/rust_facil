@@ -37,3 +37,4 @@
 - [Los enumerados Option y Result](./28.md)
 - [Otras colecciones](./29.md)
 - [El operador ?](./30.md)
+- [Traits (Rasgos)](./31.md)

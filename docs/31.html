@@ -1,0 +1,448 @@
+<!DOCTYPE HTML>
+<html lang="es" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Traits (Rasgos) - Rust en español fácil</title>
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li><li class="chapter-item expanded "><a href="15.html"><strong aria-hidden="true">15.</strong> Paso de referencias a funciones</a></li><li class="chapter-item expanded "><a href="16.html"><strong aria-hidden="true">16.</strong> Copia</a></li><li class="chapter-item expanded "><a href="17.html"><strong aria-hidden="true">17.</strong> Tipos colección</a></li><li class="chapter-item expanded "><a href="18.html"><strong aria-hidden="true">18.</strong> Vectores</a></li><li class="chapter-item expanded "><a href="19.html"><strong aria-hidden="true">19.</strong> Tuplas</a></li><li class="chapter-item expanded "><a href="20.html"><strong aria-hidden="true">20.</strong> Estructuras de control</a></li><li class="chapter-item expanded "><a href="21.html"><strong aria-hidden="true">21.</strong> Estructuras - struct</a></li><li class="chapter-item expanded "><a href="22.html"><strong aria-hidden="true">22.</strong> Enumerados - enum</a></li><li class="chapter-item expanded "><a href="23.html"><strong aria-hidden="true">23.</strong> Bucles</a></li><li class="chapter-item expanded "><a href="24.html"><strong aria-hidden="true">24.</strong> Implementando structs y enums</a></li><li class="chapter-item expanded "><a href="25.html"><strong aria-hidden="true">25.</strong> Desestructurar</a></li><li class="chapter-item expanded "><a href="26.html"><strong aria-hidden="true">26.</strong> Referencias y el operador punto .</a></li><li class="chapter-item expanded "><a href="27.html"><strong aria-hidden="true">27.</strong> Genéricos</a></li><li class="chapter-item expanded "><a href="28.html"><strong aria-hidden="true">28.</strong> Los enumerados Option y Result</a></li><li class="chapter-item expanded "><a href="29.html"><strong aria-hidden="true">29.</strong> Otras colecciones</a></li><li class="chapter-item expanded "><a href="30.html"><strong aria-hidden="true">30.</strong> El operador ?</a></li><li class="chapter-item expanded "><a href="31.html" class="active"><strong aria-hidden="true">31.</strong> Traits (Rasgos)</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust en español fácil</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="traits-rasgos"><a class="header" href="#traits-rasgos">Traits (Rasgos)</a></h1>
+<p>Anteriormente, se han visto algunos <em>traits</em><sup class="footnote-reference"><a href="#1">1</a></sup> (rasgos). <code>Debug</code>, <code>Copy</code> y <code>Clone</code> son traits  (rasgos). Para que un tipo tenga un trait (rasgo) hay que implementarlo. Puesto que algunos traits son tan comunes (como <code>Debug</code>), existen atributos en Rust que los implementan automáticamente (con una implementación por defecto). Esto es lo que sucede cuando se escribe <code>#[derive(Debug)]</code>: se implementa de forma automática el trait <code>Debug</code>.</p>
+<pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
+struct MiStruct {
+    numero: usize,
+}
+
+fn main() {}
+</code></pre></pre>
+<p>Pero hay otros traits que son más difíciles de implementar y hay que hacerlo a mano con <code>impl</code>. Por ejemplo, el trait <code>Add</code>, que se encuentra en <code>std::ops::Add</code> y se utiliza para sumar dos cosas. Pero Rust no puede adivinar cómo se pueden sumar dos cosas cualquiera, por lo que hay qué codificarlo.</p>
+<pre><pre class="playground"><code class="language-rust">struct CosasASumar {
+    primera_cosa: u32,
+    segunda_cosa: f32,
+}
+
+fn main() {}
+</code></pre></pre>
+<p>Se pueden sumar <code>primera_cosa</code> y <code>segunda_cosa</code>, pero hay que dar más información. Puede que se quiera sumar <code>f32</code>, algo así:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 🚧
+let resultado = self.segunda_cosa + self.primera_cosa as f32
+<span class="boring">}
+</span></code></pre></pre>
+<p>O puede que se quiera poner <code>self.primera_cosa</code> junto a <code>self.segunda_cosa</code> y que sea así como se quiera sumar. Así la suma de 55 a 33.4 sería 5533.4 y no 88.4.</p>
+<p>A continuación, se analiza en primer lugar como se crea un trait. Lo importante es recordar que los trait sirven para describir un comportamiento determinado de quien los implementen. Para crear un trait, se escribe <code>trait</code> y se crean algunas funciones (o ninguna).</p>
+<pre><pre class="playground"><code class="language-rust">struct Animal { // Un simple struct - un Animal que solo contiene su nombre
+    nombre: String,
+}
+
+trait Perro { // El trait Perro asigna alguna funcionalidad
+    fn ladrar(&amp;self) { // Puede ladrar
+        println!(&quot;¡Guau, guau!&quot;);
+    }
+    fn correr(&amp;self) { // y puede correr
+        println!(&quot;¡El perro está corriendo!&quot;);
+    }
+}
+
+impl Perro for Animal {} // Ahora el Animal implementa el trait Perro
+
+fn main() {
+    let rover = Animal {
+        nombre: &quot;Rover&quot;.to_string(),
+    };
+
+    rover.ladrar(); // El Animal puede usar ladrar()
+    rover.correr();  // y puede usar correr()
+}
+</code></pre></pre>
+<p>Así está bien, pero no se quiere imprimir &quot;¡El perro está corriendo!&quot;. Se pueden modificar los métodos que implementa por defecto un trait, para ello la nueva implementación tiene que tener la misma declaración. Esto significa que tiene que tomar los mismos parámetros y devolver el mismo tipo de resultado. Por ejemplo, se puede modificar el método <code>.correr()</code>. La declaración indica:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 🚧
+fn correr(&amp;self) {
+    println!(&quot;¡El perro está corriendo!&quot;);
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>fn correr(&amp;self)</code> significa que la función <code>correr()</code> tiene de parámetro <code>&amp;self</code> y no devuelve ningún valor. Por lo que no se puede definir una nueva implementación así:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn correr(&amp;self) -&gt; i32 { // ⚠️
+    5
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Rust se quejará así:</p>
+<pre><code class="language-text">   = note: expected fn pointer `fn(&amp;Animal)`
+              found fn pointer `fn(&amp;Animal) -&gt; i32`
+</code></pre>
+<p>Pero sí se puede hacer esto:</p>
+<pre><pre class="playground"><code class="language-rust">struct Animal { // Un simple struct - un Animal que solo contiene su nombre
+    nombre: String,
+}
+
+trait Perro { // El trait Perro asigna alguna funcionalidad
+    fn ladrar(&amp;self) { // Puede ladrar
+        println!(&quot;¡Guau, guau!&quot;);
+    }
+    fn correr(&amp;self) { // y puede correr
+        println!(&quot;¡El perro está corriendo!&quot;);
+    }
+}
+
+impl Perro for Animal { // Ahora el Animal implementa el trait Perro
+    fn correr(&amp;self) {
+        println!(&quot;¡{} está corriendo!&quot;, self.nombre);
+    }
+}
+
+fn main() {
+    let rover = Animal {
+        nombre: &quot;Rover&quot;.to_string(),
+    };
+
+    rover.ladrar(); // El Animal puede usar ladrar()
+    rover.correr();  // y puede usar correr()
+}
+</code></pre></pre>
+<p>Ahora imprime <code>¡Rover está corriendo!</code>. Esta función es correcta porque devuelve <code>()</code> o nada, que es lo que indica la implementación del trait.</p>
+<p>Cuando se define un trait, se puede escribir solo la declaración de las funciones. Esto obliga a que quien lo quiera implementar tenga que escribir el código que desea para las funciones que solo están declaradas en el trait (sin implementar). En el código siguiente el trait solo declara las funciones sin aportar una definición por defecto de <code>ladrar()</code> y <code>correr()</code>, por eso se obliga a escribir el código en la implementación del trait por parte del Perro.</p>
+<pre><pre class="playground"><code class="language-rust">struct Animal {
+    nombre: String,
+}
+
+trait Perro {
+    fn ladrar(&amp;self); // Solo se indica que necesita el parámetro &amp;self y que no devuelva nada
+
+    fn correr(&amp;self); // necesita &amp;self y que no devuelva nada
+    // Ahora se tiene que escribir el código en la implementación del Perro
+}
+
+impl Perro for Animal {
+
+    fn ladrar(&amp;self) {
+        println!(&quot;¡{}, para de ladrar!&quot;, self.nombre);
+    }
+    
+    fn correr(&amp;self) {
+        println!(&quot;¡{} está corriendo!&quot;, self.nombre);
+    }
+
+}
+
+fn main() {
+    let rover = Animal {
+        nombre: &quot;Rover&quot;.to_string(),
+    };
+
+    rover.ladrar();
+    rover.correr();
+}
+</code></pre></pre>
+<p>Cuando se crea un trait (rasgo), se debe pensar: ¿Qué funciones deberá tener? ¿qué funciones se pueden implementar en el propio trait? y ¿qué funciones deberá implementar el propio usuario?</p>
+<p>A continuación se implementa el trait <code>Display</code> para el siguiente struct simple:</p>
+<pre><pre class="playground"><code class="language-rust">struct Gato {
+    nombre: String,
+    edad: u8,
+}
+
+fn main() {
+    let mr_mantle = Gato {
+        nombre: &quot;Reggie Mantle&quot;.to_string(),
+        edad: 4,
+    };
+}
+</code></pre></pre>
+<p>Se quiere imprimir <code>mr_mantle</code>. <code>Debug</code> es fácil de derivar:</p>
+<pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
+struct Gato {
+    nombre: String,
+    edad: u8,
+}
+
+fn main() {
+    let mr_mantle = Gato {
+        nombre: &quot;Reggie Mantle&quot;.to_string(),
+        edad: 4,
+    };
+
+    println!(&quot;Mr. Mantle es un {:?}&quot;, mr_mantle);
+}
+</code></pre></pre>
+<p>Pero la implementación de Debug no es muy bonita. Este es el resultado:</p>
+<pre><code class="language-text">Mr. Mantle es un Gato { nombre: &quot;Reggie Mantle&quot;, edad: 4 }
+</code></pre>
+<p>Por eso, se tiene que implementar <code>Display</code> para un <code>Gato</code> si se quiere que la impresión sea bonita. En <a href="https://doc.rust-lang.org/std/fmt/trait.Display.html">https://doc.rust-lang.org/std/fmt/trait.Display.html</a> se puede ver la información detallada para Display con un ejemplo que dice:</p>
+<pre><pre class="playground"><code class="language-rust">use std::fmt;
+
+struct Position {
+    longitude: f32,
+    latitude: f32,
+}
+
+impl fmt::Display for Position {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        write!(f, &quot;({}, {})&quot;, self.longitude, self.latitude)
+    }
+}
+
+fn main() {}
+</code></pre></pre>
+<p>Hay algunas cosas que aún no se entienden en este código, como <code>&lt;'_&gt;</code> y lo que hace <code>f</code>. Pero se entiende que el struct <code>Position</code> tiene únicamente dos valores <code>f32</code>. Los campos de este struct son <code>self.longitude</code> y <code>self.latitude</code>. Así que posiblemente se pueda utilizar este código ara implementar la versión que se necesita para <code>Gato</code>, cambiando los campos por <code>self.nombre</code> y <code>self.edad</code>. Por último, <code>write!</code> se parece mucho a <code>println!</code>. Así, el código queda:</p>
+<pre><pre class="playground"><code class="language-rust">use std::fmt;
+
+struct Gato {
+    nombre: String,
+    edad: u8,
+}
+
+impl fmt::Display for Gato {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        write!(f, &quot;{} es un gato de {} años.&quot;, self.nombre, self.edad)
+    }
+}
+
+fn main() {}
+</code></pre></pre>
+<p>Si ahora se añade una función <code>fn main()</code>, el código queda así:</p>
+<pre><pre class="playground"><code class="language-rust">use std::fmt;
+
+struct Gato {
+    nombre: String,
+    edad: u8,
+}
+
+impl fmt::Display for Gato {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        write!(f, &quot;{} es un gato de {} años.&quot;, self.nombre, self.edad)
+    }
+}
+
+fn main() {
+    let mr_mantle = Gato {
+        nombre: &quot;Reggie Mantle&quot;.to_string(),
+        edad: 4,
+    };
+
+    println!(&quot;{}&quot;, mr_mantle);
+}
+</code></pre></pre>
+<p>¡Estupendo! Ahora, cuando se usa <code>{}</code> para imprimir a un Gato, se obtiene <code>Reggie Mantle es un gato de 4 años.</code>, que queda mucho mejor.</p>
+<p>Por cierto, cuando se implementa el trait <code>Display</code> se dispone del trait <code>ToString</code> sin nada que hacer adicionalmente. Esto pasa al usar la macro <code>format!</code> que facilita la creación de un <code>String</code> con la función <code>.to_string()</code>. Así que se puede hacer algo como lo siguiente cuando se pasa la variable <code>reggie_mantle</code> a una función que necesite un <code>String</code>:</p>
+<pre><pre class="playground"><code class="language-rust">use std::fmt;
+struct Gato {
+    nombre: String,
+    edad: u8,
+}
+
+impl fmt::Display for Gato {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        write!(f, &quot;{} es un gato de {} años.&quot;, self.nombre, self.edad)
+    }
+}
+
+fn print_gatos(mascota: String) {
+    println!(&quot;{}&quot;, mascota);
+}
+
+fn main() {
+    let mr_mantle = Gato {
+        nombre: &quot;Reggie Mantle&quot;.to_string(),
+        edad: 4,
+    };
+
+    print_gatos(mr_mantle.to_string()); // Lo convierte en un String
+    println!(&quot;La cadena de caracteres de Mr. Mantle tiene {} letras.&quot;,
+        mr_mantle.to_string().chars().count()); // Los convierte en caracteres y los cuenta
+}
+</code></pre></pre>
+<p>Lo anterior imprime:</p>
+<pre><code class="language-text">Reggie Mantle es un gato de 4 años.
+La cadena de caracteres de Mr. Mantle tiene 35 letras.
+</code></pre>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>N.T.: Este concepto de Rust se puede traducir como <em>rasgo</em>. Está relacionado con la programación orientada a aspectos. Los rasgos de Rust describen determinados aspectos de los tipos, funciones o variables que los implementen.</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="30.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="30.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
