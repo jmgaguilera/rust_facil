@@ -395,6 +395,428 @@ fn main() {
 <pre><code class="language-text">Reggie Mantle es un gato de 4 años.
 La cadena de caracteres de Mr. Mantle tiene 35 letras.
 </code></pre>
+<p>Lo que se debe recordar sobre los rasgos es que tratan sobre el comportamiento de algo. ¿Cómo se comporta un determinado <code>struct</code>? ¿Qué puede hacer? Para eso son los rasgos. Si se revisan los rasgos que se han visto hasta el momento, todos tratan sobre algún comportamiento: <code>Copy</code>es algo que un tipo determinado puede hacer. <code>Display</code> también es algo que un tipo puede hacer. <code>ToString</code> es otro rasgo y también es algo que un tipo puede hacer: convertirse en una <code>String</code>. En el rasgo <code>Perro</code> la palabra <em>perro</em> no significa algo que se pueda hacer, pero proporciona algunos métodos que le permiten hacer cosas. Se puede implementar para una estructura <code>Caniche</code> o para una <code>Chucho</code> y así ambas podrían disponer de los métodos de <code>Perro</code>.</p>
+<p>A continuación se presenta otro ejemplo aún más conectado con algo que solo es comportamiento. Se imaginará un juego de fantasía con algunos personajes simples. Uno es un <code>Monstruo</code>, los otros dos son <code>Mago</code> y <code>Cazador</code>. El <code>Monstruo</code> tiene <code>salud</code> y se le puede atacar, los otros dos no tendrán nada aún. Se crearán dos rasgos (traits). Uno llamado <code>LuchaCercana</code> que permite luchar de cerca y otro <code>LuchaADistancia</code> que permite lugar desde lejos. Solo el <code>Cazador</code> puede usar <code>LuchaADistancia</code>. Este es el código resultante:</p>
+<pre><pre class="playground"><code class="language-rust">struct Monstruo {
+    salud: i32,
+}
+
+struct Mago {}
+struct Cazador {}
+
+trait LuchaCercana {
+    fn atacar_con_espada(&amp;self, oponente: &amp;mut Monstruo) {
+        oponente.salud -= 10;
+        println!(
+            &quot;Atacaste con espada. Tu oponente tiene ahora {} de salud.&quot;,
+            oponente.salud
+        );
+    }
+    fn atacar_con_la_mano(&amp;self, oponente: &amp;mut Monstruo) {
+        oponente.salud -= 2;
+        println!(
+            &quot;Atacaste con la mano. tu oponente tiene ahora {} de salud.&quot;,
+            oponente.salud
+        );
+    }
+}
+impl LuchaCercana for Mago {}
+impl LuchaCercana for Cazador {}
+
+trait LuchaADistancia {
+    fn atacar_con_arco(&amp;self, oponente: &amp;mut Monstruo, distancia: u32) {
+        if distancia &lt; 10 {
+            oponente.salud -= 10;
+            println!(
+                &quot;Atacaste con el arco. Tu oponente tiene ahora {} de salud.&quot;,
+                oponente.salud
+            );
+        }
+    }
+    fn atacar_con_piedra(&amp;self, oponente: &amp;mut Monstruo, distancia: u32) {
+        if distancia &lt; 3 {
+            oponente.salud -= 4;
+        }
+        println!(
+            &quot;Atacaste con una piedra. Your oponente tiene ahora {} de salud.&quot;,
+            oponente.salud
+        );
+    }
+}
+impl LuchaADistancia for Cazador {}
+
+fn main() {
+    let radagast = Mago {};
+    let aragorn = Cazador {};
+
+    let mut uruk_hai = Monstruo { salud: 40 };
+
+    radagast.atacar_con_espada(&amp;mut uruk_hai);
+    aragorn.atacar_con_arco(&amp;mut uruk_hai, 8);
+}
+</code></pre></pre>
+<p>Lo anterior imprime:</p>
+<pre><code class="language-text">Atacaste con espada. Tu oponente tiene ahora 30 de salud.
+Atacaste con el arco. Tu oponente tiene ahora 20 de salud.
+</code></pre>
+<p>En este ejemplo, se pasa constantemente <code>self</code> a los métodos de los rasgos, pero solo se conoce que se trata de un tipo que implementa el propio rasgo. Puede ser un <code>Mago</code> o un <code>Cazador</code>. O podría ser una nueva <code>struct</code> llamada <code>Toefocfgetobjtnode</code> o cualquier otra que implementara el rasgo correspondiente. Para facilitar que <code>self</code> tenga más funcionalidad, se puede añadir restricciones a un <code>trait</code>. Se puede añadir otros <code>trait</code> que son necesarios para el <code>trait</code> que se define. Por ejemplo, si que se quiere que en los métodos de un <code>trait</code> se pueda usar <code>{:?}</code> para imprimir, se necesita que implemente el trait <code>Debug</code>. Eso se puede indicar mediante la escritura de <code>:</code> (dos puntos). Así quedaría el código:</p>
+<pre><pre class="playground"><code class="language-rust">struct Monstruo {
+    salud: i32,
+}
+
+#[derive(Debug)] // Ahora el mago tiene Debug
+struct Mago {
+    salud: i32, // Ahora el mago tiene salud
+}
+
+#[derive(Debug)] // Ahora el Cazador tiene Debug
+struct Cazador {
+    salud: i32, // Ahora el cazador tiene salud
+}
+
+trait LuchaCercana: std::fmt::Debug {
+    // Ahora el tipo necesita tener Debug 
+    // para poder implementar LuchaCercana
+    fn atacar_con_espada(&amp;self, oponente: &amp;mut Monstruo) {
+        oponente.salud -= 10;
+        println!(
+            &quot;Atacaste con espada. Tu oponente tiene ahora {} de salud. Ahora tienes {:?}&quot;,
+            // se puede usar {:?} porque se dispone de Debug
+            oponente.salud, &amp;self
+        );
+    }
+    fn atacar_con_la_mano(&amp;self, oponente: &amp;mut Monstruo) {
+        oponente.salud -= 2;
+        println!(
+            &quot;Atacaste con la mano. tu oponente tiene ahora {} de salud. Ahora tienes {:?}&quot;,
+            oponente.salud, &amp;self
+        );
+    }
+}
+impl LuchaCercana for Mago {}
+impl LuchaCercana for Cazador {}
+
+trait LuchaADistancia: std::fmt::Debug {
+    // también se podría haber escrito LuchaADistancia: LuchaCercana
+    // porque LuchaCercana implementa ya Debug
+    fn atacar_con_arco(&amp;self, oponente: &amp;mut Monstruo, distancia: u32) {
+        if distancia &lt; 10 {
+            oponente.salud -= 10;
+            println!(
+                &quot;Atacaste con el arco. Tu oponente tiene ahora {} de salud. Ahora tienes {:?}&quot;,
+                oponente.salud, &amp;self
+            );
+        }
+    }
+    fn atacar_con_piedra(&amp;self, oponente: &amp;mut Monstruo, distancia: u32) {
+        if distancia &lt; 3 {
+            oponente.salud -= 4;
+        }
+        println!(
+            &quot;Atacaste con una piedra. Your oponente tiene ahora {} de salud. Ahora tienes {:?}&quot;,
+            oponente.salud, &amp;self
+        );
+    }
+}
+impl LuchaADistancia for Cazador {}
+
+fn main() {
+    let radagast = Mago { salud: 60 };
+    let aragorn = Cazador { salud: 80 };
+
+    let mut uruk_hai = Monstruo { salud: 40 };
+
+    radagast.atacar_con_espada(&amp;mut uruk_hai);
+    aragorn.atacar_con_arco(&amp;mut uruk_hai, 8);
+}
+</code></pre></pre>
+<p>Ahora, se imprime:</p>
+<pre><code class="language-text">Atacaste con espada. Tu oponente tiene ahora 30 de salud. Ahora tienes Mago { salud: 60 }
+Atacaste con el arco. Tu oponente tiene ahora 20 de salud. Ahora tienes Cazador { salud: 80 }
+</code></pre>
+<p>En un juego real sería mejor reescribir esto para cada tipo, ya que <code>Ahora tienes Mago { salud: 60 }</code> queda muy raro. Por eso, los métodos predefinidos de los rasgos suelen ser muy simples, porque no se conoce el tipo que lo va a usar. No se puede escribir algo como <code>self.0 += 10</code>, por ejemplo. En cualquier caso, el ejemplo anterior muestra cómo se puede usar otro trait dentro de uno que se esté escribiendo y disponer así de los métodos de ese otro.</p>
+<p>Otra forma de usar un rasgo es mediante lo que se llama <code>trait bounds</code> (N.T.: límites de un rasgo). Son fáciles de implementar ya que no necesitan nada. A continuación, se reescribe el ejemplo anterior sin que los rasgos implementen ningún método, a cambio, se dispone de funciones que necesitan rasgos para que se puedan usar.</p>
+<pre><pre class="playground"><code class="language-rust">use std::fmt::Debug;  // para no tener que escribir todo el camino al rasgo
+
+struct Monstruo {
+    salud: i32,
+}
+
+#[derive(Debug)]
+struct Mago {
+    salud: i32,
+}
+#[derive(Debug)]
+struct Cazador {
+    salud: i32,
+}
+
+trait Magia{} // todos los traits sin métodos. Son límites de rasgo
+
+
+trait LuchaCercana {}
+trait LuchaADistancia {}
+
+impl LuchaCercana for Cazador{} // Cada tipo tiene LuchaCercana,
+impl LuchaCercana for Mago {}
+impl LuchaADistancia for Cazador{} // Pero solo el cazador lucha a distancia
+impl Magia for Mago{}  // y solo el mago hace magia
+
+fn atacar_con_flecha&lt;T: LuchaADistancia + Debug&gt;(personaje: &amp;T, oponente: &amp;mut Monstruo, distancia: u32) {
+    if distancia &lt; 10 {
+        oponente.salud -= 10;
+        println!(
+            &quot;Atacaste con el arco. Tu oponente tiene ahora {} de salud. Ahora tienes {:?}&quot;,
+            oponente.salud, personaje
+        );
+    }
+}
+
+fn atacar_con_espada&lt;T: LuchaCercana + Debug&gt;(personaje: &amp;T, oponente: &amp;mut Monstruo) {
+    oponente.salud -= 10;
+    println!(
+        &quot;Atacaste con la espada. Tu oponente tiene ahora {} de salud. Ahora tienes {:?}&quot;,
+        oponente.salud, personaje
+    );
+}
+
+fn atacar_con_bola_de_fuego&lt;T: Magia + Debug&gt;(personaje: &amp;T, oponente: &amp;mut Monstruo, distancia: u32) {
+    if distancia &lt; 15 {
+        oponente.salud -= 20;
+        println!(&quot;¡Levantas las manos y conjuras una bola de fuego! Tu oponente tiene ahora {} de salud. Ahora tienes: {:?}&quot;,
+    oponente.salud, personaje);
+    }
+}
+
+fn main() {
+    let radagast = Mago { salud: 60 };
+    let aragorn = Cazador { salud: 80 };
+
+    let mut uruk_hai = Monstruo { salud: 40 };
+
+    atacar_con_espada(&amp;radagast, &amp;mut uruk_hai);
+    atacar_con_flecha(&amp;aragorn, &amp;mut uruk_hai, 8);
+    atacar_con_bola_de_fuego(&amp;radagast, &amp;mut uruk_hai, 8);
+}
+</code></pre></pre>
+<pre><code class="language-text">Atacaste con la espada. Tu oponente tiene ahora 30 de salud. Ahora tienes Mago { salud: 60 }
+Atacaste con el arco. Tu oponente tiene ahora 20 de salud. Ahora tienes Cazador { salud: 80 }
+¡Levantas las manos y conjuras una bola de fuego! Tu oponente tiene ahora 0 de salud. Ahora tienes: Mago { salud: 60 }
+</code></pre>
+<p>Se puede ver que hay varias formas de obtener el mismo resultado cuando se usan rasgos. Todo depende de lo que tenga más sentido en el programa que se está escribiendo.</p>
+<p>A continuación, se echa un vistazo a cómo implementar algunos de los rasgos más usados en Rust.</p>
+<h2 id="el-rasgo-from"><a class="header" href="#el-rasgo-from">El rasgo From</a></h2>
+<p><em>From</em> es un rasgo muy útil que ya se ha usado. Con <em>From</em> se puede crear una <code>String</code> a partir de una <code>&amp;str</code>, pero se puede usar para convertir cualquier tipo en otro. Por ejemplo, <code>Vec</code> utiliza <em>From</em> para lo siguiente:</p>
+<pre><code class="language-text">From&lt;&amp;'_ [T]&gt;
+From&lt;&amp;'_ mut [T]&gt;
+From&lt;&amp;'_ str&gt;
+From&lt;&amp;'a Vec&lt;T&gt;&gt;
+From&lt;[T; N]&gt;
+From&lt;BinaryHeap&lt;T&gt;&gt;
+From&lt;Box&lt;[T]&gt;&gt;
+From&lt;CString&gt;
+From&lt;Cow&lt;'a, [T]&gt;&gt;
+From&lt;String&gt;
+From&lt;Vec&lt;NonZeroU8&gt;&gt;
+From&lt;Vec&lt;T&gt;&gt;
+From&lt;VecDeque&lt;T&gt;&gt;
+</code></pre>
+<p>Implementa un montón de <code>Vec::from()</code> que no se han usado aún en este manual. Se pueden usar algunos para ver qué pasa.</p>
+<pre><pre class="playground"><code class="language-rust">use std::fmt::Display; // se usará Display para crear una función genérica y mostrar el resultado
+
+fn print_vec&lt;T: Display&gt;(input: &amp;Vec&lt;T&gt;) { // Toma cualquier Vec&lt;T&gt; cuyo tipo T que tenga Display
+    for item in input {
+        print!(&quot;{} &quot;, item);
+    }
+    println!();
+}
+
+fn main() {
+
+    let array_vec = Vec::from([8, 9, 10]); // &quot;from&quot; un array
+    print_vec(&amp;array_vec);
+
+    let str_vec = Vec::from(&quot;¿Qué clase de vector seré?&quot;); // Array &quot;from&quot; un &amp;str
+    print_vec(&amp;str_vec);
+
+    let string_vec = Vec::from(&quot;Un String ¿Qué clase de vector será?&quot;.to_string()); // También &quot;from&quot; un String
+    print_vec(&amp;string_vec);
+}
+</code></pre></pre>
+<p>Se imprime lo siguiente:</p>
+<pre><code class="language-text">8 9 10
+87 104 97 116 32 107 105 110 100 32 111 102 32 118 101 99 32 119 105 108 108 32 73 32 98 101 63
+87 104 97 116 32 107 105 110 100 32 111 102 32 118 101 99 32 119 105 108 108 32 97 32 83 116 114 105 110 103 32 98 101 63
+</code></pre>
+<p>Si se observa el tipo, los segundo y tercer vector son de tipo <code>Vec&lt;u8&gt;</code>, lo que significa que contiene los bytes de <code>&amp;str</code> y <code>String</code>. Se ve así que <code>From</code> es muy flexible y se usa mucho.</p>
+<p>El siguiente ejemplo implemente <code>From</code> en tipos desarrollados en el código. Se construyen dos structs y luego implementan <code>From</code> para una de ellas. Una será una <code>Ciudad</code> y la otra un <code>Pais</code>. Se quiere que sea posible hacer esto: <code>let country_nombre = Pais::from(vector_de_ciudades)</code>.</p>
+<p>Queda así el código:</p>
+<pre><pre class="playground"><code class="language-rust">#[derive(Debug)] // Para poder imprimir la Ciudad
+struct Ciudad {
+    nombre: String,
+    poblacion: u32,
+}
+
+impl Ciudad {
+    fn new(nombre: &amp;str, poblacion: u32) -&gt; Self { // función new
+        Self {
+            nombre: nombre.to_string(),
+            poblacion,
+        }
+    }
+}
+#[derive(Debug)] // Pais necesita imprimirse
+struct Pais {
+    ciudades: Vec&lt;Ciudad&gt;, // Las ciudades van aquí
+}
+
+impl From&lt;Vec&lt;Ciudad&gt;&gt; for Pais { // Note: no se crea From&lt;Ciudad&gt;, se crea
+    // From&lt;Vec&lt;Ciudad&gt;&gt;. Es decir, sobre un tipo, Vec, que no se ha creado en el código
+    fn from(ciudades: Vec&lt;Ciudad&gt;) -&gt; Self {
+        Self { ciudades }
+    }
+}
+
+impl Pais {
+    fn imprimir_ciudades(&amp;self) { // función para imprimir las ciudades del Pais
+        for ciudad in &amp;self.ciudades {
+            // &amp; porque Vec&lt;Ciudad&gt; no es Copy
+            println!(&quot;{:?} tiene una población de {:?}.&quot;, ciudad.nombre, ciudad.poblacion);
+        }
+    }
+}
+
+fn main() {
+    let helsinki = Ciudad::new(&quot;Helsinki&quot;, 631_695);
+    let turku = Ciudad::new(&quot;Turku&quot;, 186_756);
+
+    let finland_ciudades = vec![helsinki, turku]; // Esto es  el Vec&lt;Ciudad&gt;
+    let finland = Pais::from(finland_ciudades); // En este punto se usa From
+
+    finland.imprimir_ciudades();
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">&quot;Helsinki&quot; tiene una población de 631695.
+&quot;Turku&quot; tiene una población de 186756.
+</code></pre>
+<p>Se observa que es fácil implementar <code>From</code> para tipos que no se han creado por el desarrollador, por ejemplo, <code>Vec</code>, <code>i32</code> o cualquier otro.</p>
+<p>A continuación, se muestra otro ejemplo en el que se crea un vector que contiene dos vectores. El primer vector contiene números pares y el segundo, impares. Con <code>From</code> se puede tomar un vector de <code>i32</code> y convertirlo en <code>Vec&lt;Vec&lt;i32&gt;&gt;</code>: un vector que contiene vectores de <code>i32</code>.</p>
+<pre><pre class="playground"><code class="language-rust">use std::convert::From;
+
+struct ParImparVec(Vec&lt;Vec&lt;i32&gt;&gt;);
+
+impl From&lt;Vec&lt;i32&gt;&gt; for ParImparVec {
+    fn from(input: Vec&lt;i32&gt;) -&gt; Self {
+        let mut par_impar_vec: Vec&lt;Vec&lt;i32&gt;&gt; = vec![vec![], vec![]]; // Un vec con dos vecs vacíos dentro
+        // se rellena para después retornarlo 
+        for item in input {
+            if item % 2 == 0 {
+                par_impar_vec[0].push(item);
+            } else {
+                par_impar_vec[1].push(item);
+            }
+        }
+        Self(par_impar_vec) // una vez relleno se devuelve como Self (Self = ParImparVec)
+    }
+}
+
+fn main() {
+    let varios_numero = vec![8, 7, -1, 3, 222, 9787, -47, 77, 0, 55, 7, 8];
+    let new_vec = ParImparVec::from(varios_numero);
+
+    println!(&quot;Números pares: {:?}\nNúmeros impares: {:?}&quot;, new_vec.0[0], new_vec.0[1]);
+}
+</code></pre></pre>
+<p>Lo anterior imprime:</p>
+<pre><code class="language-text">Números pares: [8, 222, 0, 8]
+Números impares: [7, -1, 3, 9787, -47, 77, 55, 7]
+</code></pre>
+<p>Un tipo como <code>ParImparVec</code> es mejor definirlo como genérico <code>T</code> para poder usarlo en muchos tipos de números. Se deja esta idea como práctica.</p>
+<h2 id="paso-de-parámetros-string-y-str-a-funciones"><a class="header" href="#paso-de-parámetros-string-y-str-a-funciones">Paso de parámetros String y &amp;str a funciones</a></h2>
+<p>En ocasiones se necesita que una función pueda recibir tanto <code>String</code> como <code>&amp;str</code> en el mismo parámetro. Esto se puede conseguir con genéricos y con el rasgo <code>AsRef</code>. <code>AsRef</code> se utiliza para pasar una referencia de un tipo a otro tipo. Si se observa la documentación de <code>String</code>, se ve que implementa <code>AsRef</code> para muchos tipos:</p>
+<p><a href="https://doc.rust-lang.org/std/string/struct.String.html">https://doc.rust-lang.org/std/string/struct.String.html</a></p>
+<p>Estas son algunas de las declaraciones de función:</p>
+<p><code>AsRef&lt;str&gt;</code>:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 🚧
+impl AsRef&lt;str&gt; for String
+
+fn as_ref(&amp;self) -&gt; &amp;str
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>AsRef&lt;[u8]&gt;</code>:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 🚧
+impl AsRef&lt;[u8]&gt; for String
+
+fn as_ref(&amp;self) -&gt; &amp;[u8]
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>AsRef&lt;OsStr&gt;</code>:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 🚧
+impl AsRef&lt;OsStr&gt; for String
+
+fn as_ref(&amp;self) -&gt; &amp;OsStr
+<span class="boring">}
+</span></code></pre></pre>
+<p>Se observa que implementa la función <code>as_ref</code> que recibe como parámetro <code>&amp;self</code> y devuelve una referencia a otro tipo. Esto permite que si se dispone de un tipo genérico T, se pueda indicar que ese tipo necesita <code>AsRef&lt;str&gt;</code>. Así, será posible que se pase como un <code>&amp;str</code> o un <code>String</code>.</p>
+<p>El código siguiente implementa la función genérica, pero da error:</p>
+<pre><pre class="playground"><code class="language-rust">fn imprimelo&lt;T&gt;(input: T) {
+    println!(&quot;{}&quot;, input) // ⚠️
+}
+
+fn main() {
+    imprimelo(&quot;Por favor, imprímeme&quot;);
+}
+</code></pre></pre>
+<p>Rust dice <code>error[E0277]: </code>T<code> doesn't implement std::fmt::Display</code>. Se necesita que lo implemente:</p>
+<pre><pre class="playground"><code class="language-rust">use std::fmt::Display;
+
+fn imprimelo&lt;T: Display&gt;(input: T) {
+    println!(&quot;{}&quot;, input)
+}
+
+fn main() {
+    imprimelo(&quot;Por favor, imprímeme&quot;);
+}
+</code></pre></pre>
+<p>Ahora funciona e imprime <code>Por favor, imprímeme</code>. Eso es mejor, pero T puede ser muchas cosas aún. Puede ser <code>i8</code>, <code>f32</code> o cualquier cosa que tenga <code>Display</code>. Si se añade ahora <code>AsRef&lt;str&gt;</code>, T necesita ambos rasgos.</p>
+<pre><pre class="playground"><code class="language-rust">use std::fmt::Display;
+
+fn imprimelo&lt;T: AsRef&lt;str&gt; + Display&gt;(input: T) {
+    println!(&quot;{}&quot;, input)
+}
+
+fn main() {
+    imprimelo(&quot;Por favor, imprímeme&quot;);
+    imprimelo(&quot;También, por favor, imprímeme&quot;.to_string());
+    // imprimelo(7); &lt;- Esto no compilará
+}
+</code></pre></pre>
+<p>Ahora no dejará pasar tipos como <code>i8</code>.</p>
+<p>No se puede olvidar que se puede utilizar <code>where</code> ara escribir de forma más compacta la declaración de la función cuando esta se hace muy larga. Si se añadiera Debug la línea quedaría muy larga, <code>fn imprimelo&lt;T: AsRef&lt;str&gt; + Display + Debug&gt;(input: T)</code>, así que se puede escribir de la siguiente forma.</p>
+<pre><pre class="playground"><code class="language-rust">use std::fmt::{Debug, Display}; // añade Debug
+
+fn imprimelo&lt;T&gt;(input: T) // Ahora la línea es más fácil de leer
+where
+    T: AsRef&lt;str&gt; + Debug + Display, // y también se leen bien los rasgos del tipo
+{
+    println!(&quot;{}&quot;, input)
+}
+
+fn main() {
+    imprimelo(&quot;Por favor, imprímeme&quot;);
+    imprimelo(&quot;También, por favor, imprímeme&quot;.to_string());
+}
+</code></pre></pre>
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
 <p>N.T.: Este concepto de Rust se puede traducir como <em>rasgo</em>. Está relacionado con la programación orientada a aspectos. Los rasgos de Rust describen determinados aspectos de los tipos, funciones o variables que los implementen.</p>
 </div>
