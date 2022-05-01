@@ -38,3 +38,6 @@
 - [Otras colecciones](./29.md)
 - [El operador ?](./30.md)
 - [Traits (Rasgos)](./31.md)
+- [Encadenando métodos](./32.md)
+- [Iteradores](./33.md)
+
