@@ -40,4 +40,5 @@
 - [Traits (Rasgos)](./31.md)
 - [Encadenando métodos](./32.md)
 - [Iteradores](./33.md)
+- [Closures - Cierres](./34.md)
 
