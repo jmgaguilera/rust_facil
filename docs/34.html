@@ -337,7 +337,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>Rust da un error que dice:</p>
-<pre><code class="language-text">error[E0593]: closure is expected to take 1 argument, but it takes 0 arguments
+<pre><code class="language-text">error[E0593]: closure ¿Está expected to take 1 argument, but it takes 0 arguments
  --&gt; src/main.rs:4:36
   |
 4 |     println!(&quot;{:?}&quot;, my_vec.iter().for_each(|| println!(&quot;No usamos la variable que se necesita&quot;))); // ⚠️
@@ -588,8 +588,308 @@ Some(&quot;éxito&quot;)
 None
 </code></pre>
 <p>La cadena de <code>.and()</code> de la primera operación en los tres intentos devuelve <code>None</code> ya que el segundo intento tiene <code>None</code> en la primera posición (índice cero). La segunda operación también es <code>None</code> debido a que el primer intento dio un resultado <code>None</code>. La tercera operación sí tiene éxito debido a que los tres intentos tiene un resultado distinto de <code>None</code>.</p>
-<p>#TODO</p>
-<p><code>.any()</code> y <code>.all()</code>:</p>
+<p><code>.any()</code> y <code>.all()</code>. Se utilizan de forma sencilla en iteradores. Devuelven un <code>bool</code> en función del parámetro de entrada. En el siguiente ejemplo, se crea un vector muy grande, de unos 20.000 elementos, con toods los caracteres desde la 'a' a la '働'. Después, se comprueba si contiene un determinado carácter.</p>
+<p>A continuación, se crea un vector más pequeño y se comprueba si es totalmente alfabético (con <code>.is_alphabetic()</code>). POr último, se comprueba si todos los caracteres son menores que el carácter coreano '행'.</p>
+<p>Se debe observar que se usan referencias allí donde es necesario ya que es lo que entrega <code>.iter()</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn in_char_vec(char_vec: &amp;Vec&lt;char&gt;, check: char) {
+    println!(&quot;¿Está {} dentro? {}&quot;, check, char_vec.iter().any(|&amp;char| char == check));
+}
+
+fn main() {
+    let char_vec = ('a'..'働').collect::&lt;Vec&lt;char&gt;&gt;();
+    in_char_vec(&amp;char_vec, 'i');
+    in_char_vec(&amp;char_vec, '뷁');
+    in_char_vec(&amp;char_vec, '鑿');
+
+    let smaller_vec = ('A'..'z').collect::&lt;Vec&lt;char&gt;&gt;();
+    println!(&quot;¿Es todo alfabético? {}&quot;, smaller_vec.iter().all(|&amp;x| x.is_alphabetic()));
+    println!(&quot;¿Es todo menor que el carácter 행? {}&quot;, smaller_vec.iter().all(|&amp;x| x &lt; '행'));
+}
+</code></pre></pre>
+<p>Lo anterior imprime:</p>
+<pre><code class="language-text">¿Está i dentro? true
+¿Está 뷁 dentro? false
+¿Está 鑿 dentro? false
+¿Es todo alfabético? false
+¿Es todo menor que el carácter 행? true
+</code></pre>
+<p>Por cierto, <code>.any()</code> solo comprueba hasta que encuentra un elemento que coincida. Funciona en modo cortocircuito. No sigue comprobando si ya ha encontrado una coincidencia. Por este motivo, si se va a usar esta función <code>.any()</code> con un <code>Vec</code>, puede ser buena idea que los elementos que puedan coincidir estén lo más cerca del inicio del iterador. Por ejemplo, usando <code>.rev()</code> después de <code>.iter()</code> si pueden estar por el final. Por ejemplo:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut big_vec = vec![6; 1000];
+    big_vec.push(5);
+}
+</code></pre></pre>
+<p>Que es un vector con 1000 números 6 seguidos de un 5. Si se quiere comprobar si contiene el número 5, lo óptimo sería obtener un iterador en sentido inverso con <code>.rev()</code>.</p>
+<p>En primer lugar, se puede revisar el funcionamiento esta función <code>.rev()</code>con el siguiente código:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut big_vec = vec![6; 1000];
+    big_vec.push(5);
+
+    let mut iterator = big_vec.iter().rev();
+    println!(&quot;{:?}&quot;, iterator.next());
+    println!(&quot;{:?}&quot;, iterator.next());
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">Some(5)
+Some(6)
+</code></pre>
+<p>Por lo tanto, lo eficiente, en este caso, para buscar un 5 sería buscarlo a través del iterador que comienza por el final:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut big_vec = vec![6; 1000];
+    big_vec.push(5);
+
+    println!(&quot;{:?}&quot;, big_vec.iter().rev().any(|&amp;number| number == 5));
+}
+</code></pre></pre>
+<p>Así, solo necesita iterar a través del primer elemento y luego se para. Si no se usara, en este ejemplo se iteraría a través de los 1001 elementos. El siguiente código permite observarlo:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut big_vec = vec![6; 1000];
+    big_vec.push(5);
+
+    let mut counter = 0; // Inicia la cuenta
+    let mut big_iter = big_vec.into_iter(); // Crea un Iterator
+
+    loop {
+        counter +=1;
+        if big_iter.next() == Some(5) { // Continua llamando a .next() hasta que obtiene un Some(5)
+            break;
+        }
+    }
+    println!(&quot;Final counter is: {}&quot;, counter);
+}
+</code></pre></pre>
+<p>Esto imprime <code>Final counter is: 1001</code>, por lo que queda claro que llamó a <code>.next()</code> 1001 veces antes de encontrar el 5.</p>
+<p><code>.find()</code> indica si un iterador contiene algo y <code>.position()</code> indica dónde está. <code>.find()</code> es diferente de <code>.any()</code> en que devuelve un <code>Option</code> que cotiene el valor buscado en un <code>Some</code> o <code>None</code>. <code>.position()</code>, por otra parte devuelve un <code>Option</code> con un <code>Some</code>que contiene el número de posición o <code>None</code>. En otras palabras:</p>
+<ul>
+<li><code>.find()</code>: intentará extraer el valor.</li>
+<li><code>.position()</code>: intentará indicar la posición en la que está el valor.</li>
+</ul>
+<p>A continuación, se muestra un ejemplo simple:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let num_vec = vec![10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+
+    println!(&quot;{:?}&quot;, num_vec.iter().find(|&amp;number| number % 3 == 0)); // find takes a reference, so we give it &amp;number
+    println!(&quot;{:?}&quot;, num_vec.iter().find(|&amp;number| number * 2 == 30));
+
+    println!(&quot;{:?}&quot;, num_vec.iter().position(|&amp;number| number % 3 == 0));
+    println!(&quot;{:?}&quot;, num_vec.iter().position(|&amp;number| number * 2 == 30));
+}
+</code></pre></pre>
+<p>Este código imprime: </p>
+<pre><code class="language-text">Some(30) // Devuelve el primer valor que cumple la condición
+None // No hay ningún número que multplicado por 2 == 30
+Some(2) // Esta es la posición del elemneto
+None
+</code></pre>
+<p><code>.cycle()</code> puede crear un iterador infinito que nunca termina. Este tipo de iterador funciona muy bien con <code>.zip()</code> para crear un objeto nuevo <code>Vec&lt;(i32, &amp;str)&gt;</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let even_odd = vec![&quot;par&quot;, &quot;impar&quot;];
+    let even_odd_vec = (0..6)
+        .zip(even_odd.into_iter().cycle())
+        .collect::&lt;Vec&lt;(i32, &amp;str)&gt;&gt;();
+    println!(&quot;{:?}&quot;, even_odd_vec);
+}
+</code></pre></pre>
+<p>Aunque <code>.cycle()</code> devuelve un iterador que no acaba nunca, en este caso, el iterador de <code>.zip()</code> solo se ejecuta seis veces antes de acabarse (cuando se agota el iterable de mayor longitud). La salida de este programa es:</p>
+<pre><code class="language-text">[(0, &quot;par&quot;), (1, &quot;impar&quot;), (2, &quot;par&quot;), (3, &quot;impar&quot;), (4, &quot;par&quot;), (5, &quot;impar&quot;)]
+</code></pre>
+<p>Algo parecido se puede consguir que no tiene fin. Si se escribe <code>0..</code> se crea un rango con un límite superior infinito y que nunca se completa. Es fácil de utilizar:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let ten_chars = ('a'..).take(10).collect::&lt;Vec&lt;char&gt;&gt;();
+    let skip_then_ten_chars = ('a'..).skip(1300).take(10).collect::&lt;Vec&lt;char&gt;&gt;();
+
+    println!(&quot;{:?}&quot;, ten_chars);
+    println!(&quot;{:?}&quot;, skip_then_ten_chars);
+}
+</code></pre></pre>
+<p>Ambos imprimen 10 caracteres, pero el segundo se salta 1.300 lugares e imprime diez letras en Armenio.</p>
+<pre><code class="language-text">['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+['յ', 'ն', 'շ', 'ո', 'չ', 'պ', 'ջ', 'ռ', 'ս', 'վ']
+</code></pre>
+<p><code>.fold()</code> es otro popular método que se utliza para sumar elementos de un iterador, pero se puede hacer mucho más. Es similar en cierta medida a <code>.for_each()</code>. En <code>.fold()</code> primero se añade un valor inicial (que puede ser 0 para poder sumar los valores), seguido del cierre. El cierre recibe dos parámetros, el valor total hasta el momento y el siguiente elemento. Se ve a continuación un ejemplo simple para utlizar <code>.fold()</code> para sumar elementos.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let some_numbers = vec![9, 6, 9, 10, 11];
+
+    println!(&quot;{}&quot;, some_numbers
+        .iter()
+        .fold(0, |total_so_far, next_number| total_so_far + next_number)
+    );
+}
+</code></pre></pre>
+<p>Así:</p>
+<ul>
+<li>En el paso 1, comienza con 0 y suma el siguiente número: 9.</li>
+<li>En el paso 2, toma el 9 y le suma el 6: 15.</li>
+<li>En el paso 3, toma el 15 y le suma el 9: 24.</li>
+<li>En el paso 4, toma el 24 y le suma el 10: 34.</li>
+<li>En el paso 5, toma el 34 y le suma el 11: 45, se imprime 45.</li>
+</ul>
+<p>Pero no es necesario usarlo solo para sumar. En el siguiente ejemplo se añade '-' a cada carácter para construir una cadena de caracteres de tipo <code>String</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let a_string = &quot;No tengo guiones.&quot;;
+
+    println!(
+        &quot;{}&quot;,
+        a_string
+            .chars() // iterator sobre cada carácter
+            .fold(&quot;-&quot;.to_string(), |mut string_so_far, next_char| { // Comienza con una &quot;-&quot;
+                string_so_far.push(next_char); // Incorpora el siguiente caracter, seguido de '-'
+                string_so_far.push('-');
+                string_so_far} // y se pasa al siguiente bucle
+            ));
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">-N-o- -t-e-n-g-o- -g-u-i-o-n-e-s-.-
+</code></pre>
+<p>Hay muchos otros métodos de gran utilidad como:</p>
+<ul>
+<li><code>.take_while()</code> que va leyendo elementos de un iterador mientras retorna <code>true</code>.</li>
+<li><code>.cloned()</code> que crea un clones de los elementos del iterador. Convierte una referencia en un valor.</li>
+<li><code>.by_ref()</code> que convierte en referencias los elementos del iterador. Es bueno para asegurarse de que se puede usar un <code>Vec</code> o similar después de que se haya iterado a través de él.</li>
+<li>Existen muchos métodos acabados en <code>_while</code>: <code>.skip_while()</code>, <code>.map_while()</code>.</li>
+<li><code>.sum()</code>: simplemente suma todos los elementos en un solo valor.</li>
+</ul>
+<p><code>.chunks()</code> y <code>.windows()</code> son dos formas de partir un vector en el tamaño que se desee. Se indica el tamñao que se desea como parámetro. Por ejemplo, si se tiene un vector de 10 elementos <code>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code>, y se pasa un parámetro de 3, se debe trabajar de la siguiente forma:</p>
+<ul>
+<li><code>.chunk()</code> dará lugar a cuatro fragmentos (slices): [0, 1, 2]. [3, 4, 5], [6, 7, 8] y [9]. El parámetro fija el número de elementos en cada fragmento. Con un posible fragmento de tamaño inferior al final.</li>
+<li><code>.windows()</code> dará lugar a más fragmentos en este caso ya que creará fragmentos del tamaño indicado y se desplazará de uno en uno: [0, 1, 2], [1, 2, 3], [2, 3, 4], ...., [7, 8, 9].</li>
+</ul>
+<p>Se observa el funcionamiento con el siguiente código:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let num_vec = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+
+    for chunk in num_vec.chunks(3) {
+        println!(&quot;{:?}&quot;, chunk);
+    }
+    println!();
+    for window in num_vec.windows(3) {
+        println!(&quot;{:?}&quot;, window);
+    }
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">[1, 2, 3]
+[4, 5, 6]
+[7, 8, 9]
+[0]
+
+[1, 2, 3]
+[2, 3, 4]
+[3, 4, 5]
+[4, 5, 6]
+[5, 6, 7]
+[6, 7, 8]
+[7, 8, 9]
+[8, 9, 0]
+</code></pre>
+<p>Hay que tener en cuenta que <code>.chunks()</code> lanzará <code>panic!</code> si no se le indica ningún tamaño. Se puede escribir <code>.chunks(1000)</code> para un vector de un solo elemento, pero no se puede escribir <code>.chunks()</code> con algo de longitud 0. La función valida <code>assert!(chunk_size != 0)</code>.</p>
+<p><code>.match_indices()</code> permite extraer de un <code>String</code> o <code>&amp;str</code> todo lo que coincida con el parámetro e indica el índice también. Es similar a <code>.enumerate()</code> en que retorna una tupla con dos elementos.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let rules = &quot;Regla número 1: No luchar. Regla número 2: ve a la cama a las 8 pm. Regla número 3: levántate a las 6 am.&quot;;
+    let rule_locations = rules.match_indices(&quot;Regla&quot;).collect::&lt;Vec&lt;(_, _)&gt;&gt;(); // Es Vec&lt;usize, &amp;str&gt;
+    println!(&quot;{:?}&quot;, rule_locations);
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">[(0, &quot;Regla&quot;), (28, &quot;Regla&quot;), (70, &quot;Regla&quot;)]
+</code></pre>
+<p><code>.peekable()</code> crea un iterador que permite <em>echar un vistazo</em> al siguiente elemento. Es como llmar a <code>.next()</code>(devuelve un <code>Option</code>) solo que sin avanzar el iterador. Se puede usar tanto como se necesite. A continuación, se muestra un ejemplo de uso de <code>.peek()</code> tres veces para cada elemento.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let just_numbers = vec![1, 5, 100];
+    let mut number_iter = just_numbers.iter().peekable(); // Esto crea un tipo de iterator denominado Peekable
+
+    for _ in 0..3 {
+        println!(&quot;Me encanta el número {}&quot;, number_iter.peek().unwrap());
+        println!(&quot;Me encanta tanto el número {}&quot;, number_iter.peek().unwrap());
+        println!(&quot;{} es un número tan bonito&quot;, number_iter.peek().unwrap());
+        number_iter.next();
+    }
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">Me encanta el número 1
+Me encanta tanto el número 1
+1 es un número tan bonito
+Me encanta el número 5
+Me encanta tanto el número 5
+5 es un número tan bonito
+Me encanta el número 100
+Me encanta tanto el número 100
+100 es un número tan bonito
+</code></pre>
+<p>A continuación se muestra otro ejemplo que usa <code>.peek()</code> para contrastar con <code>match</code> previamente a llamar a <code>.next()</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let locations = vec![
+        (&quot;Nevis&quot;, 25),
+        (&quot;Taber&quot;, 8428),
+        (&quot;Markerville&quot;, 45),
+        (&quot;Cardston&quot;, 3585),
+    ];
+    let mut location_iter = locations.iter().peekable();
+    while location_iter.peek().is_some() {
+        match location_iter.peek() {
+            Some((name, number)) if *number &lt; 100 =&gt; { // .peek() da una referencia, se necesita *
+                println!(&quot;Encontrada una aldea: {} con {} personas&quot;, name, number)
+            }
+            Some((name, number)) =&gt; println!(&quot;Encontrado un pueblo: {} con {} personas&quot;, name, number),
+            None =&gt; break,
+        }
+        location_iter.next();
+    }
+
+</code></pre></pre>
+<p>El código anterior da como resultado:</p>
+<pre><code class="language-text">Encontrada una aldea: Nevis con 25 personas
+Encontrado un pueblo: Taber con 8428 personas
+Encontrada una aldea: Markerville con 45 personas
+Encontrado un pueblo: Cardston con 3585 personas
+</code></pre>
+<p>Finalmente, se muestra un ejemplo en que se se usa también <code>.match_indices()</code>. En este caso, introducen nombres en un <code>struct</code> dependiendo del número de espacios de la <code>&amp;str</code>.</p>
+<pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
+struct Nombres {
+    una_palabra: Vec&lt;String&gt;,
+    dos_palabras: Vec&lt;String&gt;,
+    tres_palabras: Vec&lt;String&gt;,
+}
+
+fn main() {
+    let vec_of_Nombres = vec![
+        &quot;Caesar&quot;,
+        &quot;Frodo Baggins&quot;,
+        &quot;Bilbo Baggins&quot;,
+        &quot;Jean-Luc Picard&quot;,
+        &quot;Data&quot;,
+        &quot;Rand Al'Thor&quot;,
+        &quot;Paul Atreides&quot;,
+        &quot;Barack Hussein Obama&quot;,
+        &quot;Bill Jefferson Clinton&quot;,
+    ];
+
+    let mut iter_of_Nombres = vec_of_Nombres.iter().peekable();
+
+    let mut all_Nombres = Nombres { // inicia un struct sin nombres
+        una_palabra: vec![],
+        dos_palabras: vec![],
+        tres_palabras: vec![],
+    };
+
+    while iter_of_Nombres.peek().is_some() {
+        let next_item = iter_of_Nombres.next().unwrap(); // Se puede usar .unwrap() ya que se sabe que contiene algo
+        match next_item.match_indices(' ').collect::&lt;Vec&lt;_&gt;&gt;().len() { // Crea un vector utilizando .match_indices y comprueba la longitud
+            0 =&gt; all_Nombres.una_palabra.push(next_item.to_string()),
+            1 =&gt; all_Nombres.dos_palabras.push(next_item.to_string()),
+            _ =&gt; all_Nombres.tres_palabras.push(next_item.to_string()),
+        }
+    }
+
+    println!(&quot;{:?}&quot;, all_Nombres);
+}
+</code></pre></pre>
+<p>El código anterior imprime:</p>
+<pre><code class="language-text">Nombres { una_palabra: [&quot;Caesar&quot;, &quot;Data&quot;], dos_palabras: [&quot;Frodo Baggins&quot;, &quot;Bilbo Baggins&quot;, &quot;Jean-Luc Picard&quot;, &quot;Rand Al'Thor&quot;, &quot;Paul Atreides&quot;], tres_palabras: [&quot;Barack Hussein Obama&quot;, &quot;Bill Jefferson Clinton&quot;] }
+</code></pre>
 
                     </main>
 
