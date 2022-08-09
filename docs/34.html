@@ -143,7 +143,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="closures---cierres"><a class="header" href="#closures---cierres">Closures - Cierres</a></h1>
-<p>Los cierres o closures (en inglés) son como funciones rápidas que no necesitan un nombre. En ocasiones se les denomina funciones lambdas. Son fáciles de encontrar en el código debido a que utilizan <code>||</code> en lugar de <code>()</code>. Son muy habituales en Rust y una vez se aprenden a utilizar uno se pregunta como ha podido vivir sin ellos.</p>
+<p>Los cierres o closures (en inglés) son una especie de funciones rápidas que no necesitan un nombre. En ocasiones se les denomina funciones lambdas. Son fáciles de encontrar en el código debido a que utilizan <code>||</code> en lugar de <code>()</code>. Son muy habituales en Rust y una vez se aprenden a utilizar uno se pregunta como ha podido vivir sin ellos.</p>
 <p>Se puede asociar un closure a una variable y en ese caso funciona y parece exactamente como una función:</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let my_closure = || println!(&quot;Esto es un cierre&quot;);
@@ -328,7 +328,268 @@ fn main() {
 </code></pre></pre>
 <p>Esto imprime: <code>140     399     923     481     800     622     623     218     009     598    281</code>.</p>
 <h2 id="_-en-un-cierre-closure"><a class="header" href="#_-en-un-cierre-closure">|_| en un cierre (closure)</a></h2>
+<p>En ocasiones se puede ver <code>|_|</code> en un cierre. Esto significa que el cierre (closure) necesita un argumento (como podría ser una variable x), pero no se va a usar. Así que esta expresión en los parámetros de un cierre significa: vale, el cierre recibe un parámetro, pero no le doy un nombre porque no lo uso&quot;.</p>
+<p>A continuación, se muestra un ejemplo que da error por no expresar el parámetro:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_vec = vec![8, 9, 10];
+
+    println!(&quot;{:?}&quot;, my_vec.iter().for_each(|| println!(&quot;No usamos la variable que se necesita&quot;))); // ⚠️
+}
+</code></pre></pre>
+<p>Rust da un error que dice:</p>
+<pre><code class="language-text">error[E0593]: closure is expected to take 1 argument, but it takes 0 arguments
+ --&gt; src/main.rs:4:36
+  |
+4 |     println!(&quot;{:?}&quot;, my_vec.iter().for_each(|| println!(&quot;No usamos la variable que se necesita&quot;))); // ⚠️
+  |                                    ^^^^^^^^ -- takes 0 arguments
+  |                                    |
+  |                                    expected closure that takes 1 argument
+</code></pre>
+<p>El propio compilador da alguna pista:</p>
+<pre><code class="language-text">help: consider changing the closure to take and ignore the expected argument
+  |
+4 |     println!(&quot;{:?}&quot;, my_vec.iter().for_each(|_| println!(&quot;No usamos la variable que se necesita&quot;))); // ⚠️
+  |                                             ~~~
+</code></pre>
+<p>Es decir, que se debe pasar el argumento que necesita cualquier cierre que se pase como parámetro a la función <code>for_each</code>.</p>
+<p>Si se cambia de este modo, funcionará:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_vec = vec![8, 9, 10];
+
+    println!(&quot;{:?}&quot;, my_vec.iter().for_each(|_| println!(&quot;No usamos la variable que se necesita&quot;)));
+}
+</code></pre></pre>
+<h2 id="métodos-útiles-para-su-uso-con-cierres-e-iteradores"><a class="header" href="#métodos-útiles-para-su-uso-con-cierres-e-iteradores">Métodos útiles para su uso con cierres e iteradores</a></h2>
+<p>Rust es un lenguaje muy divertido cuando se dominan los cierres. Con ellos se pueden <em>encadenar</em> métodos para hacer mucho con poco código. A continuación, se muestrans algunos métodos que se utilizan con cierres que aún no se habían visto:</p>
+<p><code>.filter()</code>: a partir de un iterador, permite conservar los elementos que se deseen. El siguiente ejemplo filtra los meses del año:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let meses = vec![&quot;Enero&quot;, &quot;Febrero&quot;, &quot;Marzo&quot;, &quot;Abril&quot;, &quot;Mayo&quot;, &quot;Junio&quot;, &quot;Julio&quot;, &quot;Agosto&quot;, &quot;Septiembre&quot;, &quot;Octubre&quot;, &quot;Noviembre&quot;, &quot;Diciembre&quot;];
+
+    let filtered_meses = meses
+        .into_iter()                         // crea un iterador
+        .filter(|month| month.len() &lt;= 5)     // Solo los meses con cinco o menos caracters (byte)
+                                             // En este caso, todos los caracteres son de un byte, por eso funciona usar .len()
+        .filter(|month| month.contains(&quot;u&quot;)) // Se seleccionan solo los meses que contengan la letra u
+        .collect::&lt;Vec&lt;&amp;str&gt;&gt;();
+
+    println!(&quot;{:?}&quot;, filtered_meses);
+}
+</code></pre></pre>
+<p>Esto imprime: <code>[&quot;Junio&quot;, &quot;Julio&quot;]</code>.</p>
+<p><code>.filter_map()</code>: este método realiza de una vez la función de <code>.filter()</code> y <code>.map()</code>. El cierre que se pasa como parámetro,debe devolver un <code>Option&lt;T&gt;</code>. El método <code>filter_map()</code> extraerá <code>T</code> para aquellos elementos que tengan valor (que sean de tipo <code>Some&lt;T&gt;</code>) y desechará los que sean de tipo <code>None</code>. Por ejemplo, el uso de <code>.filter_map()</code> con un vector como <code>vec![Some(2), None, Some(3)]</code> devuelve <code>[2, 3]</code>.</p>
+<p>A continuación se muestra un ejemplo con un <code>struct</code> de una <code>Empresa</code>. Cada empresa tiene un campo <code>nombre</code> de tipo <code>String</code>, y un campo <code>ceo</code> para describir a su responsable. El ceo puede haber dimitido, por lo que es de tipo <code>Option&lt;String&gt;</code> En el ejemplo, se filtran las empresas para mostrar el valor de los CEO.</p>
+<pre><pre class="playground"><code class="language-rust">struct Empresa {
+    nombre: String,
+    ceo: Option&lt;String&gt;,
+}
+
+impl Empresa {
+    fn new(nombre: &amp;str, ceo: &amp;str) -&gt; Self {
+        let ceo = match ceo {
+            &quot;&quot; =&gt; None,
+            ceo =&gt; Some(ceo.to_string()),
+        }; // Se crea el valor del campo ceo y debajo se crea el elemento struct
+        Self {
+            nombre: nombre.to_string(),
+            ceo,
+        }
+    }
+
+    fn get_ceo(&amp;self) -&gt; Option&lt;String&gt; {
+        self.ceo.clone() // Devuelve un clone del CEO (struct no es tipo Copy)
+    }
+}
+
+fn main() {
+    let empresa_vec = vec![
+        Empresa::new(&quot;Umbrella Corporation&quot;, &quot;Unknown&quot;),
+        Empresa::new(&quot;Ovintiv&quot;, &quot;Doug Suttles&quot;),
+        Empresa::new(&quot;The Red-Headed League&quot;, &quot;&quot;),
+        Empresa::new(&quot;Stark Enterprises&quot;, &quot;&quot;),
+    ];
+
+    let all_the_ceos = empresa_vec
+        .into_iter()
+        .filter_map(|empresa| empresa.get_ceo()) // filter_map recibe Option&lt;T&gt; que es lo que necesita
+        .collect::&lt;Vec&lt;String&gt;&gt;();
+
+    println!(&quot;{:?}&quot;, all_the_ceos);
+}
+</code></pre></pre>
+<p>Esto imprime: <code>[&quot;Unknown&quot;, &quot;Doug Suttles&quot;]</code></p>
+<p>Para facilitar el uso de <code>.filter_map()</code> con valores <code>Result&lt;T, E&gt;</code>, este último tiene el método <code>.ok()</code> que lo convierte en <code>Option&lt;T&gt;</code> usando <code>None</code> para los casos de error.</p>
+<p>En el siguiente ejemplo se utiliza <code>.parse()</code> para convertir la entrada de usuario en números <code>f32</code>. En el resultado se registran los errores que pueda haber en la entrada del usuario, al usar <code>.filter_map()</code> junto con <code>.ok()</code> se descartan los valores erróneos.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let user_input = vec![&quot;8.9&quot;, &quot;Nine point nine five&quot;, &quot;8.0&quot;, &quot;7.6&quot;, &quot;eleventy-twelve&quot;];
+
+    let actual_numbers = user_input
+        .into_iter()
+        .filter_map(|input| input.parse::&lt;f32&gt;().ok())
+        .collect::&lt;Vec&lt;f32&gt;&gt;();
+
+    println!(&quot;{:?}&quot;, actual_numbers);
+}
+</code></pre></pre>
+<p>Lo anterior imprime: <code>[8.9, 8.0, 7.6]</code></p>
+<p>En sentido contrario de <code>.ok()</code>, los <code>Option&lt;T&gt;</code> disponen de los métodos <code>.ok_or()</code> y <code>.ok_or_else()</code>. Estas funcones convierten un <code>Option&lt;T&gt;</code> en <code>Resutl&lt;T, E&gt;</code>. La función <code>.ok_or()</code> devuelve un <code>Ok</code> o un <code>Err</code>, por lo que necesita que se le indique de qué tipo debe ser este error. Esto se debe a que los casos <code>None</code> de <code>Option</code> no disponen de información adicionales.</p>
+<p>En estas funciones, <code>.ok_or()</code> y <code>.ok_or_else()</code>, el parámetro closure se utiliza para obtener el valor para los casos en los que el <code>Option</code> sea <code>None</code>.</p>
+<p>En el siguiente ejemplo, se toma el <code>Option</code> del <code>struct</code> de <code>Empresa</code> para convertirlo en un <code>Result</code>. Para el manejo de errores a largo plazo, es bueno que la aplicación tenga sus propios tipos de error. En este caso solo se incluye un mensaje de error, por lo que el tipo del resultado es <code>Result&lt;String, &amp;str&gt;</code>.</p>
+<pre><pre class="playground"><code class="language-rust">// El código es idéntico, salvo en la función main()
+struct Empresa {
+    nombre: String,
+    ceo: Option&lt;String&gt;,
+}
+
+impl Empresa {
+    fn new(nombre: &amp;str, ceo: &amp;str) -&gt; Self {
+        let ceo = match ceo {
+            &quot;&quot; =&gt; None,
+            ceo =&gt; Some(ceo.to_string()),
+        };
+        Self {
+            nombre: nombre.to_string(),
+            ceo,
+        }
+    }
+
+    fn get_ceo(&amp;self) -&gt; Option&lt;String&gt; {
+        self.ceo.clone()
+    }
+}
+
+fn main() {
+    let empresa_vec = vec![
+        Empresa::new(&quot;Umbrella Corporation&quot;, &quot;Unknown&quot;),
+        Empresa::new(&quot;Ovintiv&quot;, &quot;Doug Suttles&quot;),
+        Empresa::new(&quot;The Red-Headed League&quot;, &quot;&quot;),
+        Empresa::new(&quot;Stark Enterprises&quot;, &quot;&quot;),
+    ];
+
+    let mut results_vec = vec![]; // Para guardar los valores resultantes
+
+    empresa_vec
+        .iter()
+        .for_each(|empresa| results_vec.push(empresa.get_ceo().ok_or(&quot;No CEO found&quot;)));
+
+    for item in results_vec {
+        println!(&quot;{:?}&quot;, item);
+    }
+}
+</code></pre></pre>
+<p>El resultado de este código es el siguiente:</p>
+<pre><code class="language-text">Ok(&quot;Unknown&quot;)
+Ok(&quot;Doug Suttles&quot;)
+Err(&quot;No CEO found&quot;)
+Err(&quot;No CEO found&quot;)
+</code></pre>
+<p>En este caso, se dispone de las cuatro entradas del usuario y se indica cuáles son erróneas.</p>
+<p>A continuación se usa <code>.ok_or_else()</code> para que se pueda pasar como parámetro un cierre y obtener un mensaje de error mejor incluyendo el nombre de la empresa.</p>
+<pre><pre class="playground"><code class="language-rust">// El código es idéntico, salvo en la función main()
+struct Empresa {
+    nombre: String,
+    ceo: Option&lt;String&gt;,
+}
+
+impl Empresa {
+    fn new(nombre: &amp;str, ceo: &amp;str) -&gt; Self {
+        let ceo = match ceo {
+            &quot;&quot; =&gt; None,
+            ceo =&gt; Some(ceo.to_string()),
+        };
+        Self {
+            nombre: nombre.to_string(),
+            ceo,
+        }
+    }
+
+    fn get_ceo(&amp;self) -&gt; Option&lt;String&gt; {
+        self.ceo.clone()
+    }
+}
+
+fn main() {
+    let empresa_vec = vec![
+        Empresa::new(&quot;Umbrella Corporation&quot;, &quot;Unknown&quot;),
+        Empresa::new(&quot;Ovintiv&quot;, &quot;Doug Suttles&quot;),
+        Empresa::new(&quot;The Red-Headed League&quot;, &quot;&quot;),
+        Empresa::new(&quot;Stark Enterprises&quot;, &quot;&quot;),
+    ];
+
+    let mut results_vec = vec![]; // Para guardar los valores resultantes
+
+    empresa_vec
+        .iter()
+        .for_each(|empresa| {
+            results_vec.push(empresa.get_ceo().ok_or_else(|| {
+                let mensaje_error = format!(&quot;No CEO found for {}&quot;, empresa.nombre);
+                mensaje_error
+            }))
+        });
+
+    for item in results_vec {
+        println!(&quot;{:?}&quot;, item);
+    }
+}
+</code></pre></pre>
+<p>El código anterior, imprime:</p>
+<pre><code class="language-text">Ok(&quot;Unknown&quot;)
+Ok(&quot;Doug Suttles&quot;)
+Err(&quot;No CEO found for The Red-Headed League&quot;)
+Err(&quot;No CEO found for Stark Enterprises&quot;)
+</code></pre>
+<p><code>.and_then()</code>: es un método que toma como parámetro un <code>Option</code> y permite realizar una operación con su valor pasando el resultado al siguiente método que exista. El resultado también debe ser de tipo <code>Option</code>. Es una forma segura de obtener el contenido del elemento <code>Some</code>, realizar la operación deseada y encapsular el resultado de nuevo en un <code>Option</code>.</p>
+<p>Un ejemplo sencillo se puede ver a partir del resultado de la operación <code>.get()</code> sobre un vector, puesto que devuelve un <code>Option</code>. En este caso, se obtiene un número, se realiza un cálculo y se vuelve a convertir a <code>Option</code>. Los valores <code>None</code> se pasan sin procesar, siguen siendo <code>None</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let new_vec = vec![8, 9, 0]; // solo un vec con números
+    let number_to_add = 5;       // Se usa en el cálculo más adelante
+    let mut empty_vec = vec![];  // El resultado va aquí
+
+
+    for index in 0..5 {
+        empty_vec.push(
+            new_vec
+               .get(index)
+                .and_then(|number| Some(number + 1))
+                .and_then(|number| Some(number + number_to_add))
+        );
+    }
+    println!(&quot;{:?}&quot;, empty_vec);
+}
+</code></pre></pre>
+<p>Esto imprime: <code>[Some(14), Some(15), Some(6), None, None]</code>. Se observa que no se filtran los <code>None</code>.</p>
+<p><code>.and()</code>: es parecido a <code>bool</code> para <code>Option</code>. Se pueden encadenar muchos y si todos son <code>Some</code> el resultado será el del último. Si existe algún <code>None</code>, el resultado será <code>None</code>.</p>
+<p>Se muestra en primer lugar un ejemplo con booleanos para ayudar a entender el funcionamiento de <code>.and()</code> en base al funcionamiento de <code>&amp;&amp;</code>(and). Un solo <code>false</code> lo convierte todo en <code>false</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let one = true;
+    let two = false;
+    let three = true;
+    let four = true;
+
+    println!(&quot;{}&quot;, one &amp;&amp; three); // prints true
+    println!(&quot;{}&quot;, one &amp;&amp; two &amp;&amp; three &amp;&amp; four); // prints false
+}
+</code></pre></pre>
+<p>A continuación, se muestra el mismo tipo de ejemplo con la función <code>.and()</code>. Se puede imagina que se ejecutaron cinco operaciones y para cada una de ellas, si el resultado fue correcto se guardar en un <code>Vec&lt;Option&lt;&amp;str&gt;&gt;</code> un valor <code>Some(&quot;éxito&quot;)</code>. Se repiten tres veces estas cinco operaciones. Después se usa <code>.and()</code> para comparar si en cada operación se obtubo resultado en todas las ocasiones.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let first_try = vec![Some(&quot;éxito&quot;), None, Some(&quot;éxito&quot;), Some(&quot;éxito&quot;), None];
+    let second_try = vec![None, Some(&quot;éxito&quot;), Some(&quot;éxito&quot;), Some(&quot;éxito&quot;), Some(&quot;éxito&quot;)];
+    let third_try = vec![Some(&quot;éxito&quot;), Some(&quot;éxito&quot;), Some(&quot;éxito&quot;), Some(&quot;éxito&quot;), None];
+
+    for i in 0..first_try.len() {
+        println!(&quot;{:?}&quot;, first_try[i].and(second_try[i]).and(third_try[i]));
+    }
+}
+</code></pre></pre>
+<p>El resultado es el siguiente:</p>
+<pre><code class="language-text">None
+None
+Some(&quot;éxito&quot;)
+Some(&quot;éxito&quot;)
+None
+</code></pre>
+<p>La cadena de <code>.and()</code> de la primera operación en los tres intentos devuelve <code>None</code> ya que el segundo intento tiene <code>None</code> en la primera posición (índice cero). La segunda operación también es <code>None</code> debido a que el primer intento dio un resultado <code>None</code>. La tercera operación sí tiene éxito debido a que los tres intentos tiene un resultado distinto de <code>None</code>.</p>
 <p>#TODO</p>
+<p><code>.any()</code> y <code>.all()</code>:</p>
 
                     </main>
 
