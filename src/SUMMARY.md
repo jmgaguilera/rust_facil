@@ -41,4 +41,4 @@
 - [Encadenando métodos](./32.md)
 - [Iteradores](./33.md)
 - [Closures - Cierres](./34.md)
-
+- [La macro `dbg!` e `.inspect()`](./35.md)
