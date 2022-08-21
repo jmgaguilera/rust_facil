@@ -46,3 +46,4 @@
 - [Tiempos de vida (lifetimes)](./37.md)
 - [Mutabilidad interior](./38.md)
 - [Cow](./39.md)
+- [Alias de tipos](./40.md)
