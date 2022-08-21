@@ -45,3 +45,4 @@
 - [Tipos de `&str`](./36.md)
 - [Tiempos de vida (lifetimes)](./37.md)
 - [Mutabilidad interior](./38.md)
+- [Cow](./39.md)
