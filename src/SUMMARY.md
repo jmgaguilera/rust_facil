@@ -44,3 +44,4 @@
 - [La macro `dbg!` e `.inspect()`](./35.md)
 - [Tipos de `&str`](./36.md)
 - [Tiempos de vida (lifetimes)](./37.md)
+- [Mutabilidad interior](./38.md)
