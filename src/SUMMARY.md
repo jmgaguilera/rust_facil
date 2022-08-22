@@ -48,3 +48,4 @@
 - [Cow](./39.md)
 - [Alias de tipos](./40.md)
 - [La macro `todo!`](./41.md)
+- [Rc](./42.md)
