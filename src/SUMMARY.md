@@ -51,3 +51,4 @@
 - [Rc](./42.md)
 - [Múltiples hilos](./43.md)
 - [Cierres en funciones](./44.md)
+- [`impl Trait`](./45.md)
