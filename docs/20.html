@@ -1,0 +1,409 @@
+<!DOCTYPE HTML>
+<html lang="es" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Estructuras de control - Rust en español fácil</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li><li class="chapter-item expanded "><a href="15.html"><strong aria-hidden="true">15.</strong> Paso de referencias a funciones</a></li><li class="chapter-item expanded "><a href="16.html"><strong aria-hidden="true">16.</strong> Copia</a></li><li class="chapter-item expanded "><a href="17.html"><strong aria-hidden="true">17.</strong> Tipos colección</a></li><li class="chapter-item expanded "><a href="18.html"><strong aria-hidden="true">18.</strong> Vectores</a></li><li class="chapter-item expanded "><a href="19.html"><strong aria-hidden="true">19.</strong> Tuplas</a></li><li class="chapter-item expanded "><a href="20.html" class="active"><strong aria-hidden="true">20.</strong> Estructuras de control</a></li><li class="chapter-item expanded "><a href="21.html"><strong aria-hidden="true">21.</strong> Estructuras - struct</a></li><li class="chapter-item expanded "><a href="22.html"><strong aria-hidden="true">22.</strong> Enumerados - enum</a></li><li class="chapter-item expanded "><a href="23.html"><strong aria-hidden="true">23.</strong> Bucles</a></li><li class="chapter-item expanded "><a href="24.html"><strong aria-hidden="true">24.</strong> Implementando structs y enums</a></li><li class="chapter-item expanded "><a href="25.html"><strong aria-hidden="true">25.</strong> Desestructurar</a></li><li class="chapter-item expanded "><a href="26.html"><strong aria-hidden="true">26.</strong> Referencias y el operador punto .</a></li><li class="chapter-item expanded "><a href="27.html"><strong aria-hidden="true">27.</strong> Genéricos</a></li><li class="chapter-item expanded "><a href="28.html"><strong aria-hidden="true">28.</strong> Los enumerados Option y Result</a></li><li class="chapter-item expanded "><a href="29.html"><strong aria-hidden="true">29.</strong> Otras colecciones</a></li><li class="chapter-item expanded "><a href="30.html"><strong aria-hidden="true">30.</strong> El operador ?</a></li><li class="chapter-item expanded "><a href="31.html"><strong aria-hidden="true">31.</strong> Traits (Rasgos)</a></li><li class="chapter-item expanded "><a href="32.html"><strong aria-hidden="true">32.</strong> Encadenando métodos</a></li><li class="chapter-item expanded "><a href="33.html"><strong aria-hidden="true">33.</strong> Iteradores</a></li><li class="chapter-item expanded "><a href="34.html"><strong aria-hidden="true">34.</strong> Closures - Cierres</a></li><li class="chapter-item expanded "><a href="35.html"><strong aria-hidden="true">35.</strong> La macro dbg! e .inspect()</a></li><li class="chapter-item expanded "><a href="36.html"><strong aria-hidden="true">36.</strong> Tipos de &str</a></li><li class="chapter-item expanded "><a href="37.html"><strong aria-hidden="true">37.</strong> Tiempos de vida (lifetimes)</a></li><li class="chapter-item expanded "><a href="38.html"><strong aria-hidden="true">38.</strong> Mutabilidad interior</a></li><li class="chapter-item expanded "><a href="39.html"><strong aria-hidden="true">39.</strong> Cow</a></li><li class="chapter-item expanded "><a href="40.html"><strong aria-hidden="true">40.</strong> Alias de tipos</a></li><li class="chapter-item expanded "><a href="41.html"><strong aria-hidden="true">41.</strong> La macro todo!</a></li><li class="chapter-item expanded "><a href="42.html"><strong aria-hidden="true">42.</strong> Rc</a></li><li class="chapter-item expanded "><a href="43.html"><strong aria-hidden="true">43.</strong> Múltiples hilos</a></li><li class="chapter-item expanded "><a href="44.html"><strong aria-hidden="true">44.</strong> Cierres en funciones</a></li><li class="chapter-item expanded "><a href="45.html"><strong aria-hidden="true">45.</strong> impl Trait</a></li><li class="chapter-item expanded "><a href="46.html"><strong aria-hidden="true">46.</strong> Arc</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust en español fácil</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="estructuras-de-control"><a class="header" href="#estructuras-de-control">Estructuras de control</a></h1>
+<p><strong>Se puede ver este capítulo en YouTube en inglés: <a href="https://youtu.be/UAymDOpv_us">Parte 1</a> y <a href="https://youtu.be/eqysTfiiQZs">Parte 2</a></strong></p>
+<p>Las estructuras de control del flujo de ejecución permiten indicar qué código debe ejecutarse en cada caso. La estructura de control de flujo más simple es <code>if</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_number = 5;
+    if my_number == 7 {
+        println!(&quot;Es el siete&quot;);
+    }
+}
+</code></pre></pre>
+<p>Se utiliza <code>==</code> y no <code>=</code>. <code>==</code> sirve para comparar y <code>=</code> se utiliza para asignar un valor. También hay que destacar que se escribe <code>if my_number == 7</code> y no <code>if (my_number == 7)</code>. La estructura de control <code>if</code> no necesita paréntesis en Rust.</p>
+<p>Esta estructura se completa con <code>else if</code> y <code>else</code> si resultan necesarias:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_number = 5;
+    if my_number == 7 {
+        println!(&quot;Es el siete&quot;);
+    } else if my_number == 6 {
+        println!(&quot;Es el seis&quot;)
+    } else {
+        println!(&quot;Es un número diferente&quot;)
+    }
+}
+</code></pre></pre>
+<p>El código anterior imprime <code>Es un númbero diferente</code> porque no es igual a 7 o 6.</p>
+<p>Se pueden añadir más condiciones con <code>&amp;&amp;</code> (operador <code>y lógico</code>) y <code>||</code> (operador <code>o lógico</code>).</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_number = 5;
+    if my_number % 2 == 1 &amp;&amp; my_number &gt; 0 { // % 2 es el resto de la división entre dos
+        println!(&quot;Es un número impar positivo&quot;);
+    } else if my_number == 6 {
+        println!(&quot;Es el seis&quot;)
+    } else {
+        println!(&quot;Es un número diferente&quot;)
+    }
+}
+</code></pre></pre>
+<p>El código anterior imprime <code>Es un número impar positivo</code> porque cuando se divide entre 2 el resto es 1, que es mayor que 0.</p>
+<p>Se observa que cuando hay demasiados <code>if</code>, <code>else</code> y <code>else if</code> el código puede resultar difícil de leer. En estos casos (y en otros muchos) se puede utilizar <code>match</code>, que resulta mucho más límpio. <code>match</code> requiere que se contemplen todos los casos posibles para evitar errores. Así que el siguiente código no funciona:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_number: u8 = 5;
+    match my_number {
+        0 =&gt; println!(&quot;Es cero&quot;),
+        1 =&gt; println!(&quot;Es uno&quot;),
+        2 =&gt; println!(&quot;Es dos&quot;),
+        // ⚠️
+    }
+}
+</code></pre></pre>
+<p>El compilar indica lo siguiente:</p>
+<pre><code class="language-text">error[E0004]: non-exhaustive patterns: `3u8..=std::u8::MAX` not covered
+ --&gt; src\main.rs:3:11
+  |
+3 |     match my_number {
+  |           ^^^^^^^^^ pattern `3u8..=std::u8::MAX` not covered
+</code></pre>
+<p>El compilador se queja de que solo conoce lo que tiene que ejecutar los casos de 0 a 2, pero <code>u8</code> puede tener valores hasta el 255 (es decir <code>std::u8::MAX</code>). Qué debe hacer el programa para el resto de valores posibles que pueden aparecer.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_number: u8 = 5;
+    match my_number {
+        0 =&gt; println!(&quot;Es cero&quot;),
+        1 =&gt; println!(&quot;Es uno&quot;),
+        2 =&gt; println!(&quot;Es dos&quot;),
+        _ =&gt; println!(&quot;Es algún otro número&quot;),
+    }
+}
+</code></pre></pre>
+<p>Este código imprime <code>Es algún otro número</code>.</p>
+<p>Para el caso de <code>match</code> hay que recordar que:</p>
+<ul>
+<li>A todo <code>match</code> le sigue un bloque de código <code>{}</code></li>
+<li>Se escriben los <em>patrones</em> a la izquierda y se usa <code>=&gt;</code> (flecha gruesa -fat arrow-) para indicar qué hay que hacer cuando hay una coincidencia.</li>
+<li>A cada línea con un patrón se le denomina &quot;brazo&quot; del <code>match</code>.</li>
+<li>Entre cada &quot;brazo&quot; se pone una coma de separación (no se usa el punto y coma).</li>
+</ul>
+<p>Se puede declarar un valor usando <code>match</code> ya que retorna una valor.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_number = 5;
+    let second_number = match my_number {
+        0 =&gt; 0,
+        5 =&gt; 10,
+        _ =&gt; 2,
+    };
+}
+</code></pre></pre>
+<p>En el ejemplo anterior, <code>second_number</code> tendrá el valor 10. El match, en este caso acaba con un ; ya que una vez se ha finalizado su evaluación esta sentencia es como si se hubiese escrito <code>let second_number = 10;</code>. Que define y asigna el 10 a <code>second_number</code>.</p>
+<p><code>match</code> se puede utilizar para cosas más complejas. Por ejemplo, con tuplas:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let sky = &quot;nuboso&quot;;
+    let temperature = &quot;cálido&quot;;
+
+    match (sky, temperature) {
+        (&quot;nuboso&quot;, &quot;frío&quot;) =&gt; println!(&quot;El día es oscuro y desapacible&quot;),
+        (&quot;despejado&quot;, &quot;cálido&quot;) =&gt; println!(&quot;El día es agradable&quot;),
+        (&quot;nuboso&quot;, &quot;cálido&quot;) =&gt; println!(&quot;El día es oscuro, pero no se está mal&quot;),
+        _ =&gt; println!(&quot;No sé cómo es el día de hoy&quot;),
+    }
+}
+</code></pre></pre>
+<p>Este código imprime <code>El día es oscuro, pero no se está mal</code> porque coincide con &quot;nuboso&quot; y &quot;cálido&quot; para <code>sky</code> y <code>temperature</code>.</p>
+<p>Incluso se puede utilizar <code>if</code> en las ramas de un <code>match</code>. Es lo que se llama una &quot;guarda de coincidencia&quot; (match guard):</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let children = 5;
+    let married = true;
+
+    match (children, married) {
+        (children, married) if married == false =&gt; println!(&quot;Sin casar con {} niños&quot;, children),
+        (children, married) if children == 0 &amp;&amp; married == true =&gt; println!(&quot;Casado, pero sin niños&quot;),
+        _ =&gt; println!(&quot;¿Casado? {}. Número de niños: {}.&quot;, married, children),
+    }
+}
+</code></pre></pre>
+<p>Este progrma imprimirá <code>¿Casado? true. Número de niños: 5.</code></p>
+<p>Se puede usar <code>_</code> tantas veces como se necesite en un <code>match</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn match_colours(rbg: (i32, i32, i32)) {
+    match rbg {
+        (r, _, _) if r &lt; 10 =&gt; println!(&quot;No muy rojo&quot;),
+        (_, b, _) if b &lt; 10 =&gt; println!(&quot;No muy azul&quot;),
+        (_, _, g) if g &lt; 10 =&gt; println!(&quot;No muy verde&quot;),
+        _ =&gt; println!(&quot;Cada color tiene al menos 10&quot;),
+    }
+}
+
+fn main() {
+    let first = (200, 0, 0);
+    let second = (50, 50, 50);
+    let third = (200, 50, 0);
+
+    match_colours(first);
+    match_colours(second);
+    match_colours(third);
+
+}
+</code></pre></pre>
+<p>Este código imprime:</p>
+<pre><code class="language-text">No muy azul
+Cada color tiene al menos 10
+No muy verde
+</code></pre>
+<p>Este código también muestra cómo funcionan las sentencias <code>match</code>, porque en el primer ejemplo solo imprime <code>No muy rojo</code>, aunque tampoco tiene mucho verde. Las sentencias <code>match</code> siempre se detienen cuando encuentran una coincidencia y no chequea el resto de los &quot;brazos&quot;. Es un buen ejemplo de código que compila bien, pero no hace lo que se quiere.</p>
+<p>Se puede construir una sentencia <code>match</code>gigante para arreglar este código, pero probablemente es mejor utilizar un bucle <code>for</code>. Más adelante se hablará de los bucles.</p>
+<p>La sentencia <code>match</code> siempre tiene que devolver el mismo tipo de datos en todas sus ramas. Por eso, este código no funciona:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_number = 10;
+    let some_variable = match my_number {
+        10 =&gt; 8,
+        _ =&gt; &quot;Not ten&quot;, // ⚠️
+    };
+}
+</code></pre></pre>
+<p>El compilador indica lo siguiente:</p>
+<pre><code class="language-text">error[E0308]: `match` arms have incompatible types
+  --&gt; src\main.rs:17:14
+   |
+15 |       let some_variable = match my_number {
+   |  _________________________-
+16 | |         10 =&gt; 8,
+   | |               - this is found to be of type `{integer}`
+17 | |         _ =&gt; &quot;Not ten&quot;,
+   | |              ^^^^^^^^^ expected integer, found `&amp;str`
+18 | |     };
+   | |_____- `match` arms have incompatible types
+</code></pre>
+<p>El código siguiente, por la misma razón, tampoco funciona:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let some_variable = if my_number == 10 { 8 } else { &quot;something else &quot;}; // ⚠️
+}
+</code></pre></pre>
+<p>Pero el siguiente código sí funciona, porque no es un <code>match</code>y son dos sentencias diferentes:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_number = 10;
+
+    if my_number == 10 {
+        let some_variable = 8;
+    } else {
+        let some_variable = &quot;Something else&quot;;
+    }
+}
+</code></pre></pre>
+<p>También se puede usar <code>@</code> para darle un nombre al valor de un patrón <code>match</code> con el fin de poder usarlo en la expresión correspondiente a ese &quot;brazo&quot;. En este ejemplo, se guarda el valor en una variable <code>number</code> para pasarlo a una función. Si es 4 o 13 se usa ese <code>number</code> en la sentencia <code>println!</code>. En otro caso, no se utiliza.</p>
+<pre><pre class="playground"><code class="language-rust">fn match_number(input: i32) {
+    match input {
+    number @ 4 =&gt; println!(&quot;{} da mala suerte en China (suena parecido a 死)&quot;, number),
+    number @ 13 =&gt; println!(&quot;{} da mala suerte en Norte América, ¡Suerte en Italia! In bocca al lupo&quot;, number),
+    _ =&gt; println!(&quot;Es un número normal&quot;),
+    }
+}
+
+fn main() {
+    match_number(50);
+    match_number(13);
+    match_number(4);
+}
+</code></pre></pre>
+<p>Este código imprime:</p>
+<pre><code class="language-text">Es un número normal
+13 da mala suerte en Norte América, ¡Suerte en Italia! In bocca al lupo
+4 da mala suerte en China (suena parecido a 死)
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="19.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="21.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="19.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="21.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

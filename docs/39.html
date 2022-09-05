@@ -1,0 +1,259 @@
+<!DOCTYPE HTML>
+<html lang="es" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Cow - Rust en español fácil</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li><li class="chapter-item expanded "><a href="15.html"><strong aria-hidden="true">15.</strong> Paso de referencias a funciones</a></li><li class="chapter-item expanded "><a href="16.html"><strong aria-hidden="true">16.</strong> Copia</a></li><li class="chapter-item expanded "><a href="17.html"><strong aria-hidden="true">17.</strong> Tipos colección</a></li><li class="chapter-item expanded "><a href="18.html"><strong aria-hidden="true">18.</strong> Vectores</a></li><li class="chapter-item expanded "><a href="19.html"><strong aria-hidden="true">19.</strong> Tuplas</a></li><li class="chapter-item expanded "><a href="20.html"><strong aria-hidden="true">20.</strong> Estructuras de control</a></li><li class="chapter-item expanded "><a href="21.html"><strong aria-hidden="true">21.</strong> Estructuras - struct</a></li><li class="chapter-item expanded "><a href="22.html"><strong aria-hidden="true">22.</strong> Enumerados - enum</a></li><li class="chapter-item expanded "><a href="23.html"><strong aria-hidden="true">23.</strong> Bucles</a></li><li class="chapter-item expanded "><a href="24.html"><strong aria-hidden="true">24.</strong> Implementando structs y enums</a></li><li class="chapter-item expanded "><a href="25.html"><strong aria-hidden="true">25.</strong> Desestructurar</a></li><li class="chapter-item expanded "><a href="26.html"><strong aria-hidden="true">26.</strong> Referencias y el operador punto .</a></li><li class="chapter-item expanded "><a href="27.html"><strong aria-hidden="true">27.</strong> Genéricos</a></li><li class="chapter-item expanded "><a href="28.html"><strong aria-hidden="true">28.</strong> Los enumerados Option y Result</a></li><li class="chapter-item expanded "><a href="29.html"><strong aria-hidden="true">29.</strong> Otras colecciones</a></li><li class="chapter-item expanded "><a href="30.html"><strong aria-hidden="true">30.</strong> El operador ?</a></li><li class="chapter-item expanded "><a href="31.html"><strong aria-hidden="true">31.</strong> Traits (Rasgos)</a></li><li class="chapter-item expanded "><a href="32.html"><strong aria-hidden="true">32.</strong> Encadenando métodos</a></li><li class="chapter-item expanded "><a href="33.html"><strong aria-hidden="true">33.</strong> Iteradores</a></li><li class="chapter-item expanded "><a href="34.html"><strong aria-hidden="true">34.</strong> Closures - Cierres</a></li><li class="chapter-item expanded "><a href="35.html"><strong aria-hidden="true">35.</strong> La macro dbg! e .inspect()</a></li><li class="chapter-item expanded "><a href="36.html"><strong aria-hidden="true">36.</strong> Tipos de &str</a></li><li class="chapter-item expanded "><a href="37.html"><strong aria-hidden="true">37.</strong> Tiempos de vida (lifetimes)</a></li><li class="chapter-item expanded "><a href="38.html"><strong aria-hidden="true">38.</strong> Mutabilidad interior</a></li><li class="chapter-item expanded "><a href="39.html" class="active"><strong aria-hidden="true">39.</strong> Cow</a></li><li class="chapter-item expanded "><a href="40.html"><strong aria-hidden="true">40.</strong> Alias de tipos</a></li><li class="chapter-item expanded "><a href="41.html"><strong aria-hidden="true">41.</strong> La macro todo!</a></li><li class="chapter-item expanded "><a href="42.html"><strong aria-hidden="true">42.</strong> Rc</a></li><li class="chapter-item expanded "><a href="43.html"><strong aria-hidden="true">43.</strong> Múltiples hilos</a></li><li class="chapter-item expanded "><a href="44.html"><strong aria-hidden="true">44.</strong> Cierres en funciones</a></li><li class="chapter-item expanded "><a href="45.html"><strong aria-hidden="true">45.</strong> impl Trait</a></li><li class="chapter-item expanded "><a href="46.html"><strong aria-hidden="true">46.</strong> Arc</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust en español fácil</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="cow"><a class="header" href="#cow">Cow</a></h1>
+<p><code>Cow</code> es un tipo de enumerado que significa &quot;clone on write&quot; (clonq en escritura). Permite devolver una referencia <code>&amp;str</code> si no se necesita un <code>String</code>. Y devuelve un <code>String</code>, cuando se necesita. Lo mismo sucede para cualquier otro tipo, como arrays vs. Vec, etc.</p>
+<p>Para entenderlo, se puede observar su definición:</p>
+<pre><pre class="playground"><code class="language-rust">pub enum Cow&lt;'a, B&gt;
+where
+    B: 'a + ToOwned + ?Sized,
+ {
+    Borrowed(&amp;'a B),
+    Owned(&lt;B as ToOwned&gt;::Owned),
+}
+
+fn main() {}
+</code></pre></pre>
+<p>En el momento en que se aparece una indicación de tiempo de vida como <code>'a</code>, se tiene conocimiento de que este tipo funciona con referencias, ya que, como se ha visto, es para lo que tienen sentido las indicaciones de tiempo de vida.</p>
+<p>El rasgo <code>ToOwned</code> significa que <code>B</code> debe ser un tipo que puede convertirse en un tipo &quot;adueñado&quot;, que tiene &quot;una variable propietario&quot;. Por ejemplo, <code>str</code> que normalmente se usa a través de préstamo por referencia, se puede convertir en una <code>String</code> que tendrá una variable propietario.</p>
+<p>Lo siguiente que aparece es <code>?Sized</code>, que significa que &quot;puede ser Sized o no&quot;. Casi todos los tipos de Rust son <code>Sized</code>, pero hay algunos, como <code>str</code>, que no. Es el motivo por el que este tipo se debe usar siempre por referencia, porque el compilador no conoce su tamaño. Por ello, si se quiere que una definición use tipos como <code>str</code>, resulta necesario que admita <code>?Sized</code>.</p>
+<p>A continuación, el código presenta las variantes del enumerado. Que son <code>Borrowed</code> y <code>Owned</code>.</p>
+<p>Por ejemplo, si se imagina una función que devolviera <code>Cow&lt;'static, str&gt;</code>. Si a esa función se le dice que devuelva <code>&quot;Mi mensaje&quot;.into()</code>, Rust mirará el tipo de &quot;Mi mensaje&quot;, que es un <code>str</code>. Se trata de un tipo <code>Borrowed</code>, por lo que el tipo seleccionado del enumerado será <code>Borrowed(&amp;'a, B)</code> y el tipo concreto que se devuelve es <code>Cow::Borrowed(&amp;'static str)</code>.</p>
+<p>Si en vez de lo anterior, se le pidiera devolver <code>format!(&quot;{}&quot;, &quot;Mi mensaje&quot;).into()</code>, entonces el tipo es <code>String</code>, porque <code>format!</code> crea <code>String</code>. Y el tipo enumerado seleccionado será <code>Owned</code>.</p>
+<p>A continuación se presenta un ejemplo para probar <code>Cow</code>. Se pasará un número a una función que devuelve <code>Cow&lt;'static, str&gt;</code>. Dependiendo del número, se crear un <code>&amp;str</code> o una <code>String</code>. Después, se usa <code>.into()</code> para convertirlo en un <code>Cow</code>. De esta forma, Rust seleccionará <code>Cow::Borrowed</code> o <code>Cow::Owned</code>. Se usa un <code>match</code> al finalizar, para ver qué se ha seleccionado:</p>
+<pre><pre class="playground"><code class="language-rust">use std::borrow::Cow;
+
+fn modulo_3(input: u8) -&gt; Cow&lt;'static, str&gt; {
+    match input % 3 {
+        0 =&gt; &quot;El resto es 0&quot;.into(),
+        1 =&gt; &quot;El resto es 1&quot;.into(),
+        remainder =&gt; format!(&quot;El resto es {}&quot;, remainder).into(),
+    }
+}
+
+fn main() {
+    for number in 1..=6 {
+        match modulo_3(number) {
+            Cow::Borrowed(message) =&gt; println!(&quot;{}, es el valor que se pasa. El Cow es prestado en este mensaje: {}&quot;, number, message),
+            Cow::Owned(message) =&gt; println!(&quot;{}, es el valor que se pasa. El Cow es propietario en este mensaje: {}&quot;, number, message),
+        }
+    }
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">1, es el valor que se pasa. El Cow es prestado en este mensaje: El resto es 1
+2, es el valor que se pasa. El Cow es propietario en este mensaje: El resto es 2
+3, es el valor que se pasa. El Cow es prestado en este mensaje: El resto es 0
+4, es el valor que se pasa. El Cow es prestado en este mensaje: El resto es 1
+5, es el valor que se pasa. El Cow es propietario en este mensaje: El resto es 2
+6, es el valor que se pasa. El Cow es prestado en este mensaje: El resto es 0
+</code></pre>
+<p><code>Cow</code> tiene otros métodos como <code>into_owned</code>o <code>into_borrowed</code> para cambiar el tipo manualmente si resulta necesario.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="38.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="40.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="38.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="40.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

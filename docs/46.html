@@ -1,0 +1,401 @@
+<!DOCTYPE HTML>
+<html lang="es" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Arc - Rust en español fácil</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li><li class="chapter-item expanded "><a href="15.html"><strong aria-hidden="true">15.</strong> Paso de referencias a funciones</a></li><li class="chapter-item expanded "><a href="16.html"><strong aria-hidden="true">16.</strong> Copia</a></li><li class="chapter-item expanded "><a href="17.html"><strong aria-hidden="true">17.</strong> Tipos colección</a></li><li class="chapter-item expanded "><a href="18.html"><strong aria-hidden="true">18.</strong> Vectores</a></li><li class="chapter-item expanded "><a href="19.html"><strong aria-hidden="true">19.</strong> Tuplas</a></li><li class="chapter-item expanded "><a href="20.html"><strong aria-hidden="true">20.</strong> Estructuras de control</a></li><li class="chapter-item expanded "><a href="21.html"><strong aria-hidden="true">21.</strong> Estructuras - struct</a></li><li class="chapter-item expanded "><a href="22.html"><strong aria-hidden="true">22.</strong> Enumerados - enum</a></li><li class="chapter-item expanded "><a href="23.html"><strong aria-hidden="true">23.</strong> Bucles</a></li><li class="chapter-item expanded "><a href="24.html"><strong aria-hidden="true">24.</strong> Implementando structs y enums</a></li><li class="chapter-item expanded "><a href="25.html"><strong aria-hidden="true">25.</strong> Desestructurar</a></li><li class="chapter-item expanded "><a href="26.html"><strong aria-hidden="true">26.</strong> Referencias y el operador punto .</a></li><li class="chapter-item expanded "><a href="27.html"><strong aria-hidden="true">27.</strong> Genéricos</a></li><li class="chapter-item expanded "><a href="28.html"><strong aria-hidden="true">28.</strong> Los enumerados Option y Result</a></li><li class="chapter-item expanded "><a href="29.html"><strong aria-hidden="true">29.</strong> Otras colecciones</a></li><li class="chapter-item expanded "><a href="30.html"><strong aria-hidden="true">30.</strong> El operador ?</a></li><li class="chapter-item expanded "><a href="31.html"><strong aria-hidden="true">31.</strong> Traits (Rasgos)</a></li><li class="chapter-item expanded "><a href="32.html"><strong aria-hidden="true">32.</strong> Encadenando métodos</a></li><li class="chapter-item expanded "><a href="33.html"><strong aria-hidden="true">33.</strong> Iteradores</a></li><li class="chapter-item expanded "><a href="34.html"><strong aria-hidden="true">34.</strong> Closures - Cierres</a></li><li class="chapter-item expanded "><a href="35.html"><strong aria-hidden="true">35.</strong> La macro dbg! e .inspect()</a></li><li class="chapter-item expanded "><a href="36.html"><strong aria-hidden="true">36.</strong> Tipos de &str</a></li><li class="chapter-item expanded "><a href="37.html"><strong aria-hidden="true">37.</strong> Tiempos de vida (lifetimes)</a></li><li class="chapter-item expanded "><a href="38.html"><strong aria-hidden="true">38.</strong> Mutabilidad interior</a></li><li class="chapter-item expanded "><a href="39.html"><strong aria-hidden="true">39.</strong> Cow</a></li><li class="chapter-item expanded "><a href="40.html"><strong aria-hidden="true">40.</strong> Alias de tipos</a></li><li class="chapter-item expanded "><a href="41.html"><strong aria-hidden="true">41.</strong> La macro todo!</a></li><li class="chapter-item expanded "><a href="42.html"><strong aria-hidden="true">42.</strong> Rc</a></li><li class="chapter-item expanded "><a href="43.html"><strong aria-hidden="true">43.</strong> Múltiples hilos</a></li><li class="chapter-item expanded "><a href="44.html"><strong aria-hidden="true">44.</strong> Cierres en funciones</a></li><li class="chapter-item expanded "><a href="45.html"><strong aria-hidden="true">45.</strong> impl Trait</a></li><li class="chapter-item expanded "><a href="46.html" class="active"><strong aria-hidden="true">46.</strong> Arc</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust en español fácil</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="arc"><a class="header" href="#arc">Arc</a></h1>
+<p>Según se ha visto, para permitir que una variable tuviera más de un dueño de forma segura, se utiliza <code>Rc</code>. Si se quiere hacer lo mismo <em>compartiendo la propiedad</em> de una variable entre diferentes hilos, se debe usar <code>Arc</code>. <code>Arc</code> significa: contador de referencias atómico. En este contexto, atómico se refiere a que solo un proceso de los existentes puede escribir en él cada vez. Esto es importante ya que si dos hilos escribieran a la vez, podrían darse resultados erróneos. Por ejemplo, si se pudiera hacer esto en Rust:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 🚧
+let mut x = 10;
+
+for i in 0..10 { // Hilo 1
+    x += 1
+}
+for i in 0..10 { // Hilo 2
+    x += 1
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Si el hilo 1 y el hilo 2 comienzan a la vez y se permitiera escribir simultáneamente, podría darse lo siguiente:</p>
+<ul>
+<li>El hilo 1 lee 10 y escribe 11. Posteriormente, el hilo 2 lee 11 y escribe 12. Esto no causa problema.</li>
+<li>El hilo 1 lee 12 y a la vez el hilo 2 lee 12. El hilo 1 escribe 13 y el hilo 2 escribe 13. Se ha perdido un incremento, lo que es un problema grave.</li>
+</ul>
+<p>El tipo <code>Arc</code> se asegura de que esto no suceda y es lo que se debe usar para compartir valores entre hilos. Si no hay hilos, es suficiente con usar <code>Rc</code> que, además, es ligeramente más rápido.</p>
+<p>Para poder modificar los valores de un <code>Arc</code> no es suficiente con él. Se necesita envolver los datos en un <code>Mutex</code> que es lo que se compartirá entre hilos con <code>Arc</code>.</p>
+<p>En el siguiente ejemplo, se va a usar un <code>Mutex</code> dentro de un <code>Arc</code> para modificar un valor de un número entre hilos. En primer lugar, se muestra el primer hilo:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+
+    let handle = std::thread::spawn(|| {
+        println!(&quot;The thread is working!&quot;) // Just testing the thread
+    });
+
+    handle.join().unwrap(); // Make the thread wait here until it is done
+    println!(&quot;Exiting the program&quot;);
+}
+</code></pre></pre>
+<p>Por ahora, solo imprime:</p>
+<pre><code class="language-text">The thread is working!
+Exiting the program
+</code></pre>
+<p>Bien, a continuación se incluye un bucle en el hilo:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+
+    let handle = std::thread::spawn(|| {
+        for _ in 0..5 {
+            println!(&quot;The thread is working!&quot;)
+        }
+    });
+
+    handle.join().unwrap();
+    println!(&quot;Exiting the program&quot;);
+}
+</code></pre></pre>
+<p>También funciona, su ejecución resulta en:</p>
+<pre><code class="language-text">The thread is working!
+The thread is working!
+The thread is working!
+The thread is working!
+The thread is working!
+Exiting the program
+</code></pre>
+<p>Ahora se crea otro hilo que hará lo mismo. La forma en que se ordena la impresión puede ser diferente cada vez, según sea la ejecución paralela de ambos hilos. Se ejecutan de forma <em>concurrente</em>, que significa que se ejecutan a la vez.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+
+    let thread1 = std::thread::spawn(|| {
+        for _ in 0..5 {
+            println!(&quot;Thread 1 is working!&quot;)
+        }
+    });
+
+    let thread2 = std::thread::spawn(|| {
+        for _ in 0..5 {
+            println!(&quot;Thread 2 is working!&quot;)
+        }
+    });
+
+    thread2.join().unwrap();
+    thread1.join().unwrap();
+    println!(&quot;Exiting the program&quot;);
+}
+</code></pre></pre>
+<p>Que podría imprimir diferentes resultados cada vez (dependiendo de la velocidad de ejecución de cada hilo), como por ejemplo:</p>
+<pre><code class="language-text">Thread 1 is working!
+Thread 1 is working!
+Thread 1 is working!
+Thread 1 is working!
+Thread 1 is working!
+Thread 2 is working!
+Thread 2 is working!
+Thread 2 is working!
+Thread 2 is working!
+Thread 2 is working!
+Exiting the program
+</code></pre>
+<p>Ahora se trata de que cada hilo cambie el valor de <code>my_number</code> que puede ser un <code>i32</code>. Para que se pueda compartir entre hilos, se debe definir así:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 🚧
+let my_number = Arc::new(Mutex::new(0));
+<span class="boring">}
+</span></code></pre></pre>
+<p>Después, se deben clonar (que realmente solo clona el puntero), para pasar cada clon a cada hilo.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 🚧
+let my_number = Arc::new(Mutex::new(0));
+
+let my_number1 = Arc::clone(&amp;my_number); // Este clon va al hilo 1
+let my_number2 = Arc::clone(&amp;my_number); // Este clon va al hilo 2
+<span class="boring">}
+</span></code></pre></pre>
+<p>Ahora se pueden mover (<code>move</code>) a cada hilo:</p>
+<pre><pre class="playground"><code class="language-rust">use std::sync::{Arc, Mutex};
+
+fn main() {
+    let my_number = Arc::new(Mutex::new(0));
+
+    let my_number1 = Arc::clone(&amp;my_number);
+    let my_number2 = Arc::clone(&amp;my_number);
+
+    let thread1 = std::thread::spawn(move || { // El clon va al hilo 1
+        for _ in 0..10 {
+            *my_number1.lock().unwrap() +=1; // Bloquea el Mutex y cambia el valor
+        }
+    });
+
+    let thread2 = std::thread::spawn(move || { // El clon va al hilo 2
+        for _ in 0..10 {
+            *my_number2.lock().unwrap() += 1;
+        }
+    });
+
+    thread1.join().unwrap();
+    thread2.join().unwrap();
+    println!(&quot;Value is: {:?}&quot;, my_number);
+    println!(&quot;Exiting the program&quot;);
+}
+</code></pre></pre>
+<p>El programa da como resultado:</p>
+<pre><code class="language-text">Value is: Mutex { data: 20 }
+Exiting the program
+</code></pre>
+<p>Para simplificar el código, se puede unificar el código de cada hilo (ya que es idéntico):</p>
+<pre><pre class="playground"><code class="language-rust">use std::sync::{Arc, Mutex};
+
+fn main() {
+    let my_number = Arc::new(Mutex::new(0));
+    let mut handle_vec = vec![]; // los JoinHandles irán aquí
+
+    for _ in 0..2 { // se hace dos veces
+        let my_number_clone = Arc::clone(&amp;my_number); // se clona antes de iniciar el hilo
+        let handle = std::thread::spawn(move || { // se mueve el clon
+            for _ in 0..10 {
+                *my_number_clone.lock().unwrap() += 1;
+            }
+        });
+        handle_vec.push(handle); // se guarda el manejador para poder hacer join cuando estén lanzados los dos hilos.
+            //si no lo hiciéramos, este manejador se perdería
+    }
+
+    handle_vec.into_iter().for_each(|handle| handle.join().unwrap()); // se llama al join de todos los hilos lanzados (dos, en este caso)
+    println!(&quot;{:?}&quot;, my_number);
+}
+</code></pre></pre>
+<p>Esto imprime: <code>{ data: 20 }</code>.</p>
+<p>Aunque parece complejo <code>Arc&lt;Mutex&lt;AlgunTipo&gt;&gt;</code> es algo que se usa mucho en Rust y se vuelve natural. Siempre se puede escribir el código para que quede más claro. A continuación, se muestra el mismo código, pero añadiendo un <code>use</code> y dos funciones. Así el código de <code>main()</code> queda conciso y claro:</p>
+<pre><pre class="playground"><code class="language-rust">use std::sync::{Arc, Mutex};
+use std::thread::spawn; // Así solo hace falta escribir spawn
+
+fn make_arc(number: i32) -&gt; Arc&lt;Mutex&lt;i32&gt;&gt; { // una función para crear un Mutex en un Arc
+    Arc::new(Mutex::new(number))
+}
+
+fn new_clone(input: &amp;Arc&lt;Mutex&lt;i32&gt;&gt;) -&gt; Arc&lt;Mutex&lt;i32&gt;&gt; { // para crear clones
+    Arc::clone(&amp;input)
+}
+
+// Ahora main() se lee más fácil
+fn main() {
+    let mut handle_vec = vec![]; // los manejadores de hilos se guardan aquí
+    let my_number = make_arc(0);
+
+    for _ in 0..2 {
+        let my_number_clone = new_clone(&amp;my_number);
+        let handle = spawn(move || {
+            for _ in 0..10 {
+                let mut value_inside = my_number_clone.lock().unwrap();
+                *value_inside += 1;
+            }
+        });
+        handle_vec.push(handle);    // se guarda el manejador
+    }
+
+    handle_vec.into_iter().for_each(|handle| handle.join().unwrap()); // se espera a la finalización de los hilos
+
+    println!(&quot;{:?}&quot;, my_number);
+}
+</code></pre></pre>
+<p>En todo caso, siempre se puede reescribir el código que parezca difícl de leer.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="45.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="45.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

@@ -1,0 +1,959 @@
+<!DOCTYPE HTML>
+<html lang="es" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Closures - Cierres - Rust en español fácil</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li><li class="chapter-item expanded "><a href="15.html"><strong aria-hidden="true">15.</strong> Paso de referencias a funciones</a></li><li class="chapter-item expanded "><a href="16.html"><strong aria-hidden="true">16.</strong> Copia</a></li><li class="chapter-item expanded "><a href="17.html"><strong aria-hidden="true">17.</strong> Tipos colección</a></li><li class="chapter-item expanded "><a href="18.html"><strong aria-hidden="true">18.</strong> Vectores</a></li><li class="chapter-item expanded "><a href="19.html"><strong aria-hidden="true">19.</strong> Tuplas</a></li><li class="chapter-item expanded "><a href="20.html"><strong aria-hidden="true">20.</strong> Estructuras de control</a></li><li class="chapter-item expanded "><a href="21.html"><strong aria-hidden="true">21.</strong> Estructuras - struct</a></li><li class="chapter-item expanded "><a href="22.html"><strong aria-hidden="true">22.</strong> Enumerados - enum</a></li><li class="chapter-item expanded "><a href="23.html"><strong aria-hidden="true">23.</strong> Bucles</a></li><li class="chapter-item expanded "><a href="24.html"><strong aria-hidden="true">24.</strong> Implementando structs y enums</a></li><li class="chapter-item expanded "><a href="25.html"><strong aria-hidden="true">25.</strong> Desestructurar</a></li><li class="chapter-item expanded "><a href="26.html"><strong aria-hidden="true">26.</strong> Referencias y el operador punto .</a></li><li class="chapter-item expanded "><a href="27.html"><strong aria-hidden="true">27.</strong> Genéricos</a></li><li class="chapter-item expanded "><a href="28.html"><strong aria-hidden="true">28.</strong> Los enumerados Option y Result</a></li><li class="chapter-item expanded "><a href="29.html"><strong aria-hidden="true">29.</strong> Otras colecciones</a></li><li class="chapter-item expanded "><a href="30.html"><strong aria-hidden="true">30.</strong> El operador ?</a></li><li class="chapter-item expanded "><a href="31.html"><strong aria-hidden="true">31.</strong> Traits (Rasgos)</a></li><li class="chapter-item expanded "><a href="32.html"><strong aria-hidden="true">32.</strong> Encadenando métodos</a></li><li class="chapter-item expanded "><a href="33.html"><strong aria-hidden="true">33.</strong> Iteradores</a></li><li class="chapter-item expanded "><a href="34.html" class="active"><strong aria-hidden="true">34.</strong> Closures - Cierres</a></li><li class="chapter-item expanded "><a href="35.html"><strong aria-hidden="true">35.</strong> La macro dbg! e .inspect()</a></li><li class="chapter-item expanded "><a href="36.html"><strong aria-hidden="true">36.</strong> Tipos de &str</a></li><li class="chapter-item expanded "><a href="37.html"><strong aria-hidden="true">37.</strong> Tiempos de vida (lifetimes)</a></li><li class="chapter-item expanded "><a href="38.html"><strong aria-hidden="true">38.</strong> Mutabilidad interior</a></li><li class="chapter-item expanded "><a href="39.html"><strong aria-hidden="true">39.</strong> Cow</a></li><li class="chapter-item expanded "><a href="40.html"><strong aria-hidden="true">40.</strong> Alias de tipos</a></li><li class="chapter-item expanded "><a href="41.html"><strong aria-hidden="true">41.</strong> La macro todo!</a></li><li class="chapter-item expanded "><a href="42.html"><strong aria-hidden="true">42.</strong> Rc</a></li><li class="chapter-item expanded "><a href="43.html"><strong aria-hidden="true">43.</strong> Múltiples hilos</a></li><li class="chapter-item expanded "><a href="44.html"><strong aria-hidden="true">44.</strong> Cierres en funciones</a></li><li class="chapter-item expanded "><a href="45.html"><strong aria-hidden="true">45.</strong> impl Trait</a></li><li class="chapter-item expanded "><a href="46.html"><strong aria-hidden="true">46.</strong> Arc</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust en español fácil</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="closures---cierres"><a class="header" href="#closures---cierres">Closures - Cierres</a></h1>
+<p>Los cierres o closures (en inglés) son una especie de funciones rápidas que no necesitan un nombre. En ocasiones se les denomina funciones lambdas. Son fáciles de encontrar en el código debido a que utilizan <code>||</code> en lugar de <code>()</code>. Son muy habituales en Rust y una vez se aprenden a utilizar uno se pregunta como ha podido vivir sin ellos.</p>
+<p>Se puede asociar un closure a una variable y en ese caso funciona y parece exactamente como una función:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_closure = || println!(&quot;Esto es un cierre&quot;);
+    my_closure();
+}
+</code></pre></pre>
+<p>Este closure no recibe nada coomo parámetro <code>||</code> e imprime el mensaje <code>Esto es un cierre</code>.</p>
+<p>Entre los símbolos <code>||</code> se pueden añadir variables de entrada y tipos, como se hace en las funciones dentro de <code>()</code>:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_closure = |x: i32| println!(&quot;{}&quot;, x);
+
+    my_closure(5);
+    my_closure(5+5);
+}
+</code></pre></pre>
+<p>Imprime:</p>
+<pre><code class="language-text">5
+10
+</code></pre>
+<p>Cuando un cierre se hace más complejo, se puede escribir con un bloque de código que puede ser tan largo como se requiera:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_closure = || {
+        let number = 7;
+        let other_number = 10;
+        println!(&quot;Los dos números son {} y {}.&quot;, number, other_number);
+          // Este cierre puede ser tan largo como se necesite, como sucede con las funciones.
+    };
+
+    my_closure();
+}
+</code></pre></pre>
+<p>Pero los cierres son especiales porque pueden guardarse valores de variables que se encuentren fuera del ellos incluso aunque no reciban parámetros (es decir, incluso habiendo escrito <code>||</code>). Por ello, se puede escribir:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let number_one = 6;
+    let number_two = 10;
+
+    let my_closure = || println!(&quot;{}&quot;, number_one + number_two);
+    my_closure();
+}
+</code></pre></pre>
+<p>Este código imprime <code>16</code>. No ha sido necesario añadir parámetros a <code>||</code> porque se pueden usar las variables dentro del código del cierre y sumarlas ahí.</p>
+<p>Por cierto, por eso se llaman <strong>closures</strong>. Porque pueden tomar unas variables y <em>encerrarlas</em> dentro. Esto significa que si se quiere hablar con precisión:</p>
+<ul>
+<li>Una <code>||</code> que no encierra ninguna variable exterior en su interior es una <em>función anónima</em>. No es, estrictamente, un <em>closure</em>.</li>
+<li>Una <code>||</code> que sí encierra una variable exterior en su interior sí es un <em>cierre</em>.</li>
+</ul>
+<p>Sin embargo, esta precisión no se suele hacer en el habla coloquial. Así que en este texto simplemente se llaman <em>cierres</em> a todos los <code>||</code>.</p>
+<p>¿Por qué es bueno conocer la diferencia? Porque las funciones anónimas generan realmente el mismo código que el de las funciones con nombre. Aunque pueda parecer que el código máquina de una función anónima será más complejo, no lo es. Es igual (y, por lo tanto, igual de rápido) que el código de una función habitual.</p>
+<p>Para qué pueden servir los cierres. Por ejemplo:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let number_one = 6;
+    let number_two = 10;
+
+    let my_closure = |x: i32| println!(&quot;{}&quot;, number_one + number_two + x);
+    my_closure(5);
+}
+</code></pre></pre>
+<p>Este cierre guarda en su interior a dos variables <code>number_one</code> y <code>number_two</code>. Pero también recibe como parámetro una nueva variable <code>x</code> y cuando se ejecuta, se le pasa 5 al parámetro <code>x</code>. Suma los tres valores y, en este caso, devuelve <code>21</code>.</p>
+<p>Normalmente, se usan los cierres para pasarlos como parámetros a determinados métodos. En la última sección se usaron cierres con <code>.map()</code>y <code>.for_each()</code>. En esa sección, se escribió <code>|x|</code> para obtener el siguiente elemento en un iterador; eso era un cierre.</p>
+<p>Otro ejemplo: el método <code>unwrap_or</code> que se usa para asignar un valor cuando no funciona <code>unwrap</code>. Igual que se puede escribir la siguiente función <code>let fourth = my_vec.get(3).unwrap_or(&amp;0);</code>, existe también el método <code>unwrap_or_else</code> que recibe un cierre como parámetro. Por ejemplo:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_vec = vec![8, 9, 10];
+
+    let fourth = my_vec.get(3).unwrap_or_else(|| { // Intenta &quot;desenvolver&quot;. Si no funciona:
+        if my_vec.get(0).is_some() {               // observa si el vector contiene algo en el índice [0]
+            &amp;my_vec[0]                             // Utiliza ese valor si existe algo.
+        } else {
+            &amp;0 // en otro caso, usa el &amp;0
+        }
+    });
+
+    println!(&quot;{}&quot;, fourth);
+}
+</code></pre></pre>
+<p>Por supuesto, los cierres pueden ser muy simples. Se puede escribir, simplemente <code>let fourth = my_vec.get(3).unwrap_or_else(|| &amp;0);</code>. No siempre se necesita usar <code>{}</code> y escribir código complejo solo porque es un cierre. Solo con escribir <code>||</code> el compilador conoce que hay un cierre.</p>
+<p>Quizás el uso más habitual de un cierre sea en la función <code>.map()</code>. A continuación se muestra otro ejemplo:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let num_vec = vec![2, 4, 6];
+
+    let double_vec = num_vec        // usa el vector
+        .iter()                     // para recorrerlo (iterar)
+        .map(|number| number * 2)   // para cada elemento, lo multiplica por 2
+        .collect::&lt;Vec&lt;i32&gt;&gt;();     // y crea un nuevo vector a partir de ello
+    println!(&quot;{:?}&quot;, double_vec);
+}
+</code></pre></pre>
+<p>Otro buen ejemplo es su uso con <code>.for_each()</code> después de <code>.enumerate()</code>. El método <code>.enumerate()</code> devuelve un iterador con el número de índice del elemento y el propio elemento. Por ejemplo, de <code>[10, 9, 8 ]</code> se obtiene <code>(0, 10), (1, 9), (2, 8)</code>. Con los tipos <code>(usize, i32)</code>. </p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let num_vec = vec![10, 9, 8];
+
+    num_vec
+        .iter()      // itera sobre num_vec
+        .enumerate() // obtiene pares de (índice, valor)
+        .for_each(|(index, number)| println!(&quot;El índice {} contiene el valor {}&quot;, index, number)); // imprime para cada elemento
+}
+</code></pre></pre>
+<p>Este código imprime:</p>
+<pre><code class="language-text">El índice 0 contiene el valor 10
+El índice 1 contiene el valor 9
+El índice 2 contiene el valor 8
+</code></pre>
+<p>En este caso se usa <code>for_each</code> en lugar de <code>map</code>. <code>map</code> es para ejecutar algo en cada elemento y pasarlo al siguiente paso (es un iterador en sí mismo) y actua de forma <em>perezosa</em>, es decir, si no hay nadie a quien pasarle el valor, no hace nada. <code>for_each</code> realiza la operación cuando recibe cada elemento. Por eso en caso de <code>map</code> hace falta usar un método como <code>collect</code> para obtener un resultado.</p>
+<p>Esta es una característica muy interesante de los iteradores. Si se intenta ejecutar un <code>map</code> sin utilizar un método como <code>collect</code>, el compilador observará que ese código no hace nada. No fallará, pero lo indicará:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let num_vec = vec![10, 9, 8];
+
+    num_vec
+        .iter()
+        .enumerate()
+        .map(|(index, number)| println!(&quot;El índice {} contiene el valor {}&quot;, index, number));
+
+}
+</code></pre></pre>
+<p>Mostrará:</p>
+<pre><code class="language-text">warning: unused `std::iter::Map` that must be used
+ --&gt; src\main.rs:4:5
+  |
+4 | /     num_vec
+5 | |         .iter()
+6 | |         .enumerate()
+7 | |         .map(|(index, number)| println!(&quot;Index number {} has number {}&quot;, index, number));
+  | |_________________________________________________________________________________________^
+  |
+  = note: `#[warn(unused_must_use)]` on by default
+  = note: iterators are lazy and do nothing unless consumed
+</code></pre>
+<p>Se trata de un aviso <strong>warning</strong>, no es un error. El programa funciona correctamente. Pero no suma nada. Si se observa el tipo del resultado de cada fila, se entenderá:</p>
+<ul>
+<li><code>let num_vec = vec![10, 9, 8];</code> En este momento se tiene un <code>Vec&lt;i32&gt;</code>.</li>
+<li><code>.iter()</code> El valor de retorno de esta función es un <code>Iter&lt;i32&gt;</code>. Es decir, un iterador sobre elementos de tipo <code>i32</code>.</li>
+<li><code>.enumerate()</code> Ahora es de tipo enumerado <code>Enumerate&lt;Iter&lt;i32&gt;&gt;</code>. Es decir, un <code>Enumerate</code> sobre un <code>Iter</code> de <code>i32</code>s.</li>
+<li><code>.map()</code> Y ahora el tipo es <code>Map&lt;Enumerate&lt;Iter&lt;i32&gt;&gt;&gt;</code>. Es decir, un <code>Map</code> sobre un <code>Enumerate</code> sobre un <code>Iter</code> de <code>i32</code>s.</li>
+</ul>
+<p>Hasta el momento, todo lo que han hecho las funciones es ir construyendo una estructura compleja que está lista para usarse, solo que hay que decirle de algún modo que lo haga. Rust hace todo esto porque necesita ejecutarse rápido. No quiere hacer:</p>
+<ul>
+<li>itera sobre todos los <code>i32</code> en el vector</li>
+<li>luego enumera todos los <code>i32</code> del iterador</li>
+<li>luego ejecuta la función sobre todos los <code>i32</code></li>
+</ul>
+<p>Rust realiza un único &quot;bucle&quot; solo cuando lo necesita. En el momento que se ejecuta una función como <code>.collect::&lt;Vec&lt;i32&gt;&gt;()</code> Rust sabe que se le está pidiendo construir un vector y comienza a pedir los diferentes valores. Esto es lo que significa que <em>los iteradores son perezosos y no hacen nada a no ser que se consuman</em>.</p>
+<p>Se pueden crear cosas muy complejas como <code>HashMap</code> mediante el uso de <code>.collect()</code>. A continuación se muestra un ejemplo sobre como construir un <code>HashMap</code> a partir de dos vectores. En primer lugar, se construyen ambos vectores. Después se usará <code>into_iter()</code> para obtener un interador sobre los valores. Posteriormente se usará <code>.zip()</code> para unir ambos iteradores como un una cremallera, emparejando cada elemento de un iterador con el obtenido del otro. Por último, se utilizará <code>.collect()</code> para crear el <code>HashMap</code>:</p>
+<pre><pre class="playground"><code class="language-rust">use std::collections::HashMap;
+
+fn main() {
+    let some_numbers = vec![0, 1, 2, 3, 4, 5]; // un Vec&lt;i32&gt;
+    let some_words = vec![&quot;cero&quot;, &quot;uno&quot;, &quot;dos&quot;, &quot;tres&quot;, &quot;cuatro&quot;, &quot;cinco&quot;]; // un Vec&lt;&amp;str&gt;
+
+    let number_word_hashmap = some_numbers
+        .into_iter()                 // obtiene un iter
+        .zip(some_words.into_iter()) // se combinan con .zip() dos iter.
+        .collect::&lt;HashMap&lt;_, _&gt;&gt;();
+
+    println!(&quot;Para la clave {} se obtiene {}.&quot;, 2, number_word_hashmap.get(&amp;2).unwrap());
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">Para la clave 2 se obtiene dos.
+</code></pre>
+<p>Se observa que se escribió <code>&lt;HashMap&lt;_, _&gt;&gt;</code>, que es información suficiente para que Rust sepa decidir el tipo del objeto como <code>&lt;HashMap&lt;i32, &amp;str&gt;&gt;</code>. También habría sido posible haber escrito <code>.collect::&lt;HashMap&lt;i32, &amp;str&gt;&gt;();</code>. E incluso así:</p>
+<pre><pre class="playground"><code class="language-rust">use std::collections::HashMap;
+
+fn main() {
+    let some_numbers = vec![0, 1, 2, 3, 4, 5]; // un Vec&lt;i32&gt;
+    let some_words = vec![&quot;cero&quot;, &quot;uno&quot;, &quot;dos&quot;, &quot;tres&quot;, &quot;cuatro&quot;, &quot;cinco&quot;]; // un Vec&lt;&amp;str&gt;
+    let number_word_hashmap: HashMap&lt;_, _&gt; = some_numbers  // Puesto que se indica el tipo aquí...
+        .into_iter()
+        .zip(some_words.into_iter())
+        .collect(); // no es necesario indicarlo aquí
+}
+</code></pre></pre>
+<p>Hay otro método que es como <code>.enumerate()</code>, pero para el tipo <code>char</code>: <code>.char_indices()</code>. Se usa de la misma forma. Si se supone que se tiene una cadena que está formada por números de tres dígitos:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let numbers_together = &quot;140399923481800622623218009598281&quot;;
+
+    for (index, number) in numbers_together.char_indices() {
+        match (index % 3, number) {
+            (0..=1, number) =&gt; print!(&quot;{}&quot;, number), // solo imprime el número si hay resto
+            _ =&gt; print!(&quot;{}\t&quot;, number), // en otro caso, imprime el número y un tabulador
+        }
+    }
+}
+</code></pre></pre>
+<p>Esto imprime: <code>140     399     923     481     800     622     623     218     009     598    281</code>.</p>
+<h2 id="_-en-un-cierre-closure"><a class="header" href="#_-en-un-cierre-closure">|_| en un cierre (closure)</a></h2>
+<p>En ocasiones se puede ver <code>|_|</code> en un cierre. Esto significa que el cierre (closure) necesita un argumento (como podría ser una variable x), pero no se va a usar. Así que esta expresión en los parámetros de un cierre significa: vale, el cierre recibe un parámetro, pero no le doy un nombre porque no lo uso&quot;.</p>
+<p>A continuación, se muestra un ejemplo que da error por no expresar el parámetro:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_vec = vec![8, 9, 10];
+
+    println!(&quot;{:?}&quot;, my_vec.iter().for_each(|| println!(&quot;No usamos la variable que se necesita&quot;))); // ⚠️
+}
+</code></pre></pre>
+<p>Rust da un error que dice:</p>
+<pre><code class="language-text">error[E0593]: closure ¿Está expected to take 1 argument, but it takes 0 arguments
+ --&gt; src/main.rs:4:36
+  |
+4 |     println!(&quot;{:?}&quot;, my_vec.iter().for_each(|| println!(&quot;No usamos la variable que se necesita&quot;))); // ⚠️
+  |                                    ^^^^^^^^ -- takes 0 arguments
+  |                                    |
+  |                                    expected closure that takes 1 argument
+</code></pre>
+<p>El propio compilador da alguna pista:</p>
+<pre><code class="language-text">help: consider changing the closure to take and ignore the expected argument
+  |
+4 |     println!(&quot;{:?}&quot;, my_vec.iter().for_each(|_| println!(&quot;No usamos la variable que se necesita&quot;))); // ⚠️
+  |                                             ~~~
+</code></pre>
+<p>Es decir, que se debe pasar el argumento que necesita cualquier cierre que se pase como parámetro a la función <code>for_each</code>.</p>
+<p>Si se cambia de este modo, funcionará:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let my_vec = vec![8, 9, 10];
+
+    println!(&quot;{:?}&quot;, my_vec.iter().for_each(|_| println!(&quot;No usamos la variable que se necesita&quot;)));
+}
+</code></pre></pre>
+<h2 id="métodos-útiles-para-su-uso-con-cierres-e-iteradores"><a class="header" href="#métodos-útiles-para-su-uso-con-cierres-e-iteradores">Métodos útiles para su uso con cierres e iteradores</a></h2>
+<p>Rust es un lenguaje muy divertido cuando se dominan los cierres. Con ellos se pueden <em>encadenar</em> métodos para hacer mucho con poco código. A continuación, se muestrans algunos métodos que se utilizan con cierres que aún no se habían visto:</p>
+<p><code>.filter()</code>: a partir de un iterador, permite conservar los elementos que se deseen. El siguiente ejemplo filtra los meses del año:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let meses = vec![&quot;Enero&quot;, &quot;Febrero&quot;, &quot;Marzo&quot;, &quot;Abril&quot;, &quot;Mayo&quot;, &quot;Junio&quot;, &quot;Julio&quot;, &quot;Agosto&quot;, &quot;Septiembre&quot;, &quot;Octubre&quot;, &quot;Noviembre&quot;, &quot;Diciembre&quot;];
+
+    let filtered_meses = meses
+        .into_iter()                         // crea un iterador
+        .filter(|month| month.len() &lt;= 5)     // Solo los meses con cinco o menos caracters (byte)
+                                             // En este caso, todos los caracteres son de un byte, por eso funciona usar .len()
+        .filter(|month| month.contains(&quot;u&quot;)) // Se seleccionan solo los meses que contengan la letra u
+        .collect::&lt;Vec&lt;&amp;str&gt;&gt;();
+
+    println!(&quot;{:?}&quot;, filtered_meses);
+}
+</code></pre></pre>
+<p>Esto imprime: <code>[&quot;Junio&quot;, &quot;Julio&quot;]</code>.</p>
+<p><code>.filter_map()</code>: este método realiza de una vez la función de <code>.filter()</code> y <code>.map()</code>. El cierre que se pasa como parámetro,debe devolver un <code>Option&lt;T&gt;</code>. El método <code>filter_map()</code> extraerá <code>T</code> para aquellos elementos que tengan valor (que sean de tipo <code>Some&lt;T&gt;</code>) y desechará los que sean de tipo <code>None</code>. Por ejemplo, el uso de <code>.filter_map()</code> con un vector como <code>vec![Some(2), None, Some(3)]</code> devuelve <code>[2, 3]</code>.</p>
+<p>A continuación se muestra un ejemplo con un <code>struct</code> de una <code>Empresa</code>. Cada empresa tiene un campo <code>nombre</code> de tipo <code>String</code>, y un campo <code>ceo</code> para describir a su responsable. El ceo puede haber dimitido, por lo que es de tipo <code>Option&lt;String&gt;</code> En el ejemplo, se filtran las empresas para mostrar el valor de los CEO.</p>
+<pre><pre class="playground"><code class="language-rust">struct Empresa {
+    nombre: String,
+    ceo: Option&lt;String&gt;,
+}
+
+impl Empresa {
+    fn new(nombre: &amp;str, ceo: &amp;str) -&gt; Self {
+        let ceo = match ceo {
+            &quot;&quot; =&gt; None,
+            ceo =&gt; Some(ceo.to_string()),
+        }; // Se crea el valor del campo ceo y debajo se crea el elemento struct
+        Self {
+            nombre: nombre.to_string(),
+            ceo,
+        }
+    }
+
+    fn get_ceo(&amp;self) -&gt; Option&lt;String&gt; {
+        self.ceo.clone() // Devuelve un clone del CEO (struct no es tipo Copy)
+    }
+}
+
+fn main() {
+    let empresa_vec = vec![
+        Empresa::new(&quot;Umbrella Corporation&quot;, &quot;Unknown&quot;),
+        Empresa::new(&quot;Ovintiv&quot;, &quot;Doug Suttles&quot;),
+        Empresa::new(&quot;The Red-Headed League&quot;, &quot;&quot;),
+        Empresa::new(&quot;Stark Enterprises&quot;, &quot;&quot;),
+    ];
+
+    let all_the_ceos = empresa_vec
+        .into_iter()
+        .filter_map(|empresa| empresa.get_ceo()) // filter_map recibe Option&lt;T&gt; que es lo que necesita
+        .collect::&lt;Vec&lt;String&gt;&gt;();
+
+    println!(&quot;{:?}&quot;, all_the_ceos);
+}
+</code></pre></pre>
+<p>Esto imprime: <code>[&quot;Unknown&quot;, &quot;Doug Suttles&quot;]</code></p>
+<p>Para facilitar el uso de <code>.filter_map()</code> con valores <code>Result&lt;T, E&gt;</code>, este último tiene el método <code>.ok()</code> que lo convierte en <code>Option&lt;T&gt;</code> usando <code>None</code> para los casos de error.</p>
+<p>En el siguiente ejemplo se utiliza <code>.parse()</code> para convertir la entrada de usuario en números <code>f32</code>. En el resultado se registran los errores que pueda haber en la entrada del usuario, al usar <code>.filter_map()</code> junto con <code>.ok()</code> se descartan los valores erróneos.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let user_input = vec![&quot;8.9&quot;, &quot;Nine point nine five&quot;, &quot;8.0&quot;, &quot;7.6&quot;, &quot;eleventy-twelve&quot;];
+
+    let actual_numbers = user_input
+        .into_iter()
+        .filter_map(|input| input.parse::&lt;f32&gt;().ok())
+        .collect::&lt;Vec&lt;f32&gt;&gt;();
+
+    println!(&quot;{:?}&quot;, actual_numbers);
+}
+</code></pre></pre>
+<p>Lo anterior imprime: <code>[8.9, 8.0, 7.6]</code></p>
+<p>En sentido contrario de <code>.ok()</code>, los <code>Option&lt;T&gt;</code> disponen de los métodos <code>.ok_or()</code> y <code>.ok_or_else()</code>. Estas funcones convierten un <code>Option&lt;T&gt;</code> en <code>Resutl&lt;T, E&gt;</code>. La función <code>.ok_or()</code> devuelve un <code>Ok</code> o un <code>Err</code>, por lo que necesita que se le indique de qué tipo debe ser este error. Esto se debe a que los casos <code>None</code> de <code>Option</code> no disponen de información adicionales.</p>
+<p>En estas funciones, <code>.ok_or()</code> y <code>.ok_or_else()</code>, el parámetro closure se utiliza para obtener el valor para los casos en los que el <code>Option</code> sea <code>None</code>.</p>
+<p>En el siguiente ejemplo, se toma el <code>Option</code> del <code>struct</code> de <code>Empresa</code> para convertirlo en un <code>Result</code>. Para el manejo de errores a largo plazo, es bueno que la aplicación tenga sus propios tipos de error. En este caso solo se incluye un mensaje de error, por lo que el tipo del resultado es <code>Result&lt;String, &amp;str&gt;</code>.</p>
+<pre><pre class="playground"><code class="language-rust">// El código es idéntico, salvo en la función main()
+struct Empresa {
+    nombre: String,
+    ceo: Option&lt;String&gt;,
+}
+
+impl Empresa {
+    fn new(nombre: &amp;str, ceo: &amp;str) -&gt; Self {
+        let ceo = match ceo {
+            &quot;&quot; =&gt; None,
+            ceo =&gt; Some(ceo.to_string()),
+        };
+        Self {
+            nombre: nombre.to_string(),
+            ceo,
+        }
+    }
+
+    fn get_ceo(&amp;self) -&gt; Option&lt;String&gt; {
+        self.ceo.clone()
+    }
+}
+
+fn main() {
+    let empresa_vec = vec![
+        Empresa::new(&quot;Umbrella Corporation&quot;, &quot;Unknown&quot;),
+        Empresa::new(&quot;Ovintiv&quot;, &quot;Doug Suttles&quot;),
+        Empresa::new(&quot;The Red-Headed League&quot;, &quot;&quot;),
+        Empresa::new(&quot;Stark Enterprises&quot;, &quot;&quot;),
+    ];
+
+    let mut results_vec = vec![]; // Para guardar los valores resultantes
+
+    empresa_vec
+        .iter()
+        .for_each(|empresa| results_vec.push(empresa.get_ceo().ok_or(&quot;No CEO found&quot;)));
+
+    for item in results_vec {
+        println!(&quot;{:?}&quot;, item);
+    }
+}
+</code></pre></pre>
+<p>El resultado de este código es el siguiente:</p>
+<pre><code class="language-text">Ok(&quot;Unknown&quot;)
+Ok(&quot;Doug Suttles&quot;)
+Err(&quot;No CEO found&quot;)
+Err(&quot;No CEO found&quot;)
+</code></pre>
+<p>En este caso, se dispone de las cuatro entradas del usuario y se indica cuáles son erróneas.</p>
+<p>A continuación se usa <code>.ok_or_else()</code> para que se pueda pasar como parámetro un cierre y obtener un mensaje de error mejor incluyendo el nombre de la empresa.</p>
+<pre><pre class="playground"><code class="language-rust">// El código es idéntico, salvo en la función main()
+struct Empresa {
+    nombre: String,
+    ceo: Option&lt;String&gt;,
+}
+
+impl Empresa {
+    fn new(nombre: &amp;str, ceo: &amp;str) -&gt; Self {
+        let ceo = match ceo {
+            &quot;&quot; =&gt; None,
+            ceo =&gt; Some(ceo.to_string()),
+        };
+        Self {
+            nombre: nombre.to_string(),
+            ceo,
+        }
+    }
+
+    fn get_ceo(&amp;self) -&gt; Option&lt;String&gt; {
+        self.ceo.clone()
+    }
+}
+
+fn main() {
+    let empresa_vec = vec![
+        Empresa::new(&quot;Umbrella Corporation&quot;, &quot;Unknown&quot;),
+        Empresa::new(&quot;Ovintiv&quot;, &quot;Doug Suttles&quot;),
+        Empresa::new(&quot;The Red-Headed League&quot;, &quot;&quot;),
+        Empresa::new(&quot;Stark Enterprises&quot;, &quot;&quot;),
+    ];
+
+    let mut results_vec = vec![]; // Para guardar los valores resultantes
+
+    empresa_vec
+        .iter()
+        .for_each(|empresa| {
+            results_vec.push(empresa.get_ceo().ok_or_else(|| {
+                let mensaje_error = format!(&quot;No CEO found for {}&quot;, empresa.nombre);
+                mensaje_error
+            }))
+        });
+
+    for item in results_vec {
+        println!(&quot;{:?}&quot;, item);
+    }
+}
+</code></pre></pre>
+<p>El código anterior, imprime:</p>
+<pre><code class="language-text">Ok(&quot;Unknown&quot;)
+Ok(&quot;Doug Suttles&quot;)
+Err(&quot;No CEO found for The Red-Headed League&quot;)
+Err(&quot;No CEO found for Stark Enterprises&quot;)
+</code></pre>
+<p><code>.and_then()</code>: es un método que toma como parámetro un <code>Option</code> y permite realizar una operación con su valor pasando el resultado al siguiente método que exista. El resultado también debe ser de tipo <code>Option</code>. Es una forma segura de obtener el contenido del elemento <code>Some</code>, realizar la operación deseada y encapsular el resultado de nuevo en un <code>Option</code>.</p>
+<p>Un ejemplo sencillo se puede ver a partir del resultado de la operación <code>.get()</code> sobre un vector, puesto que devuelve un <code>Option</code>. En este caso, se obtiene un número, se realiza un cálculo y se vuelve a convertir a <code>Option</code>. Los valores <code>None</code> se pasan sin procesar, siguen siendo <code>None</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let new_vec = vec![8, 9, 0]; // solo un vec con números
+    let number_to_add = 5;       // Se usa en el cálculo más adelante
+    let mut empty_vec = vec![];  // El resultado va aquí
+
+
+    for index in 0..5 {
+        empty_vec.push(
+            new_vec
+               .get(index)
+                .and_then(|number| Some(number + 1))
+                .and_then(|number| Some(number + number_to_add))
+        );
+    }
+    println!(&quot;{:?}&quot;, empty_vec);
+}
+</code></pre></pre>
+<p>Esto imprime: <code>[Some(14), Some(15), Some(6), None, None]</code>. Se observa que no se filtran los <code>None</code>.</p>
+<p><code>.and()</code>: es parecido a <code>bool</code> para <code>Option</code>. Se pueden encadenar muchos y si todos son <code>Some</code> el resultado será el del último. Si existe algún <code>None</code>, el resultado será <code>None</code>.</p>
+<p>Se muestra en primer lugar un ejemplo con booleanos para ayudar a entender el funcionamiento de <code>.and()</code> en base al funcionamiento de <code>&amp;&amp;</code>(and). Un solo <code>false</code> lo convierte todo en <code>false</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let one = true;
+    let two = false;
+    let three = true;
+    let four = true;
+
+    println!(&quot;{}&quot;, one &amp;&amp; three); // prints true
+    println!(&quot;{}&quot;, one &amp;&amp; two &amp;&amp; three &amp;&amp; four); // prints false
+}
+</code></pre></pre>
+<p>A continuación, se muestra el mismo tipo de ejemplo con la función <code>.and()</code>. Se puede imagina que se ejecutaron cinco operaciones y para cada una de ellas, si el resultado fue correcto se guardar en un <code>Vec&lt;Option&lt;&amp;str&gt;&gt;</code> un valor <code>Some(&quot;éxito&quot;)</code>. Se repiten tres veces estas cinco operaciones. Después se usa <code>.and()</code> para comparar si en cada operación se obtubo resultado en todas las ocasiones.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let first_try = vec![Some(&quot;éxito&quot;), None, Some(&quot;éxito&quot;), Some(&quot;éxito&quot;), None];
+    let second_try = vec![None, Some(&quot;éxito&quot;), Some(&quot;éxito&quot;), Some(&quot;éxito&quot;), Some(&quot;éxito&quot;)];
+    let third_try = vec![Some(&quot;éxito&quot;), Some(&quot;éxito&quot;), Some(&quot;éxito&quot;), Some(&quot;éxito&quot;), None];
+
+    for i in 0..first_try.len() {
+        println!(&quot;{:?}&quot;, first_try[i].and(second_try[i]).and(third_try[i]));
+    }
+}
+</code></pre></pre>
+<p>El resultado es el siguiente:</p>
+<pre><code class="language-text">None
+None
+Some(&quot;éxito&quot;)
+Some(&quot;éxito&quot;)
+None
+</code></pre>
+<p>La cadena de <code>.and()</code> de la primera operación en los tres intentos devuelve <code>None</code> ya que el segundo intento tiene <code>None</code> en la primera posición (índice cero). La segunda operación también es <code>None</code> debido a que el primer intento dio un resultado <code>None</code>. La tercera operación sí tiene éxito debido a que los tres intentos tiene un resultado distinto de <code>None</code>.</p>
+<p><code>.any()</code> y <code>.all()</code>. Se utilizan de forma sencilla en iteradores. Devuelven un <code>bool</code> en función del parámetro de entrada. En el siguiente ejemplo, se crea un vector muy grande, de unos 20.000 elementos, con toods los caracteres desde la 'a' a la '働'. Después, se comprueba si contiene un determinado carácter.</p>
+<p>A continuación, se crea un vector más pequeño y se comprueba si es totalmente alfabético (con <code>.is_alphabetic()</code>). POr último, se comprueba si todos los caracteres son menores que el carácter coreano '행'.</p>
+<p>Se debe observar que se usan referencias allí donde es necesario ya que es lo que entrega <code>.iter()</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn in_char_vec(char_vec: &amp;Vec&lt;char&gt;, check: char) {
+    println!(&quot;¿Está {} dentro? {}&quot;, check, char_vec.iter().any(|&amp;char| char == check));
+}
+
+fn main() {
+    let char_vec = ('a'..'働').collect::&lt;Vec&lt;char&gt;&gt;();
+    in_char_vec(&amp;char_vec, 'i');
+    in_char_vec(&amp;char_vec, '뷁');
+    in_char_vec(&amp;char_vec, '鑿');
+
+    let smaller_vec = ('A'..'z').collect::&lt;Vec&lt;char&gt;&gt;();
+    println!(&quot;¿Es todo alfabético? {}&quot;, smaller_vec.iter().all(|&amp;x| x.is_alphabetic()));
+    println!(&quot;¿Es todo menor que el carácter 행? {}&quot;, smaller_vec.iter().all(|&amp;x| x &lt; '행'));
+}
+</code></pre></pre>
+<p>Lo anterior imprime:</p>
+<pre><code class="language-text">¿Está i dentro? true
+¿Está 뷁 dentro? false
+¿Está 鑿 dentro? false
+¿Es todo alfabético? false
+¿Es todo menor que el carácter 행? true
+</code></pre>
+<p>Por cierto, <code>.any()</code> solo comprueba hasta que encuentra un elemento que coincida. Funciona en modo cortocircuito. No sigue comprobando si ya ha encontrado una coincidencia. Por este motivo, si se va a usar esta función <code>.any()</code> con un <code>Vec</code>, puede ser buena idea que los elementos que puedan coincidir estén lo más cerca del inicio del iterador. Por ejemplo, usando <code>.rev()</code> después de <code>.iter()</code> si pueden estar por el final. Por ejemplo:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut big_vec = vec![6; 1000];
+    big_vec.push(5);
+}
+</code></pre></pre>
+<p>Que es un vector con 1000 números 6 seguidos de un 5. Si se quiere comprobar si contiene el número 5, lo óptimo sería obtener un iterador en sentido inverso con <code>.rev()</code>.</p>
+<p>En primer lugar, se puede revisar el funcionamiento esta función <code>.rev()</code>con el siguiente código:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut big_vec = vec![6; 1000];
+    big_vec.push(5);
+
+    let mut iterator = big_vec.iter().rev();
+    println!(&quot;{:?}&quot;, iterator.next());
+    println!(&quot;{:?}&quot;, iterator.next());
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">Some(5)
+Some(6)
+</code></pre>
+<p>Por lo tanto, lo eficiente, en este caso, para buscar un 5 sería buscarlo a través del iterador que comienza por el final:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut big_vec = vec![6; 1000];
+    big_vec.push(5);
+
+    println!(&quot;{:?}&quot;, big_vec.iter().rev().any(|&amp;number| number == 5));
+}
+</code></pre></pre>
+<p>Así, solo necesita iterar a través del primer elemento y luego se para. Si no se usara, en este ejemplo se iteraría a través de los 1001 elementos. El siguiente código permite observarlo:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut big_vec = vec![6; 1000];
+    big_vec.push(5);
+
+    let mut counter = 0; // Inicia la cuenta
+    let mut big_iter = big_vec.into_iter(); // Crea un Iterator
+
+    loop {
+        counter +=1;
+        if big_iter.next() == Some(5) { // Continua llamando a .next() hasta que obtiene un Some(5)
+            break;
+        }
+    }
+    println!(&quot;Final counter is: {}&quot;, counter);
+}
+</code></pre></pre>
+<p>Esto imprime <code>Final counter is: 1001</code>, por lo que queda claro que llamó a <code>.next()</code> 1001 veces antes de encontrar el 5.</p>
+<p><code>.find()</code> indica si un iterador contiene algo y <code>.position()</code> indica dónde está. <code>.find()</code> es diferente de <code>.any()</code> en que devuelve un <code>Option</code> que cotiene el valor buscado en un <code>Some</code> o <code>None</code>. <code>.position()</code>, por otra parte devuelve un <code>Option</code> con un <code>Some</code>que contiene el número de posición o <code>None</code>. En otras palabras:</p>
+<ul>
+<li><code>.find()</code>: intentará extraer el valor.</li>
+<li><code>.position()</code>: intentará indicar la posición en la que está el valor.</li>
+</ul>
+<p>A continuación, se muestra un ejemplo simple:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let num_vec = vec![10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+
+    println!(&quot;{:?}&quot;, num_vec.iter().find(|&amp;number| number % 3 == 0)); // find takes a reference, so we give it &amp;number
+    println!(&quot;{:?}&quot;, num_vec.iter().find(|&amp;number| number * 2 == 30));
+
+    println!(&quot;{:?}&quot;, num_vec.iter().position(|&amp;number| number % 3 == 0));
+    println!(&quot;{:?}&quot;, num_vec.iter().position(|&amp;number| number * 2 == 30));
+}
+</code></pre></pre>
+<p>Este código imprime: </p>
+<pre><code class="language-text">Some(30) // Devuelve el primer valor que cumple la condición
+None // No hay ningún número que multplicado por 2 == 30
+Some(2) // Esta es la posición del elemneto
+None
+</code></pre>
+<p><code>.cycle()</code> puede crear un iterador infinito que nunca termina. Este tipo de iterador funciona muy bien con <code>.zip()</code> para crear un objeto nuevo <code>Vec&lt;(i32, &amp;str)&gt;</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let even_odd = vec![&quot;par&quot;, &quot;impar&quot;];
+    let even_odd_vec = (0..6)
+        .zip(even_odd.into_iter().cycle())
+        .collect::&lt;Vec&lt;(i32, &amp;str)&gt;&gt;();
+    println!(&quot;{:?}&quot;, even_odd_vec);
+}
+</code></pre></pre>
+<p>Aunque <code>.cycle()</code> devuelve un iterador que no acaba nunca, en este caso, el iterador de <code>.zip()</code> solo se ejecuta seis veces antes de acabarse (cuando se agota el iterable de mayor longitud). La salida de este programa es:</p>
+<pre><code class="language-text">[(0, &quot;par&quot;), (1, &quot;impar&quot;), (2, &quot;par&quot;), (3, &quot;impar&quot;), (4, &quot;par&quot;), (5, &quot;impar&quot;)]
+</code></pre>
+<p>Algo parecido se puede consguir que no tiene fin. Si se escribe <code>0..</code> se crea un rango con un límite superior infinito y que nunca se completa. Es fácil de utilizar:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let ten_chars = ('a'..).take(10).collect::&lt;Vec&lt;char&gt;&gt;();
+    let skip_then_ten_chars = ('a'..).skip(1300).take(10).collect::&lt;Vec&lt;char&gt;&gt;();
+
+    println!(&quot;{:?}&quot;, ten_chars);
+    println!(&quot;{:?}&quot;, skip_then_ten_chars);
+}
+</code></pre></pre>
+<p>Ambos imprimen 10 caracteres, pero el segundo se salta 1.300 lugares e imprime diez letras en Armenio.</p>
+<pre><code class="language-text">['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+['յ', 'ն', 'շ', 'ո', 'չ', 'պ', 'ջ', 'ռ', 'ս', 'վ']
+</code></pre>
+<p><code>.fold()</code> es otro popular método que se utliza para sumar elementos de un iterador, pero se puede hacer mucho más. Es similar en cierta medida a <code>.for_each()</code>. En <code>.fold()</code> primero se añade un valor inicial (que puede ser 0 para poder sumar los valores), seguido del cierre. El cierre recibe dos parámetros, el valor total hasta el momento y el siguiente elemento. Se ve a continuación un ejemplo simple para utlizar <code>.fold()</code> para sumar elementos.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let some_numbers = vec![9, 6, 9, 10, 11];
+
+    println!(&quot;{}&quot;, some_numbers
+        .iter()
+        .fold(0, |total_so_far, next_number| total_so_far + next_number)
+    );
+}
+</code></pre></pre>
+<p>Así:</p>
+<ul>
+<li>En el paso 1, comienza con 0 y suma el siguiente número: 9.</li>
+<li>En el paso 2, toma el 9 y le suma el 6: 15.</li>
+<li>En el paso 3, toma el 15 y le suma el 9: 24.</li>
+<li>En el paso 4, toma el 24 y le suma el 10: 34.</li>
+<li>En el paso 5, toma el 34 y le suma el 11: 45, se imprime 45.</li>
+</ul>
+<p>Pero no es necesario usarlo solo para sumar. En el siguiente ejemplo se añade '-' a cada carácter para construir una cadena de caracteres de tipo <code>String</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let a_string = &quot;No tengo guiones.&quot;;
+
+    println!(
+        &quot;{}&quot;,
+        a_string
+            .chars() // iterator sobre cada carácter
+            .fold(&quot;-&quot;.to_string(), |mut string_so_far, next_char| { // Comienza con una &quot;-&quot;
+                string_so_far.push(next_char); // Incorpora el siguiente caracter, seguido de '-'
+                string_so_far.push('-');
+                string_so_far} // y se pasa al siguiente bucle
+            ));
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">-N-o- -t-e-n-g-o- -g-u-i-o-n-e-s-.-
+</code></pre>
+<p>Hay muchos otros métodos de gran utilidad como:</p>
+<ul>
+<li><code>.take_while()</code> que va leyendo elementos de un iterador mientras retorna <code>true</code>.</li>
+<li><code>.cloned()</code> que crea un clones de los elementos del iterador. Convierte una referencia en un valor.</li>
+<li><code>.by_ref()</code> que convierte en referencias los elementos del iterador. Es bueno para asegurarse de que se puede usar un <code>Vec</code> o similar después de que se haya iterado a través de él.</li>
+<li>Existen muchos métodos acabados en <code>_while</code>: <code>.skip_while()</code>, <code>.map_while()</code>.</li>
+<li><code>.sum()</code>: simplemente suma todos los elementos en un solo valor.</li>
+</ul>
+<p><code>.chunks()</code> y <code>.windows()</code> son dos formas de partir un vector en el tamaño que se desee. Se indica el tamñao que se desea como parámetro. Por ejemplo, si se tiene un vector de 10 elementos <code>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code>, y se pasa un parámetro de 3, se debe trabajar de la siguiente forma:</p>
+<ul>
+<li><code>.chunk()</code> dará lugar a cuatro fragmentos (slices): [0, 1, 2]. [3, 4, 5], [6, 7, 8] y [9]. El parámetro fija el número de elementos en cada fragmento. Con un posible fragmento de tamaño inferior al final.</li>
+<li><code>.windows()</code> dará lugar a más fragmentos en este caso ya que creará fragmentos del tamaño indicado y se desplazará de uno en uno: [0, 1, 2], [1, 2, 3], [2, 3, 4], ...., [7, 8, 9].</li>
+</ul>
+<p>Se observa el funcionamiento con el siguiente código:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let num_vec = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+
+    for chunk in num_vec.chunks(3) {
+        println!(&quot;{:?}&quot;, chunk);
+    }
+    println!();
+    for window in num_vec.windows(3) {
+        println!(&quot;{:?}&quot;, window);
+    }
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">[1, 2, 3]
+[4, 5, 6]
+[7, 8, 9]
+[0]
+
+[1, 2, 3]
+[2, 3, 4]
+[3, 4, 5]
+[4, 5, 6]
+[5, 6, 7]
+[6, 7, 8]
+[7, 8, 9]
+[8, 9, 0]
+</code></pre>
+<p>Hay que tener en cuenta que <code>.chunks()</code> lanzará <code>panic!</code> si no se le indica ningún tamaño. Se puede escribir <code>.chunks(1000)</code> para un vector de un solo elemento, pero no se puede escribir <code>.chunks()</code> con algo de longitud 0. La función valida <code>assert!(chunk_size != 0)</code>.</p>
+<p><code>.match_indices()</code> permite extraer de un <code>String</code> o <code>&amp;str</code> todo lo que coincida con el parámetro e indica el índice también. Es similar a <code>.enumerate()</code> en que retorna una tupla con dos elementos.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let rules = &quot;Regla número 1: No luchar. Regla número 2: ve a la cama a las 8 pm. Regla número 3: levántate a las 6 am.&quot;;
+    let rule_locations = rules.match_indices(&quot;Regla&quot;).collect::&lt;Vec&lt;(_, _)&gt;&gt;(); // Es Vec&lt;usize, &amp;str&gt;
+    println!(&quot;{:?}&quot;, rule_locations);
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">[(0, &quot;Regla&quot;), (28, &quot;Regla&quot;), (70, &quot;Regla&quot;)]
+</code></pre>
+<p><code>.peekable()</code> crea un iterador que permite <em>echar un vistazo</em> al siguiente elemento. Es como llmar a <code>.next()</code>(devuelve un <code>Option</code>) solo que sin avanzar el iterador. Se puede usar tanto como se necesite. A continuación, se muestra un ejemplo de uso de <code>.peek()</code> tres veces para cada elemento.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let just_numbers = vec![1, 5, 100];
+    let mut number_iter = just_numbers.iter().peekable(); // Esto crea un tipo de iterator denominado Peekable
+
+    for _ in 0..3 {
+        println!(&quot;Me encanta el número {}&quot;, number_iter.peek().unwrap());
+        println!(&quot;Me encanta tanto el número {}&quot;, number_iter.peek().unwrap());
+        println!(&quot;{} es un número tan bonito&quot;, number_iter.peek().unwrap());
+        number_iter.next();
+    }
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">Me encanta el número 1
+Me encanta tanto el número 1
+1 es un número tan bonito
+Me encanta el número 5
+Me encanta tanto el número 5
+5 es un número tan bonito
+Me encanta el número 100
+Me encanta tanto el número 100
+100 es un número tan bonito
+</code></pre>
+<p>A continuación se muestra otro ejemplo que usa <code>.peek()</code> para contrastar con <code>match</code> previamente a llamar a <code>.next()</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let locations = vec![
+        (&quot;Nevis&quot;, 25),
+        (&quot;Taber&quot;, 8428),
+        (&quot;Markerville&quot;, 45),
+        (&quot;Cardston&quot;, 3585),
+    ];
+    let mut location_iter = locations.iter().peekable();
+    while location_iter.peek().is_some() {
+        match location_iter.peek() {
+            Some((name, number)) if *number &lt; 100 =&gt; { // .peek() da una referencia, se necesita *
+                println!(&quot;Encontrada una aldea: {} con {} personas&quot;, name, number)
+            }
+            Some((name, number)) =&gt; println!(&quot;Encontrado un pueblo: {} con {} personas&quot;, name, number),
+            None =&gt; break,
+        }
+        location_iter.next();
+    }
+
+</code></pre></pre>
+<p>El código anterior da como resultado:</p>
+<pre><code class="language-text">Encontrada una aldea: Nevis con 25 personas
+Encontrado un pueblo: Taber con 8428 personas
+Encontrada una aldea: Markerville con 45 personas
+Encontrado un pueblo: Cardston con 3585 personas
+</code></pre>
+<p>Finalmente, se muestra un ejemplo en que se se usa también <code>.match_indices()</code>. En este caso, introducen nombres en un <code>struct</code> dependiendo del número de espacios de la <code>&amp;str</code>.</p>
+<pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
+struct Nombres {
+    una_palabra: Vec&lt;String&gt;,
+    dos_palabras: Vec&lt;String&gt;,
+    tres_palabras: Vec&lt;String&gt;,
+}
+
+fn main() {
+    let vec_of_Nombres = vec![
+        &quot;Caesar&quot;,
+        &quot;Frodo Baggins&quot;,
+        &quot;Bilbo Baggins&quot;,
+        &quot;Jean-Luc Picard&quot;,
+        &quot;Data&quot;,
+        &quot;Rand Al'Thor&quot;,
+        &quot;Paul Atreides&quot;,
+        &quot;Barack Hussein Obama&quot;,
+        &quot;Bill Jefferson Clinton&quot;,
+    ];
+
+    let mut iter_of_Nombres = vec_of_Nombres.iter().peekable();
+
+    let mut all_Nombres = Nombres { // inicia un struct sin nombres
+        una_palabra: vec![],
+        dos_palabras: vec![],
+        tres_palabras: vec![],
+    };
+
+    while iter_of_Nombres.peek().is_some() {
+        let next_item = iter_of_Nombres.next().unwrap(); // Se puede usar .unwrap() ya que se sabe que contiene algo
+        match next_item.match_indices(' ').collect::&lt;Vec&lt;_&gt;&gt;().len() { // Crea un vector utilizando .match_indices y comprueba la longitud
+            0 =&gt; all_Nombres.una_palabra.push(next_item.to_string()),
+            1 =&gt; all_Nombres.dos_palabras.push(next_item.to_string()),
+            _ =&gt; all_Nombres.tres_palabras.push(next_item.to_string()),
+        }
+    }
+
+    println!(&quot;{:?}&quot;, all_Nombres);
+}
+</code></pre></pre>
+<p>El código anterior imprime:</p>
+<pre><code class="language-text">Nombres { una_palabra: [&quot;Caesar&quot;, &quot;Data&quot;], dos_palabras: [&quot;Frodo Baggins&quot;, &quot;Bilbo Baggins&quot;, &quot;Jean-Luc Picard&quot;, &quot;Rand Al'Thor&quot;, &quot;Paul Atreides&quot;], tres_palabras: [&quot;Barack Hussein Obama&quot;, &quot;Bill Jefferson Clinton&quot;] }
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="33.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="35.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="33.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="35.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

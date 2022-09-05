@@ -1,0 +1,357 @@
+<!DOCTYPE HTML>
+<html lang="es" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>impl Trait - Rust en español fácil</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li><li class="chapter-item expanded "><a href="15.html"><strong aria-hidden="true">15.</strong> Paso de referencias a funciones</a></li><li class="chapter-item expanded "><a href="16.html"><strong aria-hidden="true">16.</strong> Copia</a></li><li class="chapter-item expanded "><a href="17.html"><strong aria-hidden="true">17.</strong> Tipos colección</a></li><li class="chapter-item expanded "><a href="18.html"><strong aria-hidden="true">18.</strong> Vectores</a></li><li class="chapter-item expanded "><a href="19.html"><strong aria-hidden="true">19.</strong> Tuplas</a></li><li class="chapter-item expanded "><a href="20.html"><strong aria-hidden="true">20.</strong> Estructuras de control</a></li><li class="chapter-item expanded "><a href="21.html"><strong aria-hidden="true">21.</strong> Estructuras - struct</a></li><li class="chapter-item expanded "><a href="22.html"><strong aria-hidden="true">22.</strong> Enumerados - enum</a></li><li class="chapter-item expanded "><a href="23.html"><strong aria-hidden="true">23.</strong> Bucles</a></li><li class="chapter-item expanded "><a href="24.html"><strong aria-hidden="true">24.</strong> Implementando structs y enums</a></li><li class="chapter-item expanded "><a href="25.html"><strong aria-hidden="true">25.</strong> Desestructurar</a></li><li class="chapter-item expanded "><a href="26.html"><strong aria-hidden="true">26.</strong> Referencias y el operador punto .</a></li><li class="chapter-item expanded "><a href="27.html"><strong aria-hidden="true">27.</strong> Genéricos</a></li><li class="chapter-item expanded "><a href="28.html"><strong aria-hidden="true">28.</strong> Los enumerados Option y Result</a></li><li class="chapter-item expanded "><a href="29.html"><strong aria-hidden="true">29.</strong> Otras colecciones</a></li><li class="chapter-item expanded "><a href="30.html"><strong aria-hidden="true">30.</strong> El operador ?</a></li><li class="chapter-item expanded "><a href="31.html"><strong aria-hidden="true">31.</strong> Traits (Rasgos)</a></li><li class="chapter-item expanded "><a href="32.html"><strong aria-hidden="true">32.</strong> Encadenando métodos</a></li><li class="chapter-item expanded "><a href="33.html"><strong aria-hidden="true">33.</strong> Iteradores</a></li><li class="chapter-item expanded "><a href="34.html"><strong aria-hidden="true">34.</strong> Closures - Cierres</a></li><li class="chapter-item expanded "><a href="35.html"><strong aria-hidden="true">35.</strong> La macro dbg! e .inspect()</a></li><li class="chapter-item expanded "><a href="36.html"><strong aria-hidden="true">36.</strong> Tipos de &str</a></li><li class="chapter-item expanded "><a href="37.html"><strong aria-hidden="true">37.</strong> Tiempos de vida (lifetimes)</a></li><li class="chapter-item expanded "><a href="38.html"><strong aria-hidden="true">38.</strong> Mutabilidad interior</a></li><li class="chapter-item expanded "><a href="39.html"><strong aria-hidden="true">39.</strong> Cow</a></li><li class="chapter-item expanded "><a href="40.html"><strong aria-hidden="true">40.</strong> Alias de tipos</a></li><li class="chapter-item expanded "><a href="41.html"><strong aria-hidden="true">41.</strong> La macro todo!</a></li><li class="chapter-item expanded "><a href="42.html"><strong aria-hidden="true">42.</strong> Rc</a></li><li class="chapter-item expanded "><a href="43.html"><strong aria-hidden="true">43.</strong> Múltiples hilos</a></li><li class="chapter-item expanded "><a href="44.html"><strong aria-hidden="true">44.</strong> Cierres en funciones</a></li><li class="chapter-item expanded "><a href="45.html" class="active"><strong aria-hidden="true">45.</strong> impl Trait</a></li><li class="chapter-item expanded "><a href="46.html"><strong aria-hidden="true">46.</strong> Arc</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust en español fácil</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="impl-trait"><a class="header" href="#impl-trait"><code>impl Trait</code></a></h1>
+<p><code>imple Trait</code> es similar a los genéricos. Los genéricos usan un tipo, representado (por convenio) por <code>T</code> o similar, que se decide en tiempo de compilación.</p>
+<p>En primer lugar, se presenta un ejemplo con un tipo concreto:</p>
+<pre><pre class="playground"><code class="language-rust">fn gives_higher_i32(one: i32, two: i32) {
+    let higher = if one &gt; two { one } else { two };
+    println!(&quot;{} is higher.&quot;, higher);
+}
+
+fn main() {
+    gives_higher_i32(8, 10);
+}
+</code></pre></pre>
+<p>Que imprime: <code>10 is higher.</code>.</p>
+<p>En este caso, la función solo recibe el tipo <code>i32</code>. A continuación, se modifica el código para hacerlo genérico. El código de la función necesita comparar y necesita imprimir con <code>{}</code>, por lo que el tipo <code>T</code> necesita implementar los rasgos <code>PartialOrd</code> y <code>Display</code>. Se debe recordar que esto significa que solo es posible implementar esta función para aquellos tipos que tengan estos rasgos.</p>
+<pre><pre class="playground"><code class="language-rust">use std::fmt::Display;
+
+fn gives_higher_i32&lt;T: PartialOrd + Display&gt;(one: T, two: T) {
+    let higher = if one &gt; two { one } else { two };
+    println!(&quot;{} is higher.&quot;, higher);
+}
+
+fn main() {
+    gives_higher_i32(8, 10);
+}
+</code></pre></pre>
+<p>El caso de <code>impl Trait</code> es similar, pero decide en tiempo de ejecución. Permite pasar variables de los tipos que implementen el rasgo, pero el código de la función es uno solo (no se desarrolla uno para cada tipo en tiempo de ejecución). El código es un poco menos eficiente, ya que necesita determinar en tiempo de ejecución si el tipo que se pasa implementa o no los rasgos necesarios.</p>
+<pre><pre class="playground"><code class="language-rust">fn prints_it(input: impl Into&lt;String&gt; + std::fmt::Display) { // Takes anything that can turn into a String and has Display
+    println!(&quot;You can print many things, including {}&quot;, input);
+}
+
+fn main() {
+    let name = &quot;Tuon&quot;;
+    let string_name = String::from(&quot;Tuon&quot;);
+    prints_it(name);
+    prints_it(string_name);
+}
+</code></pre></pre>
+<p>Sin embargo, lo más interesante de esto es que se puede devolver también <code>impl Trait</code> y que esto permite devolver cierres (hay que recordar que hay tres tipos de cierres, pero cada implementación concreta tiene un tipo concreto único que es de uno de los tres generales). La definición de cada cierre es un rasgo en sí (trait).</p>
+<p>Para entenderlo mejor, se puede observar algún método que funciona así en la librería estándar. Por ejemplo, esta es la definición de <code>.map()</code>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn map&lt;B, F&gt;(self, f: F) -&gt; Map&lt;Self, F&gt;     // 🚧
+    where
+        Self: Sized,
+        F: FnMut(Self::Item) -&gt; B,
+    {
+        Map::new(self, f)
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>fn map&lt;B, F&gt;(self, f: F)</code> significa que esta función necesita dos tipos genéricos. <code>F</code> es una función que recibe como parámetro un elemento del contenedor que implementa <code>.map()</code> y <code>B</code> es el valor de retorno de esta función. En el <code>where</code> se observan los ragos que deben tener las diferentes variables y tipos. <code>Self</code> tiene que ser un tipo <code>Sized</code> y <code>F</code> tiene que ser una función/cierre <code>FnMut</code>.</p>
+<p>Así, se puede hacer lo mismo para devolver un cierre. Se usa <code>impl</code> y la definición del cierre. Una vez devuelto, se puede usar como cualquier otra función. A continuación se presenta un ejemplo de una función que devuelve diferentes cierres en función del texto que reciba. Si se pasa &quot;double&quot; o &quot;triple&quot; devuelve un cierre que multiplica por dos o por tres. En todos los demás casos, usa un cierre que devuelve el mismo valor:</p>
+<pre><pre class="playground"><code class="language-rust">fn returns_a_closure(input: &amp;str) -&gt; impl FnMut(i32) -&gt; i32 {
+    match input {
+        &quot;double&quot; =&gt; |mut number| {
+            number *= 2;
+            println!(&quot;Doubling number. Now it is {}&quot;, number);
+            number
+        },
+        &quot;triple&quot; =&gt; |mut number| {
+            number *= 40;
+            println!(&quot;Tripling number. Now it is {}&quot;, number);
+            number
+        },
+        _ =&gt; |number| {
+            println!(&quot;Sorry, it's the same: {}.&quot;, number);
+            number
+        },
+    }
+}
+
+fn main() {
+    let my_number = 10;
+
+    // Make three closures
+    let mut doubles = returns_a_closure(&quot;double&quot;);
+    let mut triples = returns_a_closure(&quot;triple&quot;);
+    let mut quadruples = returns_a_closure(&quot;quadruple&quot;);
+
+    doubles(my_number);
+    triples(my_number);
+    quadruples(my_number);
+}
+</code></pre></pre>
+<p>Por último, se presenta un ejemplo más largo. Se imagina un juego en el que el personaje se enfrenta a monstruos que son más fuertes por la noche. Se puede crear un enumerado denominado <code>TimeOfday</code> para conocer el momento del día. El personaje se llama Simón y tiene un número que se denomina <code>character_fear</code>, que es un <code>f64</code>. El número sube por la noche (tiene más miedo por la noche) y baja durante el día. Se construye una función <code>change_fear</code> que cambia el el miedo en función del momento del día y hace otras cosas como imprimir mensajes:</p>
+<pre><pre class="playground"><code class="language-rust">enum TimeOfDay { // enum
+    Dawn,
+    Day,
+    Sunset,
+    Night,
+}
+
+fn change_fear(input: TimeOfDay) -&gt; impl FnMut(f64) -&gt; f64 { // la función recibe TimeOfDay. Devuelve un closure.
+                // Se usa impl FnMut(64) -&gt; f64 para indicar la función que
+                // cambiará el valor
+    use TimeOfDay::*; // Para que sea más corto de escribir Dawn, Day, Sunset, Night
+                      // En lugar de TimeOfDay::Dawn, TimeOfDay::Day, etc.
+    match input {
+        Dawn =&gt; |x| { // x representa a la variable character_fear que se pasará después
+            println!(&quot;The morning sun has vanquished the horrible night. You no longer feel afraid.&quot;);
+            println!(&quot;Your fear is now {}&quot;, x * 0.5);
+            x * 0.5
+        },
+        Day =&gt; |x| {
+            println!(&quot;What a nice day. Maybe put your feet up and rest a bit.&quot;);
+            println!(&quot;Your fear is now {}&quot;, x * 0.2);
+            x * 0.2
+        },
+        Sunset =&gt; |x| {
+            println!(&quot;The sun is almost down! This is no good.&quot;);
+            println!(&quot;Your fear is now {}&quot;, x * 1.4);
+            x * 1.4
+        },
+        Night =&gt; |x| {
+            println!(&quot;What a horrible night to have a curse.&quot;);
+            println!(&quot;Your fear is now {}&quot;, x * 5.0);
+            x * 5.0
+        },
+    }
+}
+
+fn main() {
+    use TimeOfDay::*;
+    let mut character_fear = 10.0; // Comienza Simon a 10
+
+    let mut daytime = change_fear(Day); // Crea cuatro cierres que cambian el nivel de miedo de Simon.
+    let mut sunset = change_fear(Sunset);
+    let mut night = change_fear(Night);
+    let mut morning = change_fear(Dawn);
+
+    character_fear = daytime(character_fear); // Llama a los cierres. Cambian el miedo y escriben un mensaje
+    character_fear = sunset(character_fear);
+    character_fear = night(character_fear);
+    character_fear = morning(character_fear);
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">What a nice day. Maybe put your feet up and rest a bit.
+Your fear is now 2
+The sun is almost down! This is no good.
+Your fear is now 2.8
+What a horrible night to have a curse.
+Your fear is now 14
+The morning sun has vanquished the horrible night. You no longer feel afraid.
+Your fear is now 7
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="44.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="46.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="44.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="46.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
