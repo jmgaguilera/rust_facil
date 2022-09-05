@@ -53,3 +53,4 @@
 - [Cierres en funciones](./44.md)
 - [`impl Trait`](./45.md)
 - [Arc](./46.md)
+- [Canales](./47.md)
