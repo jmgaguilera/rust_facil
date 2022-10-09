@@ -54,4 +54,5 @@
 - [`impl Trait`](./45.md)
 - [Arc](./46.md)
 - [Canales](./47.md)
-- [Entender la documentación de rust](./48.md)
+- [Entender la documentación de Rust](./48.md)
+- [Atributos](./49.md)

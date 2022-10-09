@@ -1,0 +1,315 @@
+<!DOCTYPE HTML>
+<html lang="es" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Atributos - Rust en español fácil</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="actualizaciones.html">Actualizaciones</a></li><li class="chapter-item expanded affix "><a href="introduccion.html">Introducción</a></li><li class="chapter-item expanded affix "><a href="quiensoy.html">¿Quién soy?</a></li><li class="chapter-item expanded affix "><a href="escritura.html">La escritura de Rust en inglés fácil</a></li><li class="chapter-item expanded affix "><li class="part-title">Parte 1 - Rust en tu navegador</li><li class="chapter-item expanded "><a href="01.html"><strong aria-hidden="true">1.</strong> El entorno de pruebas de Rust</a></li><li class="chapter-item expanded "><a href="02.html"><strong aria-hidden="true">2.</strong> 🚧 y ⚠️</a></li><li class="chapter-item expanded "><a href="03.html"><strong aria-hidden="true">3.</strong> Comentarios</a></li><li class="chapter-item expanded "><a href="04.html"><strong aria-hidden="true">4.</strong> Tipos de dato</a></li><li class="chapter-item expanded "><a href="05.html"><strong aria-hidden="true">5.</strong> Inferencia de tipos de dato</a></li><li class="chapter-item expanded "><a href="06.html"><strong aria-hidden="true">6.</strong> Imprimiendo '¡Hola, mundo!'</a></li><li class="chapter-item expanded "><a href="07.html"><strong aria-hidden="true">7.</strong> La visualización y depuración</a></li><li class="chapter-item expanded "><a href="08.html"><strong aria-hidden="true">8.</strong> Mutabilidad (cambio)</a></li><li class="chapter-item expanded "><a href="09.html"><strong aria-hidden="true">9.</strong> La pila, la memoria dinámica y los punteros</a></li><li class="chapter-item expanded "><a href="10.html"><strong aria-hidden="true">10.</strong> Más sobre impresión</a></li><li class="chapter-item expanded "><a href="11.html"><strong aria-hidden="true">11.</strong> Cadenas de caracteres</a></li><li class="chapter-item expanded "><a href="12.html"><strong aria-hidden="true">12.</strong> const y static</a></li><li class="chapter-item expanded "><a href="13.html"><strong aria-hidden="true">13.</strong> Algo más sobre referencias</a></li><li class="chapter-item expanded "><a href="14.html"><strong aria-hidden="true">14.</strong> Referencias modificables (mutables)</a></li><li class="chapter-item expanded "><a href="15.html"><strong aria-hidden="true">15.</strong> Paso de referencias a funciones</a></li><li class="chapter-item expanded "><a href="16.html"><strong aria-hidden="true">16.</strong> Copia</a></li><li class="chapter-item expanded "><a href="17.html"><strong aria-hidden="true">17.</strong> Tipos colección</a></li><li class="chapter-item expanded "><a href="18.html"><strong aria-hidden="true">18.</strong> Vectores</a></li><li class="chapter-item expanded "><a href="19.html"><strong aria-hidden="true">19.</strong> Tuplas</a></li><li class="chapter-item expanded "><a href="20.html"><strong aria-hidden="true">20.</strong> Estructuras de control</a></li><li class="chapter-item expanded "><a href="21.html"><strong aria-hidden="true">21.</strong> Estructuras - struct</a></li><li class="chapter-item expanded "><a href="22.html"><strong aria-hidden="true">22.</strong> Enumerados - enum</a></li><li class="chapter-item expanded "><a href="23.html"><strong aria-hidden="true">23.</strong> Bucles</a></li><li class="chapter-item expanded "><a href="24.html"><strong aria-hidden="true">24.</strong> Implementando structs y enums</a></li><li class="chapter-item expanded "><a href="25.html"><strong aria-hidden="true">25.</strong> Desestructurar</a></li><li class="chapter-item expanded "><a href="26.html"><strong aria-hidden="true">26.</strong> Referencias y el operador punto .</a></li><li class="chapter-item expanded "><a href="27.html"><strong aria-hidden="true">27.</strong> Genéricos</a></li><li class="chapter-item expanded "><a href="28.html"><strong aria-hidden="true">28.</strong> Los enumerados Option y Result</a></li><li class="chapter-item expanded "><a href="29.html"><strong aria-hidden="true">29.</strong> Otras colecciones</a></li><li class="chapter-item expanded "><a href="30.html"><strong aria-hidden="true">30.</strong> El operador ?</a></li><li class="chapter-item expanded "><a href="31.html"><strong aria-hidden="true">31.</strong> Traits (Rasgos)</a></li><li class="chapter-item expanded "><a href="32.html"><strong aria-hidden="true">32.</strong> Encadenando métodos</a></li><li class="chapter-item expanded "><a href="33.html"><strong aria-hidden="true">33.</strong> Iteradores</a></li><li class="chapter-item expanded "><a href="34.html"><strong aria-hidden="true">34.</strong> Closures - Cierres</a></li><li class="chapter-item expanded "><a href="35.html"><strong aria-hidden="true">35.</strong> La macro dbg! e .inspect()</a></li><li class="chapter-item expanded "><a href="36.html"><strong aria-hidden="true">36.</strong> Tipos de &str</a></li><li class="chapter-item expanded "><a href="37.html"><strong aria-hidden="true">37.</strong> Tiempos de vida (lifetimes)</a></li><li class="chapter-item expanded "><a href="38.html"><strong aria-hidden="true">38.</strong> Mutabilidad interior</a></li><li class="chapter-item expanded "><a href="39.html"><strong aria-hidden="true">39.</strong> Cow</a></li><li class="chapter-item expanded "><a href="40.html"><strong aria-hidden="true">40.</strong> Alias de tipos</a></li><li class="chapter-item expanded "><a href="41.html"><strong aria-hidden="true">41.</strong> La macro todo!</a></li><li class="chapter-item expanded "><a href="42.html"><strong aria-hidden="true">42.</strong> Rc</a></li><li class="chapter-item expanded "><a href="43.html"><strong aria-hidden="true">43.</strong> Múltiples hilos</a></li><li class="chapter-item expanded "><a href="44.html"><strong aria-hidden="true">44.</strong> Cierres en funciones</a></li><li class="chapter-item expanded "><a href="45.html"><strong aria-hidden="true">45.</strong> impl Trait</a></li><li class="chapter-item expanded "><a href="46.html"><strong aria-hidden="true">46.</strong> Arc</a></li><li class="chapter-item expanded "><a href="47.html"><strong aria-hidden="true">47.</strong> Canales</a></li><li class="chapter-item expanded "><a href="48.html"><strong aria-hidden="true">48.</strong> Entender la documentación de Rust</a></li><li class="chapter-item expanded "><a href="49.html" class="active"><strong aria-hidden="true">49.</strong> Atributos</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust en español fácil</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="atributos"><a class="header" href="#atributos">Atributos</a></h1>
+<p>Ya se ha visto anteriormente código como este <code>#[derive(Debug)]</code>. Este tipo de código es un <em>atributo</em>. Los atributos son pequeñas piezas de código que dan información al compilador. No son fáciles de crear, pero son muy fáciles de usar. Un atributo puede comenzar con solo <code>#</code>, lo que significa que solo afecta al código de la siguiente línea. Sin embargo, si comienza con <code>#!</code> afectará a todo lo que esté en su espacio.</p>
+<p>Hay atributos que aparecen mucho:</p>
+<p><code>#[allow(dead_code)]</code> y <code>#[allow(unused_variables)]</code>. Si el fichero contiene código que no se utiliza, Rust compilará, pero avisará. Por ejemplo, el siguiente código contiene un <code>struct</code> vacío y una variable. Ninguno se usa en el código:</p>
+<pre><pre class="playground"><code class="language-rust">struct JustAStruct {}
+
+fn main() {
+    let some_char = 'ん';
+}
+</code></pre></pre>
+<p>Rust se queja e indica que no se usan:</p>
+<pre><code class="language-text">warning: unused variable: `some_char`
+ --&gt; src\main.rs:4:9
+  |
+4 |     let some_char = 'ん';
+  |         ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_some_char`
+  |
+  = note: `#[warn(unused_variables)]` on by default
+
+warning: struct is never constructed: `JustAStruct`
+ --&gt; src\main.rs:1:8
+  |
+1 | struct JustAStruct {}
+  |        ^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` on by default
+</code></pre>
+<p>Se ha visto que se puede utilizar un guión bajo para indicar que no se usa <code>_</code>:</p>
+<pre><pre class="playground"><code class="language-rust">struct _JustAStruct {}
+
+fn main() {
+    let _some_char = 'ん';
+}
+</code></pre></pre>
+<p>Pero también se puede utilizar un atributo. El propio mensaje de Rust indica que tiene activo los atributos <code>#[warn(unused_variables)]</code> y <code>#[warn(dead_code)]</code>. En el código anterior, <code>JustAStruct</code> es código muerto y <code>some_char</code> es una variable sin usar. El atributo opuesto a <code>warn</code> es <code>allow</code>, por lo que se puede escribire en el código y Rust dejará de avisar para estos casos:</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(dead_code)]
+#![allow(unused_variables)]
+
+struct Struct1 {} // Crea cinco structs
+struct Struct2 {}
+struct Struct3 {}
+struct Struct4 {}
+struct Struct5 {}
+
+fn main() {
+    let char1 = 'ん'; // y cuatro variables. No se usa ninguno de ellos, pero el compilador ya no da ningún mensaje
+    let char2 = ';';
+    let some_str = &quot;I'm just a regular &amp;str&quot;;
+    let some_vec = vec![&quot;I&quot;, &quot;am&quot;, &quot;just&quot;, &quot;a&quot;, &quot;vec&quot;];
+}
+</code></pre></pre>
+<p>Es importante tener en cuenta el código muerto y las variables sin uso, pero en ocasiones puede ser necesario que el compilador deje de avisar durante un tiempo. Se puede necesitar desarrollar el código o enseñar a alguien y no se quiere confundir con excesivos mensajes.</p>
+<p>El atributo <code>#[derive(NombreDeRasfgo)]</code> permite derivar algunos rasgos para los struct y enum que se creen. Diversos rasgos de uso común, como <code>Debug</code>, pueden derivarse de esta forma. Otros, como <code>Display</code>, no se pueden derivar. En el caso de <code>Display</code> es necesari que se dedica por parte del desarrollador cómo se quiere mostrar el elemento.</p>
+<pre><pre class="playground"><code class="language-rust">// ⚠️
+#[derive(Display)]
+struct HoldsAString {
+    the_string: String,
+}
+
+fn main() {
+    let my_string = HoldsAString {
+        the_string: &quot;¡Aquí estoy!&quot;.to_string(),
+    };
+}
+</code></pre></pre>
+<p>El mensaje de error lo indica bien claro:</p>
+<pre><code class="language-text">error: cannot find derive macro `Display` in this scope
+ --&gt; src/main.rs:2:10
+  |
+2 | #[derive(Display)]
+  |          ^^^^^^^
+</code></pre>
+<p>Pero en los casos de rasgos que se pueden derivar, se pueden indicar tantos como se necesite. En el siguiente ejemplo se le dan siete rasgos diferentes a un <code>struct</code>, solo por gusto, aunque solo se necesite uno en este caso.</p>
+<pre><pre class="playground"><code class="language-rust">#[derive(Debug, PartialEq, Eq, Ord, PartialOrd, Hash, Clone)]
+struct HoldsAString {
+    the_string: String,
+}
+
+fn main() {
+    let my_string = HoldsAString {
+        the_string: &quot;¡Aquí estoy!&quot;.to_string(),
+    };
+    println!(&quot;{:?}&quot;, my_string);
+}
+</code></pre></pre>
+<p>Se puede derivar <code>Copy</code>, pero solo en los casos que un elemento solo contiene elementos que también tienen el rasgo <code>Copy</code>. En el ejemplo anterior no es posible puesto que <code>String</code> no tiene dicho rasgo y el <code>struct HodsAString</code> contiene una variable de dicho tipo. Sin embargo en el siguiente ejemplo sí se puede derivar <code>Copy</code> al contener tipos que disponen de dicho rasgo:</p>
+<pre><pre class="playground"><code class="language-rust">#[derive(Clone, Copy)] // Se necesita Clone para usar Copy
+struct NumberAndBool {
+    number: i32, // i32 es Copy
+    true_or_false: bool // bool es también Copy. Por lo que no es problema
+}
+
+fn does_nothing(input: NumberAndBool) {
+
+}
+
+fn main() {
+    let number_and_bool = NumberAndBool {
+        number: 8,
+        true_or_false: true
+    };
+
+    does_nothing(number_and_bool);
+    does_nothing(number_and_bool); // Sin Copy, esta fila daría error
+}
+</code></pre></pre>
+<p>El atributo <code>#[cfg()]</code> significa configuración e indica al compilador si ejecutar código o no. Normalmente, se encuentra de la siguiente forma <code>#[cfg(test)]</code>. Se usa cuando se escriben funciones de prueba para que el compilador solo las ejecute cuando se está probando. Así, el código de prueba puede estar junto al código del programa sin que el compilador lo ejecute, salvo cuando se le indica.</p>
+<p>Otro ejemplo del uso de <code>cfg</code> es <code>#[cfg(target_os = &quot;windows&quot;)]</code>. Que indica que solo se ejecute el código en windows (o linux u otro sistema).</p>
+<p>El atributo <code>#![no_std]</code> indica a Rust que no incorpore la librería estándar. Esto implica que no se dispone de <code>Vec</code>, <code>String</code> y todo lo que aporta esta librería. Es útil cuando no es necesaria y el código tiene que ejecutarse en pequeños dispositivos con poca memoria.</p>
+<p>Los diferentes atributos disponibles se pueden consultar <a href="https://doc.rust-lang.org/reference/attributes.html">aquí</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="48.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="48.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
