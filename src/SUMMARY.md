@@ -57,3 +57,4 @@
 - [Entender la documentación de Rust](./48.md)
 - [Atributos](./49.md)
 - [Box](./50.md)
+- [Box y los rasgos](./51.md)
