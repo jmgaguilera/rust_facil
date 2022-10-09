@@ -56,3 +56,4 @@
 - [Canales](./47.md)
 - [Entender la documentación de Rust](./48.md)
 - [Atributos](./49.md)
+- [Box](./50.md)
