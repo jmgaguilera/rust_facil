@@ -617,6 +617,553 @@ error[E0599]: no method named `occg` found for struct `std::ffi::OsString` in th
 </code></pre>
 <p>Se ve que en el primer caso, el caso correcto, devolvería <code>String</code> y en el caso incorrecto devolvería <code>OsString</code>:</p>
 <h2 id="mem"><a class="header" href="#mem">mem</a></h2>
+<p><code>std::mem</code> tiene métodos muy interesantes. Ya se han visto algunos, como <code>.size_of()</code>, <code>.size_of_val()</code> y <code>.drop()</code>-</p>
+<pre><pre class="playground"><code class="language-rust">use std::mem;
+
+fn main() {
+    println!(&quot;{}&quot;, mem::size_of::&lt;i32&gt;());
+    let my_array = [8; 50];
+    println!(&quot;{}&quot;, mem::size_of_val(&amp;my_array));
+    let mut some_string = String::from(&quot;Se puede hacer drop de String porque está en el heap&quot;);
+    mem::drop(some_string);
+    // some_string.clear();   Esto podría entrar en pánico
+</code></pre></pre>
+<p>Esto imprime:</p>
+<pre><code class="language-text">4
+200
+</code></pre>
+<p>A continuación, se presentan algunos métodos de <code>mem</code>:</p>
+<p><code>swap()</code>: intercambia valors entre dos variables. Necesita una referencia mutable para cada una de ellas. Es útil cuando tienes dos tienes dos cosas que se quieren intercambiar y Rust no deja por las reglas de préstamo. O simplemente, cuando se necesita hacer un intercambio rápido entre dos variables.</p>
+<p>A continuación, se muestra un ejemplo:</p>
+<pre><pre class="playground"><code class="language-rust">use std::{mem, fmt};
+
+struct Ring { // Crea un anillo del Señor de los Anillos
+    owner: String,
+    former_owner: String,
+    seeker: String, // es la persona buscándolo
+}
+
+impl Ring {
+    fn new(owner: &amp;str, former_owner: &amp;str, seeker: &amp;str) -&gt; Self {
+        Self {
+            owner: owner.to_string(),
+            former_owner: former_owner.to_string(),
+            seeker: seeker.to_string(),
+        }
+    }
+}
+
+impl fmt::Display for Ring { // Para mostrar quién lo tiene y quién lo busca
+        fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+            write!(f, &quot;{} tiene el anillo, {} solía tenerlo, {} lo quiere&quot;, self.owner, self.former_owner, self.seeker)
+        }
+}
+
+fn main() {
+    let mut one_ring = Ring::new(&quot;Frodo&quot;, &quot;Gollum&quot;, &quot;Sauron&quot;);
+    println!(&quot;{}&quot;, one_ring);
+    mem::swap(&amp;mut one_ring.owner, &amp;mut one_ring.former_owner); // Gollum tiene el anillo fugazmente
+    println!(&quot;{}&quot;, one_ring);
+}
+</code></pre></pre>
+<p>Esto imprimirá:</p>
+<pre><code class="language-text">Frodo tiene el anillo, Gollum solía tenerlo, Sauron lo quiere
+Gollum tiene el anillo, Frodo solía tenerlo, Sauron lo quiere
+</code></pre>
+<p><code>replace()</code>: se parece a swap y lo usa internamente, como se puede ver:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn replace&lt;T&gt;(dest: &amp;mut T, mut src: T) -&gt; T {
+    swap(dest, &amp;mut src);
+    src
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Lo único que hace es conmutar los valores y devolver el antiguo elemento. Así, se puede usar con <code>let</code>. Como por ejemplo:</p>
+<pre><pre class="playground"><code class="language-rust">use std::mem;
+
+struct City {
+    name: String,
+}
+
+impl City {
+    fn change_name(&amp;mut self, name: &amp;str) {
+        let old_name = mem::replace(&amp;mut self.name, name.to_string());
+        println!(
+            &quot;La ciudad llamada en el pasado {} ahora se llama {}.&quot;,
+            old_name, self.name
+        );
+    }
+}
+
+fn main() {
+    let mut capital_city = City {
+        name: &quot;Constantinopla&quot;.to_string(),
+    };
+    capital_city.change_name(&quot;Estambul&quot;);
+}
+</code></pre></pre>
+<p>Esto imprime <code>La ciudad llamada en el pasado Constantinopla ahora se llama Estambul.</code>.</p>
+<p><code>.take()</code> es una como <code>.replace()</code>, pero lo sustituye por el valor por defecto en el elemento. Se recordará que los valores por defecto suelen ser cosas como 0, &quot;&quot; o similar. Esta es su declaración:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 🚧
+pub fn take&lt;T&gt;(dest: &amp;mut T) -&gt; T
+where
+    T: Default,
+<span class="boring">}
+</span></code></pre></pre>
+<p>Se pueden hacer cosas como:</p>
+<pre><pre class="playground"><code class="language-rust">use std::mem;
+
+fn main() {
+    let mut number_vec = vec![8, 7, 0, 2, 49, 9999];
+    let mut new_vec = vec![];
+
+    number_vec.iter_mut().for_each(|number| {
+        let taker = mem::take(number);
+        new_vec.push(taker);
+    });
+
+    println!(&quot;{:?}\n{:?}&quot;, number_vec, new_vec);
+}
+</code></pre></pre>
+<p>Como se puede ver en el resultado:</p>
+<pre><code class="language-text">[0, 0, 0, 0, 0, 0]
+[8, 7, 0, 2, 49, 9999]
+</code></pre>
+<p>Reemplaza todos los números con 0, pero no elimina ningún elemento.</p>
+<p>En el caso de tipos propios, <code>Default</code> puede implementar lo que se necesite. En el siguiente ejemplo se dispone de un <code>Banco</code> y un <code>Ladron</code>. Cada vez que roba el <code>Banco</code>, se lleva el dinero del mostrador. Pero el mostrador puede tomar dinero del interior del bano siempre que se necesita, por lo que siempre tiene 50. Se va a construir este tipo para que ese sea su valor por defecto.</p>
+<pre><pre class="playground"><code class="language-rust">use std::mem;
+use std::ops::{Deref, DerefMut}; // Se usa esto para obtener la potencia de u32
+
+struct Banco {
+    dinero_dentro: u32,
+    dinero_en_mostrador: DineroMostrador, // Es un &quot;puntero inteligente&quot;. tiene su propio Default, pero usa u32
+}
+
+struct DineroMostrador(u32);
+
+impl Default for DineroMostrador {
+    fn default() -&gt; Self {
+        Self(50) // Siempre 50, no 0
+    }
+}
+
+impl Deref for DineroMostrador { // Con este rasgo se puede acceder al u32 usando *
+    type Target = u32;
+
+    fn deref(&amp;self) -&gt; &amp;Self::Target {
+        &amp;self.0
+    }
+}
+
+impl DerefMut for DineroMostrador { // Y con esto se puede restar, sumar, etc.
+    fn deref_mut(&amp;mut self) -&gt; &amp;mut Self::Target {
+        &amp;mut self.0
+    }
+}
+
+impl Banco {
+    fn comprobar_dinero(&amp;self) {
+        println!(
+            &quot;Hay {}€ en el banco y {}€ en el mostrador.\n&quot;,
+            self.dinero_dentro, *self.dinero_en_mostrador // usa * para imprimir el u32
+        );
+    }
+}
+
+struct Ladron {
+    dinero_en_bolsillo: u32,
+}
+
+impl Ladron {
+    fn comprobar_dinero(&amp;self) {
+        println!(&quot;El ladrón tiene {}€ en este momento.\n&quot;, self.dinero_en_bolsillo);
+    }
+
+    fn robar_banco(&amp;mut self, Banco: &amp;mut Banco) {
+        let nuevo_dinero = mem::take(&amp;mut Banco.dinero_en_mostrador); // Toma el dinero, pero deja siempre 50€ que es el valor por defecto.
+        self.dinero_en_bolsillo += *nuevo_dinero; // Usa * porque solo se pueden sumar u32. DineroMostrador no puede sumar
+        Banco.dinero_dentro -= *nuevo_dinero;    // Igual aquí
+        println!(&quot;¡Ha robado el banco, ahora tiene {}€!\n&quot;, self.dinero_en_bolsillo);
+    }
+}
+
+fn main() {
+    let mut banco_de_klezkavania = Banco { // Prepara el banco
+        dinero_dentro: 5000,
+        dinero_en_mostrador: DineroMostrador(50),
+    };
+    banco_de_klezkavania.comprobar_dinero();
+
+    let mut ladron = Ladron { // Prepara al Ladron
+        dinero_en_bolsillo: 50,
+    };
+    ladron.comprobar_dinero();
+
+    ladron.robar_banco(&amp;mut banco_de_klezkavania); // Roba, después comprueba el dinero
+    ladron.comprobar_dinero();
+    banco_de_klezkavania.comprobar_dinero();
+
+    ladron.robar_banco(&amp;mut banco_de_klezkavania); // Vuelve a robar
+    ladron.comprobar_dinero();
+    banco_de_klezkavania.comprobar_dinero();
+
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">Hay 5000€ en el banco y 50€ en el mostrador.
+
+El ladrón tiene 50€ en este momento.
+
+¡Ha robado el banco, ahora tiene 100€!
+
+El ladrón tiene 100€ en este momento.
+
+Hay 4950€ en el banco y 50€ en el mostrador.
+
+¡Ha robado el banco, ahora tiene 150€!
+
+El ladrón tiene 150€ en este momento.
+
+Hay 4900€ en el banco y 50€ en el mostrador.
+</code></pre>
+<p>Se puede obsverar que siempre hay 50€ en el mostrador.</p>
+<h2 id="prelude"><a class="header" href="#prelude">prelude</a></h2>
+<p>La librería estándar tiene también un preludio, que es lo que hace que no haya que escribir cosas como <code>use std::vec::Vec</code> para crear un <code>Vec</code>. Se pueden ver todos los elementos que contiene <a href="https://doc.rust-lang.org/std/prelude/index.html#prelude-contents">aquí</a>. Ya han aparecido casi todos ellos:</p>
+<ul>
+<li><code>std::marker::{Copy, Send, Sized, Sync, Unpin}</code>. No se ha visto <code>Unpin</code> antes. Se usa en casi cualquier tipo (como <code>Sized</code>, que también es muy común). <code>Pin</code> significa que no se puede mover de su lugar en la memoria, pero la mayoría de los elementos implementan <code>Unpin</code>, por lo que es posible moverlos. Por ello funcionan métodos como <code>std::mem::replace</code>.</li>
+<li><code>std::ops::{Drop, Fn, FnMut, FnOnce}</code>.</li>
+<li><code>std::mem::drop</code></li>
+<li><code>std::boxed::Box</code>.</li>
+<li><code>std::borrow::ToOwned</code>. Se ha visto antes con <code>Cow</code>, que puede tomar contenido prestado y convertirlo en propiedad suya. Utiliza <code>.to_owned()</code> para hacerlo. También se puede usar <code>.to_owned()</code> en un <code>&amp;str</code> para convertirlo en <code>String</code> y lo mismo para otros valores prestados.</li>
+<li><code>std::clone::Clone</code></li>
+<li><code>std::cmp::{PartialEq, PartialOrd, Eq, Ord}</code>.</li>
+<li><code>std::convert::{AsRef, AsMut, Into, From}</code>.</li>
+<li><code>std::default::Default</code>.</li>
+<li><code>std::iter::{Iterator, Extend, IntoIterator, DoubleEndedIterator, ExactSizeIterator}</code>. Anteriormente, se usó <code>.rev()</code> en un iterador: en realidad esta función crea un <code>DoubleEndedIterator</code>. Un <code>ExactSizeIterator</code> es algo como <code>0..10</code>: se sabe al inicio que tiene una longitud de 10 elementos. Otros iteradores no conocen su tamaño con seguridad.</li>
+<li><code>std::option::Option::{self, Some, None}</code>.</li>
+<li><code>std::result::Result::{self, Ok, Err}</code>.</li>
+<li><code>std::string::{String, ToString}</code>.</li>
+<li><code>std::vec::Vec</code>.</li>
+</ul>
+<p>Si por alguna razón no se deseara cargar el preludio, se debe añadir el atributo <code>#![no_implicit_prelude]</code>. Se prueba lo siguiente y se observa que el compilador se queja:</p>
+<pre><pre class="playground"><code class="language-rust">// ⚠️
+#![no_implicit_prelude]
+fn main() {
+    let my_vec = vec![8, 9, 10];
+    let my_string = String::from(&quot;Esto no funciona&quot;);
+    println!(&quot;{:?}, {}&quot;, my_vec, my_string);
+}
+</code></pre></pre>
+<p>Ahora, Rust desconoce qué son determinados elementos y no compila.</p>
+<pre><code class="language-text">error: cannot find macro `println` in this scope
+ --&gt; src/main.rs:5:5
+  |
+5 |     println!(&quot;{:?}, {}&quot;, my_vec, my_string);
+  |     ^^^^^^^
+
+error: cannot find macro `vec` in this scope
+ --&gt; src/main.rs:3:18
+  |
+3 |     let my_vec = vec![8, 9, 10];
+  |                  ^^^
+
+error[E0433]: failed to resolve: use of undeclared type or module `String`
+ --&gt; src/main.rs:4:21
+  |
+4 |     let my_string = String::from(&quot;This won't work&quot;);
+  |                     ^^^^^^ use of undeclared type or module `String`
+
+error: aborting due to 3 previous errors
+</code></pre>
+<p>Para este código tan simple, manteniendo que Rust no cargue el preludio, solo hay que añadir la librería estándar con <code>extern crate std</code> y luego añadir los elementos que se usan realmente. Quedaría como sigue:</p>
+<pre><pre class="playground"><code class="language-rust">#![no_implicit_prelude] 
+extern crate std; // Hay que decirle a Rust que se quiere usar la librería std
+use std::vec; // se necesita la macro vec
+use std::string::String; // y string
+use std::convert::From; // Y este rasgo para convertir de &amp;str a String
+use std::println; // y esto para imprimir
+
+fn main() {
+    let my_vec = vec![8, 9, 10];
+    let my_string = String::from(&quot;Esto sí funciona&quot;);
+    println!(&quot;{:?}, {}&quot;, my_vec, my_string);
+}
+</code></pre></pre>
+<p>Ahora sí funciona e imprime <code>[8, 9, 10], Esto sí funciona</code>.</p>
+<p>Además, se puede llegar a utilizar un atributo <code>#![no_std]</code> (se vio anteriormente) cuando no se puede usar ni la pila. La mayor parte del tiempo no es necesario quitar el preludio o <code>std</code>.</p>
+<p>En el pasado se usaba mucho más la palabra clave <code>extern</code>. Era necesario para cualquier librería externa que se quisiera usar. Por ejemplo, para usar <code>rand</code> era necesario escribir:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>extern crate rand;
+<span class="boring">}
+</span></code></pre></pre>
+<p>y después las sentencias <code>use</code> que fuesen necesarias para incorporar módulos, rasgos, etc. El compilador ya no lo necesita, es suficiente con expresar los diferentes <code>use</code> y el propio compilador se encarga de encontrarlos en las librerías a que correspondan.</p>
+<h2 id="time"><a class="header" href="#time">time</a></h2>
+<p><code>std::time</code> es donde se encuentran las funciones relacionadas con la fecha y hora (si son necesarias más, se puede usar la librería <code>chrono</code>). La función más sencilla es la que recupera la hora del sistema <code>Instant::now()</code>.</p>
+<pre><pre class="playground"><code class="language-rust">use std::time::Instant;
+
+fn main() {
+    let time = Instant::now();
+    println!(&quot;{:?}&quot;, time);
+}
+</code></pre></pre>
+<p>Si se imprime, se obtiene algo como esto: <code>Instant { tv_sec: 432756, tv_nsec: 504281663 }</code>. Muestra segundos y nanosegundos, lo que no resulta muy útil. La <a href="https://doc.rust-lang.org/std/time/struct.Instant.html">página de documentación de <code>Instant</code></a> indica ques &quot;opaco y solo es útil con <code>Duration</code>&quot;. Solo es útil, comparando distintos momentos del tiempo.</p>
+<p>Si se observan los rasgos de este tipo, uno de ellos es <code>Sub&lt;Instant&gt;</code>. Se pueden restar unos de otros. Si se ve su código fuente:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Sub&lt;Instant&gt; for Instant {
+    type Output = Duration;
+
+    fn sub(self, other: Instant) -&gt; Duration {
+        self.duration_since(other)
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Toma un <code>Instant</code> y usa <code>.duration_since()</code> para obtener una <code>Duration</code>. Para probarlo, se van a tomar dos instantes separados por un cierto intervalo:</p>
+<pre><pre class="playground"><code class="language-rust">use std::time::Instant;
+
+fn main() {
+    let time1 = Instant::now();
+    let time2 = Instant::now(); // Estos dos instantes están muy cerca entre sí
+
+    let mut new_string = String::new();
+    loop {
+        new_string.push('წ'); // Se va a crear un String añadiendo una letra 100.000 veces
+        if new_string.len() &gt; 100_000 { //  hasta que es de longitud 100.000 
+            break;
+        }
+    }
+    let time3 = Instant::now();
+    println!(&quot;{:?}&quot;, time2 - time1);
+    println!(&quot;{:?}&quot;, time3 - time1);
+}
+</code></pre></pre>
+<p>Esto imprimirá un <code>Duration</code>:</p>
+<pre><code class="language-text">1.025µs
+683.378µs
+</code></pre>
+<p>En este ejemplo, uno representa un poco más de 1 microsegundo vs. 683 microsegundos. Se observa que construir la cadena de caracteres llevó su tiempo.</p>
+<p>Hay una última cosa que se puede hacer con un único <code>Instant</code>. Convertirlo a <code>String</code> con <code>format!(&quot;{:?}&quot;, Instant::now());</code>:</p>
+<pre><pre class="playground"><code class="language-rust">use std::time::Instant;
+
+fn main() {
+    let time1 = format!(&quot;{:?}&quot;, Instant::now());
+    println!(&quot;{}&quot;, time1);
+}
+</code></pre></pre>
+<p>Esto imprime algo así como <code>Instant { tv_sec: 433468, tv_nsec: 406649320 }</code>. Si se usa <code>.iter()</code>, <code>.rev()</code> y <code>.skip(2)</code>, es posible saltar la llave <code>}</code> final y se puede crear un generador de números aleatorios.</p>
+<pre><pre class="playground"><code class="language-rust">use std::time::Instant;
+
+fn bad_random_number(digits: usize) {
+    if digits &gt; 9 {
+        panic!(&quot;El número debe ser como máximo de 9 dígitos&quot;);
+    }
+    let now = Instant::now();
+    let output = format!(&quot;{:?}&quot;, now);
+
+    output
+        .chars()
+        .rev()
+        .skip(2)
+        .take(digits)
+        .for_each(|character| print!(&quot;{}&quot;, character));
+    println!();
+}
+
+fn main() {
+    bad_random_number(1);
+    bad_random_number(1);
+    bad_random_number(3);
+    bad_random_number(3);
+}
+</code></pre></pre>
+<p>Esto imprimirá algo así como:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>6
+4
+967
+180
+<span class="boring">}
+</span></code></pre></pre>
+<p>No es un buen generador de números aleatorios. Rust tiene librerías mucho mejores para ello, como <code>rand</code> y <code>fastrand</code>. Pero es un ejemplo de lo que se puede hacer con <code>Instant</code> y cierta imaginación.</p>
+<p>En un hilo es posible parar durante un tiempo con <code>std::thread::sleep</code>. Cuando se hace esto hay que darle una duración. Para obtener las unidades necesarias, se puede usar <code>Duration::from_millis()</code>, <code>Duration::from_secs()</code>, etc. Por ejemplo:</p>
+<pre><pre class="playground"><code class="language-rust">use std::time::Duration;
+use std::thread::sleep;
+
+fn main() {
+    let three_seconds = Duration::from_secs(3);
+    println!(&quot;Me voy a dormir.&quot;);
+    sleep(three_seconds);
+    println!(&quot;¿Me he perdido algo?&quot;);
+}
+</code></pre></pre>
+<p>Esto imprimirá:</p>
+<pre><code class="language-text">Me voy a dormir.
+¿Me he perdido algo?
+</code></pre>
+<p>Pero el hilo no hará nada durante esos tres segundos. Normalmente, se usa <code>.sleep()</code> cuando existen diversos hilos que tienen que repetir o intentar algo varias veces, como conectarse a un servicio. En estos casos, se intenta o repite la acción, después se duerme duratne un tiempo establecido, hasta que se completa y se vuelve ha realizar la acción programada. Y así cada vez que se despierta el hilo.</p>
+<h2 id="otras-macros"><a class="header" href="#otras-macros">Otras macros</a></h2>
+<p>A continuación, se recorren algunas otras macros de Rust.</p>
+<h3 id="unreachable"><a class="header" href="#unreachable">unreachable!()</a></h3>
+<p>Es una especie de <code>todo!()</code> salvo por ser para código que nunca se usará. Es posible que exista un <code>match</code> en la que se sepa que una de las ramas nunca se alcanza. Si es así, se escribe esta macro para que el compilador lo sepa y pueda ignorar esa parte.</p>
+<p>Por ejemplo, se escribe un programa que imprime algo cada vez que se elige un país para vivir. Están en Ucrania y todos son lugares elegibles salvo Chernobyl. El código puede ser como sigue:</p>
+<pre><pre class="playground"><code class="language-rust">enum UkrainePlaces {
+    Kiev,
+    Kharkiv,
+    Chernobyl, 
+    Odesa,
+    Dnipro,
+}
+
+fn choose_city(place: &amp;UkrainePlaces) {
+    use UkrainePlaces::*;
+    match place {
+        Kiev =&gt; println!(&quot;Vivirás en Kiev&quot;),
+        Kharkiv =&gt; println!(&quot;Vivirás en Kharkiv&quot;),
+        Chernobyl =&gt; unreachable!(),
+        Odesa =&gt; println!(&quot;Vivirás en Odesa&quot;),
+        Dnipro =&gt; println!(&quot;Vivirás en Dnipro&quot;),
+    }
+}
+
+fn main() {
+    let user_input = UkrainePlaces::Kiev; // El usuario introduciría el lugar de algún modo sin poder elegir Chernobyl
+    choose_city(&amp;user_input);
+}
+</code></pre></pre>
+<p>Este código imprimirá <code>Vivirás en Kiev</code>.</p>
+<p><code>unreachable!()</code> es útil para recordar que esa parte del programa no se va a ejecutar nunca. Hay que estar seguro de ello. Si el compilador llega a entrar en esta función, el programa entrará en pánico.</p>
+<p>El compilador avisará en los casos en que tenga claro que el programador se ha equivocado y hay código inalcanzable que no se haya marcado como tal. Por ejemplo:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let true_or_false = true;
+
+    match true_or_false {
+        true =&gt; println!(&quot;It's true&quot;),
+        false =&gt; println!(&quot;It's false&quot;),
+        true =&gt; println!(&quot;It's true&quot;), // Vaya, se ha vuelto a escribir true
+    }
+}
+</code></pre></pre>
+<p>Lo anterior, dará el siguiente aviso:</p>
+<pre><code class="language-text">warning: unreachable pattern
+ --&gt; src/main.rs:7:9
+  |
+7 |         true =&gt; println!(&quot;It's true&quot;),
+  |         ^^^^
+  |
+</code></pre>
+<h3 id="column-line-file-module_path"><a class="header" href="#column-line-file-module_path">column!, line!, file!, module_path!</a></h3>
+<p>Estas cuatro macros son parecidas a <code>dbg!()</code> porque solo se incorporan para obtener información de depuración. No necesitan parámetros, se uan con los paréntesis, sin nada más. Son fáciles de aprender juntas:</p>
+<ul>
+<li><code>column!()</code> muestra la columna en la que se escribió.</li>
+<li><code>file!()</code> muestra el nombre del fichero en el que se escribió.</li>
+<li><code>line!()</code> muestra el número de lína en la que se escribió.</li>
+<li><code>module_path!()</code> muestra el módulo en el que se encuentra.</li>
+</ul>
+<p>El código siguiente muestra su uso. Se simula la creación de diversos módulos (unos dentro de otros) para que se vea el resultado de estas macros:</p>
+<pre><pre class="playground"><code class="language-rust">pub mod something {
+    pub mod third_mod {
+        pub fn print_a_country(input: &amp;mut Vec&lt;&amp;str&gt;) {
+            println!(
+                &quot;The last country is {} inside the module {}&quot;,
+                input.pop().unwrap(),
+                module_path!()
+            );
+        }
+    }
+}
+
+fn main() {
+    use something::third_mod::*;
+    let mut country_vec = vec![&quot;Portugal&quot;, &quot;Czechia&quot;, &quot;Finland&quot;];
+    
+    // do some stuff
+    println!(&quot;Hello from file {}&quot;, file!());
+
+    // do some stuff
+    println!(
+        &quot;On line {} we got the country {}&quot;,
+        line!(),
+        country_vec.pop().unwrap()
+    );
+
+    // do some more stuff
+
+    println!(
+        &quot;The next country is {} on line {} and column {}.&quot;,
+        country_vec.pop().unwrap(),
+        line!(),
+        column!(),
+    );
+
+    // lots more code
+
+    print_a_country(&amp;mut country_vec);
+}
+</code></pre></pre>
+<p>Este código imprime:</p>
+<pre><code class="language-text">Hello from file src/main.rs
+On line 23 we got the country Finland
+The next country is Czechia on line 32 and column 9.
+The last country is Portugal inside the module playground::something::third_mod
+</code></pre>
+<h3 id="cfg"><a class="header" href="#cfg">cfg!</a></h3>
+<p>Se sabe que se pueden usar atributos como <code>#[cfg(test)]</code> y <code>#[cfg(windows)]</code> para informar al compilador qué hacer en ciertos casos. En el caso de <code>test</code> se ejecuta el código marcado por el atributo si se está ejecutando el programa en modo test (usando <code>cargo test</code>). Cuando se usa <code>windows</code>, se ejecuta el código cuando el sistema operativo es Windows. Pero puede ser que solo se quiera cambiar una pequeña parte de código dependiendo del sistema operativo en que se ejecute. Es en este caso, cuando esta macro es útil. Devuelve un <code>bool</code>.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let helpful_message = if cfg!(target_os = &quot;windows&quot;) { &quot;backslash&quot; } else { &quot;slash&quot; };
+
+    println!(
+        &quot;...then in your hard drive, type the directory name followed by a {}. Then you...&quot;,
+        helpful_message
+    );
+}
+</code></pre></pre>
+<p>Este trozo de código imprimirá diferente texto en función del sistema operativo en que se encuentre. El playground de Rust se ejecuta en Linux, por lo que se imprime:</p>
+<pre><code class="language-text">...then in your hard drive, type the directory name followed by a slash. Then you...
+</code></pre>
+<p><code>cfg!()</code> funciona para cualquier configuración disponible. El código siguiente muestra cómo ejecutar algo cuando se está en un test.</p>
+<pre><pre class="playground"><code class="language-rust">#[cfg(test)] // cfg! buscará la existencia de este atributo de configuración
+mod testing {
+    use super::*;
+    #[test]
+    fn check_if_five() {
+        assert_eq!(bring_number(true), 5); // Esta función comprueba que bring_number() devolverá 5
+    }
+}
+
+fn bring_number(should_run: bool) -&gt; u32 { // esta función comprueba si debe ejecutarse o no
+    if cfg!(test) &amp;&amp; should_run { // Si se tiene que ejecutar y está en test, devuelve 5
+        5
+    } else if should_run { // Si no es test devuelve 5 e imprime
+        println!(&quot;Returning 5. This is not a test&quot;);
+        5
+    } else {
+        println!(&quot;This shouldn't run, returning 0.&quot;); // en otro caso devuelve 0
+        0
+    }
+}
+
+fn main() {
+    bring_number(true);
+    bring_number(false);
+}
+</code></pre></pre>
+<p>Este código devolverá:</p>
+<pre><code class="language-text">Returning 5. This is not a test
+This shouldn't run, returning 0.
+</code></pre>
+<p>Cuando no está en modo test. Cuando se ejecuta en modo test (<code>cargo test</code>), ejecutará la preuba y en este caso, siempre devuelve 5, por lo que pasará el test.</p>
+<pre><code class="language-text">running 1 test
+test testing::check_if_five ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
 
                     </main>
 
