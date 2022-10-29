@@ -65,3 +65,11 @@
 - [Crates externas](./56.md)
 - [Un paseo por la librería estándar](./57.md)
 - [La escritura de macros](./58.md)
+
+# Parte 2 - Rust en tu ordenador
+
+- [cargo](./59.md)
+- [Entrada de datos de usuario](./60.md)
+- [Utilizando ficheros](./61.md)
+- [cargo doc](./62.md)
+- [¿El final?](./63.md)
