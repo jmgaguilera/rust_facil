@@ -11038,10 +11038,70 @@ fn main() {
 <p>Como se ha visto hasta el momento, Rust se puede aprender utilizando Playground. Pero lo normal, será desarrollar con Rust en un ordenador personal. Además, existen cosas, como utilizar ficheros o crear librerías y programas de más de un fichero, que no se pueden hacer en Playground.</p>
 <p>Lo más importante es poder usar todo tipo de librerías (crates) para construir programas completos.</p>
 <h1 id="cargo"><a class="header" href="#cargo">cargo</a></h1>
+<p><code>rustc</code> signifca compilador de Rust, y es el programa que compila el código fuente. Los ficheros de rust se escriben con la extensión <code>.rs</code>. En todo caso, la mayoría de las personas no escriben <code>rustc main.rs</code> para compilar un programa. Normalmente, se usa <code>cargo</code> que es el programa gestor de paquetes de Rust.</p>
+<p>Una nota sobre el nombre: se llama <code>cargo</code> porque cuando se unen diversas &quot;crates&quot; (cajas, librerías) se tiene toda una carga de cajas. Un &quot;crate&quot; es una caja como las que se ven en los barcos o en los camiones trailer. Pero todo proyecto Rust también se llama así &quot;crate&quot;. Cuando se unen todas las librerías, se consigue una carga completa.</p>
+<p>A continuación se prueba <code>cargo</code> para ejecutar un proyecto que utiliza la librería (crate) <code>rand</code> para elegir de forma aleatoria entre ocho letras posibles.</p>
+<pre><pre class="playground"><code class="language-rust">use rand::seq::SliceRandom; // Use this for .choose over slices
+
+fn main() {
+
+    let my_letters = vec!['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+
+    let mut rng = rand::thread_rng();
+    for _ in 0..6 {
+        print!(&quot;{} &quot;, my_letters.choose(&amp;mut rng).unwrap());
+    }
+}
+</code></pre></pre>
+<p>El código anterior imprime algo como <code>b c g h e a</code>. Pero lo que se quiere ver es cómo funciona <code>cargo</code>. Para usarlo y ejecutar este programa, normalmente se usará <code>cargo run</code>. Esto compilará, construirá y ejecutará el programa. Pero cuando se empieza a compilar, se observará algo como esto:</p>
+<pre><code class="language-text">   Compiling getrandom v0.1.14
+   Compiling cfg-if v0.1.10
+   Compiling ppv-lite86 v0.2.8
+   Compiling rand_core v0.5.1
+   Compiling rand_chacha v0.2.2
+   Compiling rand v0.7.3
+   Compiling rust_book v0.1.0 (C:\Users\mithr\OneDrive\Documents\Rust\rust_book)
+    Finished dev [unoptimized + debuginfo] target(s) in 13.13s
+     Running `C:\Users\mithr\OneDrive\Documents\Rust\rust_book\target\debug\rust_book.exe`
+g f c f h b
+</code></pre>
+<p>Se ve que no solo usa <code>rand</code>, sino otras librerías. Esto es debido a que <code>rand</code> también necesita a otras librerías. <code>cargo</code> se encarga de encontrar todas las librerías necesarias y las compila juntas. En este caso solo se necesitan siete librerías, pero en proyectos grande pueden aparecer 200 o más librerías.</p>
+<p>Este es un inconveniente de Rust. Es muy rápido, porque se compila por adelantado. Lo hace mirando el código y viendo qué hace. Si se escribe el siguiente código:</p>
+<pre><pre class="playground"><code class="language-rust">use std::fmt::Display;
+
+fn print_and_return_thing&lt;T: Display&gt;(input: T) -&gt; T {
+    println!(&quot;You gave me {} and now I will give it back.&quot;, input);
+    input
+}
+
+fn main() {
+    let my_name = print_and_return_thing(&quot;Windy&quot;);
+    let small_number = print_and_return_thing(9.0);
+}
+</code></pre></pre>
+<p>Esta función puede tomar cualquier tipo que tenga el rasgo <code>Display</code>, así que se le pasa un <code>&amp;str</code> y en el siguiente uso un <code>f64</code> y no falla. Pero el compilador no usa genéricos, porque no deja nada para la posterior ejecución del programa. El compilador construye un programa que pueda ejecutarse lo más rápido posible. Por eso cuando mura a la primer parte con &quot;Windy&quot;, genera una función particular como <code>fn print_and_return_thing(input: &amp;str) -&gt; &amp;str</code>. Y cuando se usa un <code>f64</code>, construye, a partir del código genérico, otra función <code>fn print_and_return_thing(input: f64) -&gt; f64</code>. Todo los chequeos sobre los rasgos se hace durante la compilación y esta es la razón por la que se tarda más en compilar el programa, porque necesita analizar el código y construir las versiones concretas de cada código genérico que hay.</p>
+<p>Otra cosa más: En 2020 se está trabajando en reducir el tiempo de compilación de Rust, puesto que es lo que más tiempo lleva. Cada versión de Rust es un poco más rápida al compilar y existen diversos planes para acelerarla más. Mientras tanto, esto es lo más importante a conocer:</p>
+<ul>
+<li><code>cargo build</code> compila el programa para que se pueda ejecutar.</li>
+<li><code>cargo run</code> lo compila y ejecuta.</li>
+<li><code>cargo build --release</code> y <code>cargo run --release</code> hace lo mismo que los anteriores, pero optimizado para distribuir. ¿Qué es esto? Es el modo en el que se compila el programa cuando ya se ha terminado. En este modo, Rust tarda aún más en compilar, pero lo hace para que el programa resultante sea lo más rápido posible. El modo &quot;release&quot; es mucho más rápido en ejecución que el modo normal, que se llama modo de depuración. Este otro modo se llama así porque es más rápido en compilar y tiene más información de depuración. El modo <code>cargo build</code> normal se llama &quot;construcción de depuración&quot; (debug build) y <code>cargo build --release</code> se llama construcción para distribución (release build).</li>
+<li><code>cargo check</code> sirve para validar el código. Es como compilar, pero sin que genere el código ejecutable. Es una forma de validar si no se quiere ejecutar el código, ya que es más rápida que <code>build</code> o <code>run</code>.</li>
+</ul>
+<p>Por cierto, la parte <code>--release</code> de la sentencia de cargo es un <em>flag</em>. Es información extra que recibe la sentencia <code>cargo</code> que sirve para cambiar su comportamiento.</p>
+<p>Algunas otras cosas que son necesarias conocer sobre <code>cargo</code>:</p>
+<ul>
+<li><code>cargo new</code> sirve para crear un nuevo proyecto de Rust. Después de la palabra <code>new</code> se escribe el nombre del proyecto y <code>cargo</code> creará una carpeta y los ficheros mínimos necesarios para ese proyecto.</li>
+<li><code>cargo clean</code> sirve para eliminar las librerías que se hayan descargado por ser necesarias para el proyecto. Estas librerías se habrán ido añadido como filas en el fichero <code>Cargo.toml</code> y se habrán ido descargando como consecuencia de haber compilado el proyecto con <code>cargo build</code> o <code>cargo run</code>.</li>
+</ul>
+<p>Una última cosa a conocer sobre el compilador: siempre tarda más la primera vez que se ejecuta <code>cargo build</code> o <code>carga run</code>. Después de esta primera vez, recordará las librerías usadas y compilará más rápido. Eso sí, después de un <code>cargo clean</code>, volverá a tardar mucho en compilar ya que es como si fuese la primera vez que lo hace.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="entrada-de-datos-de-usuario"><a class="header" href="#entrada-de-datos-de-usuario">Entrada de datos de usuario</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="utilizando-ficheros"><a class="header" href="#utilizando-ficheros">Utilizando ficheros</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="cargo-doc"><a class="header" href="#cargo-doc">cargo doc</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="el-final"><a class="header" href="#el-final">¿El final?</a></h1>
+<p>Este es el final de Rust en español fácil. Pero yo estoy aún aquí, y puedes hacerme llegar cualquier pregunta. Siéntete libre de <a href="https://twitter.com/mithridates">contactarme en Twitter</a><sup class="footnote-reference"><a href="#1">1</a></sup> o añadir una &quot;pull request&quot;, incidencia, etc. También puedes hacerme llegar qué partes son las más difíciles de comprender. Rust en español fácil aspira a ser muy comprensible, por lo que necesito conocer en qué partes el texto resulta difícil. Por supuesto, Rust en sí mismo puede ser difícil de comprender, pero al menos que esté explicado de forma fácil.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>N.T.: para la traducción al español puedes contactarme en <a href="https://www.jmgaguilera.com">jmgaguilera.com</a>.</p>
+</div>
 
                     </main>
 
