@@ -143,6 +143,239 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="utilizando-ficheros"><a class="header" href="#utilizando-ficheros">Utilizando ficheros</a></h1>
+<p>Ahora que se está usando Rust en el propio ordenador, se puede comenzar a trabajar con ficheros. Ahora se van a ver muchos <code>Result</code> en el código. Esto es debido a que muchas cosas pueden fallar. El fichero puede no existir, o el ordenador no lo puede leer.</p>
+<p>Se puede usar el operador <code>?</code> que espera recibir un <code>Result</code> de la función a la que se aplique. Si no se recuerda el error que se devuelve, se dejar vacío y dejar que el compilador lo indique. El programa siguiente contiene una función que intenta obtener un número con <code>.parse()</code>.</p>
+<pre><pre class="playground"><code class="language-rust">// ⚠️
+fn give_number(input: &amp;str) -&gt; Result&lt;i32, ()&gt; {
+    input.parse::&lt;i32&gt;()
+}
+
+fn main() {
+    println!(&quot;{:?}&quot;, give_number(&quot;88&quot;));
+    println!(&quot;{:?}&quot;, give_number(&quot;5&quot;));
+}
+</code></pre></pre>
+<p>El compilador dice lo que hay que hacer:</p>
+<pre><code class="language-text">error[E0308]: mismatched types
+ --&gt; src\main.rs:4:5
+  |
+3 | fn give_number(input: &amp;str) -&gt; Result&lt;i32, ()&gt; {
+  |                                --------------- expected `std::result::Result&lt;i32, ()&gt;` because of return type
+4 |     input.parse::&lt;i32&gt;()
+  |     ^^^^^^^^^^^^^^^^^^^^ expected `()`, found struct `std::num::ParseIntError`
+  |
+  = note: expected enum `std::result::Result&lt;_, ()&gt;`
+             found enum `std::result::Result&lt;_, std::num::ParseIntError&gt;`
+</code></pre>
+<p>Así, el compilador indica cuál es el tipo de retorno esperado y se puede corregir:</p>
+<pre><pre class="playground"><code class="language-rust">use std::num::ParseIntError;
+
+fn give_number(input: &amp;str) -&gt; Result&lt;i32, ParseIntError&gt; {
+    input.parse::&lt;i32&gt;()
+}
+
+fn main() {
+    println!(&quot;{:?}&quot;, give_number(&quot;88&quot;));
+    println!(&quot;{:?}&quot;, give_number(&quot;5&quot;));
+}
+</code></pre></pre>
+<p>Ahora el programa funciona:</p>
+<pre><code class="language-text">Ok(88)
+Ok(5)
+</code></pre>
+<p>Ahora se quiere utilizar el operador <code>?</code> para que se devuelva el valor recuperado o el error en caso de que lo haya habido, pero este código no funciona:</p>
+<pre><pre class="playground"><code class="language-rust">// ⚠️
+use std::num::ParseIntError;
+
+fn give_number(input: &amp;str) -&gt; Result&lt;i32, ParseIntError&gt; {
+    input.parse::&lt;i32&gt;()
+}
+
+fn main() {
+    println!(&quot;{:?}&quot;, give_number(&quot;88&quot;)?);
+    println!(&quot;{:?}&quot;, give_number(&quot;5&quot;)?);
+}
+</code></pre></pre>
+<p>El compilador dice:</p>
+<pre><code class="language-text">error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `std::ops::Try`)
+  --&gt; src\main.rs:8:22
+   |
+7  | / fn main() {
+8  | |     println!(&quot;{:?}&quot;, give_number(&quot;88&quot;)?);
+   | |                      ^^^^^^^^^^^^^^^^^^ cannot use the `?` operator in a function that returns `()`
+9  | |     println!(&quot;{:?}&quot;, give_number(&quot;5&quot;)?);
+10 | | }
+   | |_- this function should return `Result` or `Option` to accept `?`
+</code></pre>
+<p>Pero <code>main()</code> si puede devolver un <code>Result</code>, como cualquier otra función. Si la función va bien, no se debe devolver nada en <code>main</code>, pero si falla, debe dar el mismo error. Por lo tanto, el código queda así:</p>
+<pre><pre class="playground"><code class="language-rust">use std::num::ParseIntError;
+
+fn give_number(input: &amp;str) -&gt; Result&lt;i32, ParseIntError&gt; {
+    input.parse::&lt;i32&gt;()
+}
+
+fn main() -&gt; Result&lt;(), ParseIntError&gt; {
+    println!(&quot;{:?}&quot;, give_number(&quot;88&quot;)?);
+    println!(&quot;{:?}&quot;, give_number(&quot;5&quot;)?);
+    Ok(())
+}
+</code></pre></pre>
+<p>Es importante ahora añadir el <code>Ok(())</code> como valor de retorno final de <code>main</code>. Esto es muy común en Rust. Significa <code>Ok</code>, dentro del cual está <code>()</code> que es el valor de retorno. Ahora imprime:</p>
+<pre><code class="language-text">88
+5
+</code></pre>
+<p>Esto no es muy útil cuando solo se usa <code>.parse()</code>, pero lo será con ficheros. Esto de debe a que <code>?</code> también modifica los tipos de error. Según indica la <a href="https://doc.rust-lang.org/std/macro.try.html">página del operador ?</a>:</p>
+<pre><code class="language-text">If you get an `Err`, it will get the inner error. Then `?` does a conversion using `From`. With that it can change specialized errors to more general ones. The error it gets is then returned.
+</code></pre>
+<p>Es decir, si el operador obtiene un <code>Err</code>, se recuperará el error interno. Así con <code>From</code>, <code>?</code> realiza la conversión de errores especializados a más general. El error que obtiene así, es el que se devuelve.</p>
+<p>Además, Rust tiene un tipo <code>Result</code> especializado para los <code>Files</code> (ficheros) o similar. Es el tipo <code>std::io::Result</code> y es lo típico que se observará como retorno de una función <code>main()</code> cuando se están manipulando ficheros y usando <code>?</code>. Este tipo <code>Result</code> es un alias de:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>type Result&lt;T&gt; = Result&lt;T, Error&gt;;
+<span class="boring">}
+</span></code></pre></pre>
+<p>Es un <code>Result&lt;T, Error&gt;</code>, pero no es necesario escribir la parte del errro, solo <code>Result&lt;T&gt;</code>.</p>
+<p>A continuación, se presenta el primer ejemplo que trabaja con ficheros. <code>std::fs</code> es el módulo que contiene los métodos para trabajar con ficheros. <code>std::io::Write</code> permite escribir contenido a ficheros. Se puede usar el método <code>.write_all()</code> para escribir valores a un ficehro.</p>
+<pre><pre class="playground"><code class="language-rust">use std::fs;
+use std::io::Write;
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let mut file = fs::File::create(&quot;myfilename.txt&quot;)?; // Crea un fichero con este nombre.
+                                                        // CUIDADO: si existe un fichero previamente con ese nombre,
+                                                        // se eliminará todo su contenido previo.
+    file.write_all(b&quot;Let's put this in the file&quot;)?;     // No se debe olvidar la b delante de &quot;. Esto se debe a que un fichero recibe bytes.
+    Ok(())
+}
+</code></pre></pre>
+<p>Este código consiste en: intentar crear un fichero y comprobar si ha funcionado. Si funciona, utiliza <code>.write_all()</code> y comprueba que haya funcionado bien.</p>
+<p>De hecho, existe una función que hace las dos cosas juntas. Crea un fichero y escribe el contenido que se indique. Se denomina <code>std::io::write</code>. Se le pasa como parámetros el nombre del fichero deseado y el contenido que se quiere incorporar. Como antes, es importante tener cuidado ya que si el fichero existiera previamente, se borraría todo su contenido anterior. Además, permite escribir un <code>&amp;str</code> sin necesidad de utilizar <code>b</code> delante. Esto se debe a que la función se define así:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn write&lt;P: AsRef&lt;Path&gt;, C: AsRef&lt;[u8]&gt;&gt;(path: P, contents: C) -&gt; Result&lt;()&gt;
+<span class="boring">}
+</span></code></pre></pre>
+<p>El segundo parámetro, el contenido, debe implementar un array de binarios <code>AsRef&lt;u8&gt;</code>. Por eso se puede pasar un <code>&amp;str</code> sin hacer conversión explícita a binario.</p>
+<p>Se puede ver en el siguiente ejemplo:</p>
+<pre><pre class="playground"><code class="language-rust">use std::fs;
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    fs::write(&quot;calvin_with_dad.txt&quot;, 
+&quot;Calvin: Dad, how come old photographs are always black and white? Didn't they have color film back then?
+Dad: Sure they did. In fact, those photographs *are* in color. It's just the *world* was black and white then.
+Calvin: Really?
+Dad: Yep. The world didn't turn color until sometimes in the 1930s...&quot;)?;
+
+    Ok(())
+}
+</code></pre></pre>
+<p>En este programa se crea un fichero que será el que se usará en los siguientes ejemplos, es una conversión de un personaje de un libro de comic llamado Calvin que habla con su padre, que no se toma la pregunta en serio. Con este código, se puede crera un fichero que se usará en varios ejemplos.</p>
+<p>Abrir un fichero, leer de él, es tan sencillo como crearlo. Solo se necesita usar <code>open()</code> en lugar de <code>create()</code>. Después de esto, si el fichero existía, se pueden usar funciones como <code>read_to_string()</code>. Para esto es necesario disponer de una <code>mut String</code> y leer del fichero a ella. Por ejemplo:</p>
+<pre><pre class="playground"><code class="language-rust">use std::fs;
+use std::fs::File;
+use std::io::Read; // Este módulo es necesario para disponer de la función .read_to_string()
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+     fs::write(&quot;calvin_with_dad.txt&quot;, 
+&quot;Calvin: Dad, how come old photographs are always black and white? Didn't they have color film back then?
+Dad: Sure they did. In fact, those photographs *are* in color. It's just the *world* was black and white then.
+Calvin: Really?
+Dad: Yep. The world didn't turn color until sometimes in the 1930s...&quot;)?;
+
+
+    let mut calvin_file = File::open(&quot;calvin_with_dad.txt&quot;)?; // Abre el fichero recién creado
+    let mut calvin_string = String::new(); // Esta String guardará el contenido
+    calvin_file.read_to_string(&amp;mut calvin_string)?; // Lee el fichero a la String
+
+    calvin_string.split_whitespace().for_each(|word| print!(&quot;{} &quot;, word.to_uppercase())); // Pasa a mayúsculas e imprime cada palabra de la cadena de caracteres
+
+    Ok(())
+}
+</code></pre></pre>
+<p>El resultado del programa es:</p>
+<pre><code class="language-text">CALVIN: DAD, HOW COME OLD PHOTOGRAPHS ARE ALWAYS BLACK AND WHITE? DIDN'T THEY HAVE COLOR FILM BACK THEN? DAD: SURE THEY DID. IN 
+FACT, THOSE PHOTOGRAPHS *ARE* IN COLOR. IT'S JUST THE *WORLD* WAS BLACK AND WHITE THEN. CALVIN: REALLY? DAD: YEP. THE WORLD DIDN'T TURN COLOR UNTIL SOMETIMES IN THE 1930S...
+</code></pre>
+<p>Si se quiere crear un fichero, pero solo si no existe otro con el mismo nombre, existe una struct denominada <code>OpenOptions</code>. En realidad, ya se ha estado usando este <code>struct</code>. Por ejemplo, la definición de <code>File::open</code> dice:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn open&lt;P: AsRef&lt;Path&gt;&gt;(path: P) -&gt; io::Result&lt;File&gt; {
+        OpenOptions::new().read(true).open(path.as_ref())
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p>Esta definición parece seguir el patrón del constructor que se aprendió antes. Lo mismo sucede para <code>File::create</code>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn create&lt;P: AsRef&lt;Path&gt;&gt;(path: P) -&gt; io::Result&lt;File&gt; {
+        OpenOptions::new().write(true).create(true).truncate(true).open(path.as_ref())
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p>Si se consulta <a href="https://doc.rust-lang.org/std/fs/struct.OpenOptions.html">página de OpenOptions</a>, se pueden ver todos los métodos que existen. La mayoría necesitan un valor <code>bool</code>:</p>
+<ul>
+<li><code>append()</code>: este método indica que se añada al contenido anterior, en lugar de borrarlo.</li>
+<li><code>create()</code>: crea un fichero.</li>
+<li><code>create_new()</code>: solo crea el fichero si no existe previamente.</li>
+<li><code>read()</code>: para poder leer del fichero, se necesario ponerlo a <code>true</code>.</li>
+<li><code>truncate()</code>: si se pone a <code>true</code> se elimina todo el contenido del fichero cuando se abre.</li>
+<li><code>write()</code>: permite escribir en un fichero.</li>
+</ul>
+<p>Como último método se usa <code>.open()</code> con el nombre del fichero que devuelve un <code>Result</code>. Por ejemplo:</p>
+<pre><pre class="playground"><code class="language-rust">// ⚠️
+use std::fs;
+use std::fs::OpenOptions;
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+     fs::write(&quot;calvin_with_dad.txt&quot;, 
+&quot;Calvin: Dad, how come old photographs are always black and white? Didn't they have color film back then?
+Dad: Sure they did. In fact, those photographs *are* in color. It's just the *world* was black and white then.
+Calvin: Really?
+Dad: Yep. The world didn't turn color until sometimes in the 1930s...&quot;)?;
+
+    let calvin_file = OpenOptions::new().write(true).create_new(true).open(&quot;calvin_with_dad.txt&quot;)?;
+
+    Ok(())
+}
+</code></pre></pre>
+<p>En primer lugar se crea un <code>OpenOptions</code> con <code>new</code>. Después se le indica que se puede escribir con <code>write</code>. Después de eso <code>create_new()</code> a <code>true</code> e intenta abrir el fichero. En este caso no funciona ya que ya existe el fichero por lo que lanza el siguiente error:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>Error: Os { code: 80, kind: AlreadyExists, message: &quot;The file exists.&quot; }
+<span class="boring">}
+</span></code></pre></pre>
+<p>Para que sí funcione, se debe usar <code>.append()</code> para este caso. Para escribir al fichero, se puede usar <code>.write_all()</code>, que intenta escribir todo lo que se le pase.</p>
+<p>También se va a usar la macro <code>write!</code> para hacer lo mismo. Esta macro ya se ha usado cuando se usó <code>impl Display</code> para construir struct. Ahora se usará en un fichero en lugar de un buffer.</p>
+<pre><pre class="playground"><code class="language-rust">use std::fs;
+use std::fs::OpenOptions;
+use std::io::Write;
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    fs::write(&quot;calvin_with_dad.txt&quot;, 
+&quot;Calvin: Dad, how come old photographs are always black and white? Didn't they have color film back then?
+Dad: Sure they did. In fact, those photographs *are* in color. It's just the *world* was black and white then.
+Calvin: Really?
+Dad: Yep. The world didn't turn color until sometimes in the 1930s...&quot;)?;
+
+    let mut calvin_file = OpenOptions::new()
+        .append(true) // Ahora se puede escribir sin borrar el contenido anterior
+        .read(true)
+        .open(&quot;calvin_with_dad.txt&quot;)?;
+    calvin_file.write_all(b&quot;And it was a pretty grainy color for a while too.\n&quot;)?;
+    write!(&amp;mut calvin_file, &quot;That's really weird.\n&quot;)?;
+    write!(&amp;mut calvin_file, &quot;Well, truth is stranger than fiction.&quot;)?;
+
+    println!(&quot;{}&quot;, fs::read_to_string(&quot;calvin_with_dad.txt&quot;)?);
+
+    Ok(())
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">Calvin: Dad, how come old photographs are always black and white? Didn't they have color film back then?
+Dad: Sure they did. In fact, those photographs *are* in color. It's just the *world* was black and white then.
+Calvin: Really?
+Dad: Yep. The world didn't turn color until sometimes in the 1930s...And it was a pretty grainy color for a while too.
+That's really weird.
+Well, truth is stranger than fiction.
+</code></pre>
 
                     </main>
 
