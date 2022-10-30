@@ -11331,6 +11331,95 @@ Can't find ROOT
 <p>Se ve que es mejor usar <code>option_env!</code>, salvo que realmente se quiera que el programa falle si no existe determinada variable de entorno de sistema/usuario, entonces sería mejor <code>env!</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="utilizando-ficheros"><a class="header" href="#utilizando-ficheros">Utilizando ficheros</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="cargo-doc"><a class="header" href="#cargo-doc">cargo doc</a></h1>
+<p>Se puede haber observado que la documentación de Rust siempre es parecida. En el lado izquierdo aparecen los <code>struct</code> y <code>trait</code> y los ejemplos de código aparecen a la derecha. Esto se debe a que se puede generar de forma automática la documentación mediante el uso de <code>cargo doc</code>.</p>
+<p>Incluso con un programa que no hace nada, se puede aprender sobre los rasgos en Rust. Por ejemplo, a continuación hay dos struct que no hacen casi nada y una función <code>fn main()</code> que casi tampoco hace nada:</p>
+<pre><pre class="playground"><code class="language-rust">struct DoesNothing {}
+struct PrintThing {}
+
+impl PrintThing {
+    fn prints_something() {
+        println!(&quot;I am printing something&quot;);
+    }
+}
+
+fn main() {}
+</code></pre></pre>
+<p>Pero si se teclea <code>cargo doc --open</code>, se puede observa que existe mucha información, más de la que puede que se esperara. Lo primero que muestra es:</p>
+<pre><code class="language-text">Crate rust_book
+
+Structs
+DoesNothing
+PrintThing
+
+Functions
+main
+</code></pre>
+<p>Pero si se teclea en una de las <code>struct</code> mostrará muchos rasgos que implementa sin haberse hecho por parte del desarrollador:</p>
+<pre><code class="language-text">Struct rust_book::DoesNothing
+[+] Show declaration
+Auto Trait Implementations
+impl RefUnwindSafe for DoesNothing
+impl Send for DoesNothing
+impl Sync for DoesNothing
+impl Unpin for DoesNothing
+impl UnwindSafe for DoesNothing
+Blanket Implementations
+impl&lt;T&gt; Any for T
+where
+    T: 'static + ?Sized,
+[src]
+[+]
+impl&lt;T&gt; Borrow&lt;T&gt; for T
+where
+    T: ?Sized,
+[src]
+[+]
+impl&lt;T&gt; BorrowMut&lt;T&gt; for T
+where
+    T: ?Sized,
+[src]
+[+]
+impl&lt;T&gt; From&lt;T&gt; for T
+[src]
+[+]
+impl&lt;T, U&gt; Into&lt;U&gt; for T
+where
+    U: From&lt;T&gt;,
+[src]
+[+]
+impl&lt;T, U&gt; TryFrom&lt;U&gt; for T
+where
+    U: Into&lt;T&gt;,
+[src]
+[+]
+impl&lt;T, U&gt; TryInto&lt;U&gt; for T
+where
+    U: TryFrom&lt;T&gt;,
+</code></pre>
+<p>Esto se debe a que Rust los implementa de forma automática para todos los tipos que se crean.</p>
+<p>Si, además, se añade algo de comentarios de documentación <code>\\\</code>, aparecerán en <code>cargo doc</code>.</p>
+<pre><pre class="playground"><code class="language-rust">/// This is a struct that does nothing
+struct DoesNothing {}
+/// This struct only has one method.
+struct PrintThing {}
+/// It just prints the same message.
+impl PrintThing {
+    fn prints_something() {
+        println!(&quot;I am printing something&quot;);
+    }
+}
+
+fn main() {}
+</code></pre></pre>
+<p>Que mostrará ahora:</p>
+<pre><code class="language-text">Crate rust_book
+Structs
+DoesNothing This is a struct that does nothing
+PrintThing  This struct only has one method.
+Functions
+main
+</code></pre>
+<p><code>cargo doc</code> es muy útil cuando se usan librerías de otras personas. Porque normalmente estas librerías están en múltiples sitios web. Puede necesitarse tiempo para buscarlas todas. Con <code>cargo doc</code> se mostrará la documentación de todas ellas desde el propio ordenador personal.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="el-final"><a class="header" href="#el-final">¿El final?</a></h1>
 <p>Este es el final de Rust en español fácil. Pero yo estoy aún aquí, y puedes hacerme llegar cualquier pregunta. Siéntete libre de <a href="https://twitter.com/mithridates">contactarme en Twitter</a><sup class="footnote-reference"><a href="#1">1</a></sup> o añadir una &quot;pull request&quot;, incidencia, etc. También puedes hacerme llegar qué partes son las más difíciles de comprender. Rust en español fácil aspira a ser muy comprensible, por lo que necesito conocer en qué partes el texto resulta difícil. Por supuesto, Rust en sí mismo puede ser difícil de comprender, pero al menos que esté explicado de forma fácil.</p>
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
