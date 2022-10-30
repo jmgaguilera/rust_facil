@@ -143,6 +143,240 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="entrada-de-datos-de-usuario"><a class="header" href="#entrada-de-datos-de-usuario">Entrada de datos de usuario</a></h1>
+<p>Una forma fácil de permitir que el usuario &quot;teclee&quot; información para el programa es usar la librería <code>std::io::stdin</code>. Esta es la librería &quot;estándar de entrada&quot;, que recibe las entradas del teclado. Con <code>stdin()</code> se puede obtener la entrada del usuario. Esto se guardará en una <code>&amp;mut String</code> con <code>.read_line()</code>. A continuación se muestra un ejemplo simple que no funciona del todo:</p>
+<pre><pre class="playground"><code class="language-rust">use std::io;
+
+fn main() {
+    println!(&quot;Por favor, teclea algo o x para terminar:&quot;);
+    let mut input_string = String::new();
+
+    while input_string != &quot;x&quot; { // Esto es lo que no funciona bien
+        input_string.clear(); // Primero vacía la cadena de caracteres. En otro caso, se estaría añadiendo sin parar información
+        io::stdin().read_line(&amp;mut input_string).unwrap(); // Obtiene la entrada del usuario y la pone en  read_string
+        println!(&quot;Escribiste: {}&quot;, input_string);
+    }
+    println!(&quot;¡Adios!&quot;);
+}
+</code></pre></pre>
+<p>Esta es es la salida de este programa:</p>
+<pre><code class="language-text">Por favor, teclea algo o x para terminar:
+algo
+Escribiste: algo
+
+Algo más
+Escribiste: Algo más
+
+x
+Escribiste: x
+
+x
+Escribiste: x
+
+x
+Escribiste: x
+</code></pre>
+<p>Toma el valor de entrada y lo escribe en pantalla, pero continúa a pesar de haber escrito <code>x</code>. La única forma de salir es cerrar la ventana o pulsar <code>ctrl</code> y <code>c</code> simultáneamente. Si se modifica el <code>{}</code> del <code>println!</code> por <code>{:?}</code> para obtener más información (o se usa <code>dbg!(&amp;input_string)</code>) el programa imprime lo siguiente:</p>
+<pre><code class="language-text">Por favor, teclea algo o x para terminar:
+algo
+Escribiste: &quot;algo\r\n&quot;
+algo más
+Escribiste: &quot;algo más\r\n&quot;
+x
+Escribiste: &quot;x\r\n&quot;
+x
+Escribiste: &quot;x\r\n&quot;
+</code></pre>
+<p>Esto se debe a que la entrada que se recibe del teclado no es la palabra &quot;algo&quot;, sino que es &quot;algo&quot; y el resultado de la tecla <code>Intro</code> (Enter en inglés). La forma más fácil para resolver esto es usar el método <code>.trim()</code> que elimina todos los espacios en blanco que rodean al texto por ambos lados. En esta caso por espacio en blanco <code>.trim()</code> entiende estos <a href="https://doc.rust-lang.org/reference/whitespace.html">caracteres</a>:</p>
+<pre><code class="language-text">U+0009 (tabulador horizontal, '\t')
+U+000A (salto de línea, '\n')
+U+000B (tabulador vertical)
+U+000C (salto de página)
+U+000D (retorno de carro, '\r')
+U+0020 (espacio, ' ')
+U+0085 (siguiente línea)
+U+200E (marca de izquierda a derecha)
+U+200F (marca de derecha a izquierda)
+U+2028 (separador de línea)
+U+2029 (separador de párrafo)
+</code></pre>
+<p>De esta forma, la cadena <code>x\r\n</code> se convierte en <code>x</code>. Con este cambio, la aplicación funciona:</p>
+<pre><pre class="playground"><code class="language-rust">use std::io;
+
+fn main() {
+    println!(&quot;Por favor, teclea algo o x para terminar:&quot;);
+    let mut input_string = String::new();
+
+    while input_string.trim() != &quot;x&quot; {
+        input_string.clear();
+        io::stdin().read_line(&amp;mut input_string).unwrap();
+        println!(&quot;Escribiste: {}&quot;, input_string);
+    }
+    println!(&quot;¡Adiós!&quot;);
+}
+</code></pre></pre>
+<p>Ahora imprimirá:</p>
+<pre><code class="language-text">Por favor, teclea algo o x para terminar:
+algo
+Escribiste: algo
+
+algo
+Escribiste: algo
+
+x
+Escribiste: x
+
+¡Adiós!
+</code></pre>
+<p>Hay otra clase de entrada de usuario denominada <code>std::env::Args</code> (env significa entorno). <code>Args</code> es lo que teclea el usuario cuando inicia el programa (en la misma línea de arranque). Siempre existe un <code>Arg</code> en todos los programas.</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    println!(&quot;{:?}&quot;, std::env::args());
+}
+</code></pre></pre>
+<p>Si se teclea <code>cargo run</code> el código anterior imprime:</p>
+<pre><code class="language-text">Args { inner: [&quot;target\\debug\\rust_book.exe&quot;] }
+</code></pre>
+<p>A continuación, se ejecuta el mismo programa, pero pasándole más argumentos, por ejemplo: <code>cargo run but with some extra words</code>. En este caso, imprime:</p>
+<pre><code class="language-text">Args { inner: [&quot;target\\debug\\rust_book.exe&quot;, &quot;but&quot;, &quot;with&quot;, &quot;some&quot;, &quot;extra&quot;, &quot;words&quot;] }
+</code></pre>
+<p>Es interesante el resultado. Cuando se observa <a href="https://doc.rust-lang.org/std/env/struct.Args.html">la página de Args</a> se ve que implementa <code>IntoIterator</code>. Esto significa que se puede leer con un iterador:</p>
+<pre><pre class="playground"><code class="language-rust">use std::env::args;
+
+fn main() {
+    let input = args();
+
+    for entry in input {
+        println!(&quot;You entered: {}&quot;, entry);
+    }
+}
+</code></pre></pre>
+<p>Que imprime:</p>
+<pre><code class="language-text">You entered: target\debug\rust_book.exe
+You entered: but
+You entered: with
+You entered: some
+You entered: extra
+You entered: words
+</code></pre>
+<p>El primer argumento siempre es el nombre del programa, por lo que lo habitual es saltárselo:</p>
+<pre><pre class="playground"><code class="language-rust">use std::env::args;
+
+fn main() {
+    let input = args();
+
+    input.skip(1).for_each(|item| {
+        println!(&quot;You wrote {}, which in capital letters is {}&quot;, item, item.to_uppercase());
+    })
+}
+</code></pre></pre>
+<p>Que imprimirá:</p>
+<pre><code class="language-text">You wrote but, which in capital letters is BUT
+You wrote with, which in capital letters is WITH
+You wrote some, which in capital letters is SOME
+You wrote extra, which in capital letters is EXTRA
+You wrote words, which in capital letters is WORDS
+</code></pre>
+<p>Un uso habitual de <code>Args</code> es para las configuraciones de usuario. A continuación, se muestra un programa que pone las palabas que se teclean en mayúsculas (capital) o minúsculas (lowercase), según sea la configuración inicial:</p>
+<pre><pre class="playground"><code class="language-rust">use std::env::args;
+
+enum Letters {
+    Capitalize,
+    Lowercase,
+    Nothing,
+}
+
+fn main() {
+    let mut changes = Letters::Nothing;
+    let input = args().collect::&lt;Vec&lt;_&gt;&gt;();
+
+    if input.len() &gt; 2 {
+        match input[1].as_str() {
+            &quot;capital&quot; =&gt; changes = Letters::Capitalize,
+            &quot;lowercase&quot; =&gt; changes = Letters::Lowercase,
+            _ =&gt; {}
+        }
+    }
+
+    for word in input.iter().skip(2) {
+      match changes {
+        Letters::Capitalize =&gt; println!(&quot;{}&quot;, word.to_uppercase()),
+        Letters::Lowercase =&gt; println!(&quot;{}&quot;, word.to_lowercase()),
+        _ =&gt; println!(&quot;{}&quot;, word)
+      }
+    }
+    
+}
+</code></pre></pre>
+<p>Algunos ejemplos de su ejecución:</p>
+<p>Entrada <code>cargo run please make capitals</code>:</p>
+<pre><code class="language-text">make capitals
+</code></pre>
+<p>Entrada <code>cargo run capital</code>:</p>
+<pre><code class="language-text">// No imprime nada...
+</code></pre>
+<p>Entrada <code>cargo run capital I think I understand now</code>:</p>
+<pre><code class="language-text">I
+THINK
+I
+UNDERSTAND
+NOW
+</code></pre>
+<p>ENtrada <code>cargo run lowercase Does this work too?</code>:</p>
+<pre><code class="language-text">does
+this
+work
+too?
+</code></pre>
+<p>Además de los argumentos tecleados por el usuario al arrancar el programa, <code>std::env</code> tiene también <code>Vars</code> que son las variables del sistema. Estas son diversas configuraciones que el usuario no tiene que teclera. Para acceder a ellas se usa <code>std::env::vars()</code> que devuelve una lista de tuplas <code>(String, String)</code>. Suelen existir muchas. POr ejemplo:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    for item in std::env::vars() {
+        println!(&quot;{:?}&quot;, item);
+    }
+}
+</code></pre></pre>
+<p>El programa anterior muestra la información completa de las variables de sesión del usaurio:</p>
+<pre><code class="language-text">(&quot;CARGO&quot;, &quot;/playground/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo&quot;)
+(&quot;CARGO_HOME&quot;, &quot;/playground/.cargo&quot;)
+(&quot;CARGO_MANIFEST_DIR&quot;, &quot;/playground&quot;)
+(&quot;CARGO_PKG_AUTHORS&quot;, &quot;The Rust Playground&quot;)
+(&quot;CARGO_PKG_DESCRIPTION&quot;, &quot;&quot;)
+(&quot;CARGO_PKG_HOMEPAGE&quot;, &quot;&quot;)
+(&quot;CARGO_PKG_NAME&quot;, &quot;playground&quot;)
+(&quot;CARGO_PKG_REPOSITORY&quot;, &quot;&quot;)
+(&quot;CARGO_PKG_VERSION&quot;, &quot;0.0.1&quot;)
+(&quot;CARGO_PKG_VERSION_MAJOR&quot;, &quot;0&quot;)
+(&quot;CARGO_PKG_VERSION_MINOR&quot;, &quot;0&quot;)
+(&quot;CARGO_PKG_VERSION_PATCH&quot;, &quot;1&quot;)
+(&quot;CARGO_PKG_VERSION_PRE&quot;, &quot;&quot;)
+(&quot;DEBIAN_FRONTEND&quot;, &quot;noninteractive&quot;)
+(&quot;HOME&quot;, &quot;/playground&quot;)
+(&quot;HOSTNAME&quot;, &quot;f94c15b8134b&quot;)
+(&quot;LD_LIBRARY_PATH&quot;, &quot;/playground/target/debug/build/backtrace-sys-3ec4c973f371c302/out:/playground/target/debug/build/libsqlite3-sys-fbddfbb9b241dacb/out:/playground/target/debug/build/ring-cadba5e583648abb/out:/playground/target/debug/deps:/playground/target/debug:/playground/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib:/playground/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib&quot;)
+(&quot;PATH&quot;, &quot;/playground/.cargo/bin:/playground/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;)
+(&quot;PLAYGROUND_EDITION&quot;, &quot;2018&quot;)
+(&quot;PLAYGROUND_TIMEOUT&quot;, &quot;10&quot;)
+(&quot;PWD&quot;, &quot;/playground&quot;)
+(&quot;RUSTUP_HOME&quot;, &quot;/playground/.rustup&quot;)
+(&quot;RUSTUP_TOOLCHAIN&quot;, &quot;stable-x86_64-unknown-linux-gnu&quot;)
+(&quot;RUST_RECURSION_COUNT&quot;, &quot;1&quot;)
+(&quot;SHLVL&quot;, &quot;1&quot;)
+(&quot;SSL_CERT_DIR&quot;, &quot;/usr/lib/ssl/certs&quot;)
+(&quot;SSL_CERT_FILE&quot;, &quot;/usr/lib/ssl/certs/ca-certificates.crt&quot;)
+(&quot;USER&quot;, &quot;playground&quot;)
+(&quot;_&quot;, &quot;/usr/bin/timeout&quot;)
+</code></pre>
+<p>La forma más sencilla de acceder a una de ellas de forma independiente es usar la macro <code>env!</code>. Se le da el nombre de una variable y devolverá un <code>&amp;str</code> con el valor. No funcionará si la variable no existe, por lo que es mejor usar <code>option_env!</code>. Si se escribe el siguiente código en Playground:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    println!(&quot;{}&quot;, env!(&quot;USER&quot;));
+    println!(&quot;{}&quot;, option_env!(&quot;ROOT&quot;).unwrap_or(&quot;Can't find ROOT&quot;));
+    println!(&quot;{}&quot;, option_env!(&quot;CARGO&quot;).unwrap_or(&quot;Can't find CARGO&quot;));
+}
+</code></pre></pre>
+<p>Se obtiene:</p>
+<pre><code class="language-text">playground
+Can't find ROOT
+/playground/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo
+</code></pre>
+<p>Se ve que es mejor usar <code>option_env!</code>, salvo que realmente se quiera que el programa falle si no existe determinada variable de entorno de sistema/usuario, entonces sería mejor <code>env!</code>.</p>
 
                     </main>
 
